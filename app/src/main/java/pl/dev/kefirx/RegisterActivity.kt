@@ -1,23 +1,17 @@
 package pl.dev.kefirx
 
-import android.content.Intent
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
 import pl.dev.kefirx.databinding.ActivityMainBinding
+import pl.dev.kefirx.fragments.FragmentRegisterStart
 
-class MainActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_register)
         binding = ActivityMainBinding.inflate(layoutInflater)
-
-        val registerIntent = Intent(this, RegisterActivity::class.java).apply{}
-        startActivity(registerIntent)
-
-
-
     }
 }

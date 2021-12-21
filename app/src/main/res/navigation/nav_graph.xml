@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragmentRegisterStart">
+
+    <fragment
+        android:id="@+id/fragmentRegisterStart"
+        android:name="pl.dev.kefirx.fragments.FragmentRegisterStart"
+        android:label="FragmentRegisterStart"
+        tools:layout="@layout/fragment_register_start">
+        <action
+            android:id="@+id/action_fragmentRegisterStart_to_fragmentRegisterStep1"
+            app:destination="@id/fragmentRegisterStep1" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentRegisterStep1"
+        android:name="pl.dev.kefirx.fragments.FragmentRegisterStep1"
+        android:label="FragmentRegisterStep1"
+        tools:layout="@layout/fragment_register_step1">
+        <action
+            android:id="@+id/action_fragmentRegisterStep1_to_fragmentRegisterStep2"
+            app:destination="@id/fragmentRegisterStep2" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentRegisterStep2"
+        android:name="pl.dev.kefirx.fragments.FragmentRegisterStep2"
+        android:label="FragmentRegisterStep2"
+        tools:layout="@layout/fragment_register_step2">
+        <action
+            android:id="@+id/action_fragmentRegisterStep2_to_fragmentRegisterStep3"
+            app:destination="@id/fragmentRegisterStep3" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentRegisterStep3"
+        android:name="pl.dev.kefirx.fragments.FragmentRegisterStep3"
+        android:label="FragmentRegisterStep3"
+        tools:layout="@layout/fragment_register_step3">
+        <action
+            android:id="@+id/action_fragmentRegisterStep3_to_fragmentRegisterStep4"
+            app:destination="@id/fragmentRegisterStep4" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentRegisterStep4"
+        android:name="pl.dev.kefirx.fragments.FragmentRegisterStep4"
+        android:label="FragmentRegisterStep4"
+        tools:layout="@layout/fragment_register_step4">
+        <action
+            android:id="@+id/action_fragmentRegisterStep4_to_fragmentRegisterEnd"
+            app:destination="@id/fragmentRegisterEnd" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentRegisterEnd"
+        android:name="pl.dev.kefirx.fragments.FragmentRegisterEnd"
+        android:label="FragmentRegisterEnd"
+        tools:layout="@layout/fragment_register_end"/>
+</navigation>
