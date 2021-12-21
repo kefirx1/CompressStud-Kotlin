@@ -6,11 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_register_end.*
 import kotlinx.android.synthetic.main.fragment_register_step2.*
 import kotlinx.android.synthetic.main.fragment_register_step4.*
+import pl.dev.kefirx.MainActivity
 import pl.dev.kefirx.R
+import pl.dev.kefirx.viewModel.UserViewModel
 
 class FragmentRegisterStep4 : Fragment() {
 
@@ -21,8 +24,6 @@ class FragmentRegisterStep4 : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
-
 
         nextStep5Button.setOnClickListener{
 

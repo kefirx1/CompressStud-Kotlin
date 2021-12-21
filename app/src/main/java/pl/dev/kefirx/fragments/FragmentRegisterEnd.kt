@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_register_end.*
+import pl.dev.kefirx.MainActivity
 import pl.dev.kefirx.R
+import pl.dev.kefirx.room.User
 
 class FragmentRegisterEnd : Fragment() {
 
@@ -20,7 +22,15 @@ class FragmentRegisterEnd : Fragment() {
         super.onStart()
 
         val personalInformation: ArrayList<String> = arguments?.getStringArrayList("info") as ArrayList<String>
-        println(personalInformation)
+
+        val name = personalInformation[0]
+        val levelOfEdu = personalInformation[1]
+        val likeMusic = personalInformation[2]
+        val musicGenres = personalInformation[3]
+
+        val user  = User(name, levelOfEdu, likeMusic, musicGenres)
+
+        MainActivity.viewModel.insertUser(user)
 
         endRegisterButton.setOnClickListener{
             this.activity?.finish()

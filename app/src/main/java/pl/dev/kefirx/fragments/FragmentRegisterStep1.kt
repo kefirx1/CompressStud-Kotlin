@@ -27,12 +27,8 @@ class FragmentRegisterStep1 : Fragment() {
 
             val personName = personNameEditText.text.toString()
 
-            println(personName)
-
             val personalInformation: ArrayList<String> = ArrayList()
             personalInformation.add(personName)
-
-            println(personalInformation)
 
             findNavController().navigate(
                 FragmentRegisterStep1Directions.actionFragmentRegisterStep1ToFragmentRegisterStep2().actionId,

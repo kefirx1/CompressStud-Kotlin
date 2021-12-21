@@ -64,9 +64,26 @@ dependencies {
 
 
     //Kotlin
-    implementation "androidx.navigation:navigation-fragment-ktx:2.3.0"
-    implementation "androidx.navigation:navigation-ui-ktx:2.3.0"
-    implementation "androidx.navigation:navigation-dynamic-features-fragment:2.3.0"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.5"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:2.3.5"
+
+    implementation'androidx.cardview:cardview:1.0.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.10'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+    implementation "androidx.room:room-ktx:2.4.0"
+    implementation "androidx.room:room-runtime:2.4.0"
+    kapt 'androidx.room:room-compiler:2.4.0'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.4.0"
+    //noinspection LifecycleAnnotationProcessorWithJava8
+    kapt "androidx.lifecycle:lifecycle-compiler:2.4.0"
+
+
 
 
     implementation 'androidx.core:core-ktx:1.7.0'
