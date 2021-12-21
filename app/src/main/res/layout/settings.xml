@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/regular"
+        android:text="Ustawienia"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.077"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.042" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="411dp"
+        android:layout_height="70dp"
+        android:background="@drawable/footer_background"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/regular"
+        android:text="Made with passion by"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView13"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.023"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView13"
+        app:layout_constraintVertical_bias="0.191" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/regular"
+        android:text="SakubDev &amp; Kefirx"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView13"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.02"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView13"
+        app:layout_constraintVertical_bias="0.723" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bold"
+        android:text="COFNIJ"
+        android:onClick="setActiveLayout"
+        android:tag="dashboard2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.943"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.042" />
+
+
+    <LinearLayout
+        android:layout_width="380dp"
+        android:layout_height="260dp"
+        android:background="@drawable/section_background"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.157">
+
+        <TextView
+            android:id="@+id/openNameModal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:background="@drawable/settings__option"
+            android:fontFamily="@font/regular"
+            android:textSize="24sp"
+            android:text="Imię"
+            android:onClick="openNameModal"
+            />
+
+        <TextView
+            android:id="@+id/openLevelModal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/settings__option"
+            android:fontFamily="@font/regular"
+            android:textSize="24sp"
+            android:onClick="openLevelModal"
+            android:text="Poziom nauczania" />
+        <TextView
+            android:id="@+id/openMusicModal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/settings__option"
+            android:fontFamily="@font/regular"
+            android:textSize="24sp"
+            android:onClick="openMusicModal"
+            android:text="Preferencje muzyczne" />
+        <TextView
+            android:id="@+id/openThemeModal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/settings__option"
+            android:fontFamily="@font/regular"
+            android:textSize="24sp"
+            android:onClick="openThemeModal"
+            android:text="Motyw" />
+        <TextView
+            android:id="@+id/openWarningModal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/settings__option"
+            android:fontFamily="@font/regular"
+            android:textSize="24sp"
+            android:onClick="openWideDataWarningModal"
+            android:text="Wyczyść dane" />
+    </LinearLayout>
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:id="@+id/nameModal"
+        android:gravity="center"
+        android:background="@drawable/modal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Podaj nowe imie"
+            android:textAlignment="center"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:textColor="@color/primary"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/regular"/>
+
+        <EditText
+            android:id="@+id/editTextTextPersonName2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/text_input"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text=""
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.777"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.813" />
+
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeUserInfo"
+            android:tag="name"
+            android:text="ZATWIERDŹ" />
+    </LinearLayout>
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:id="@+id/levelModal"
+        android:gravity="center"
+        android:background="@drawable/modal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Podaj nowy poziom nauczania"
+            android:textAlignment="center"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:textColor="@color/primary"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/regular"/>
+
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="220dp"
+            android:layout_height="30dp"
+            android:background="@drawable/spinner"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.53"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.268" />
+
+        <Button
+            android:id="@+id/button8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeUserInfo"
+            android:tag="levelOfEdu"
+            android:text="ZATWIERDŹ" />
+    </LinearLayout>
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:id="@+id/musicModal"
+        android:gravity="center"
+        android:background="@drawable/modal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Podaj nowy ulubiony typ muzyki"
+            android:textAlignment="center"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:textColor="@color/primary"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/regular"/>
+
+        <Spinner
+            android:id="@+id/spinner3"
+            android:layout_width="220dp"
+            android:layout_height="30dp"
+            android:background="@drawable/spinner"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.53"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.268" />
+
+        <Button
+            android:id="@+id/button9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeUserInfo"
+            android:tag="favType"
+            android:text="ZATWIERDŹ" />
+    </LinearLayout>
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:id="@+id/themeModal"
+        android:gravity="center"
+        android:background="@drawable/modal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Zmień motyw"
+            android:textAlignment="center"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:textColor="@color/primary"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/regular"/>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.565"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            app:layout_constraintVertical_bias="0.291"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        <Button
+            android:id="@+id/button10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeUserInfo"
+            android:tag="theme"
+            android:text="ZATWIERDŹ" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_width="350dp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:layout_height="250dp"
+        android:orientation="vertical"
+        android:id="@+id/settingsModal"
+        android:background="@drawable/modal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:textSize="18sp"
+            android:layout_marginBottom="10dp"
+            android:text="Wyczyszczenie danych spowoduje także usunięcie statystyk i sprawdzianów."
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jesteś pewien?"
+            android:textAlignment="center"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/bold"/>
+
+        <Button
+            android:id="@+id/button6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="wipeData"
+            android:text="TAK, WYCZYŚĆ" />
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

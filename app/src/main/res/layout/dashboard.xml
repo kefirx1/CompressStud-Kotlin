@@ -1,0 +1,701 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--    android:layout_width="370dp"-->
+    <!--    android:layout_height="208dp"-->
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="370dp"
+        android:layout_height="208dp"
+        android:background="@drawable/section_background"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.191">
+
+        <LinearLayout
+            android:id="@+id/top3testWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:id="@+id/top3test2"
+                android:layout_width="105dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/white_button"
+                android:elevation="10dp"
+                android:gravity="center_vertical"
+                android:onClick="openLearnTestModal"
+                android:orientation="vertical"
+                android:tag="1">
+
+
+                <TextView
+                    android:id="@+id/top3test__first__dayNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/bold"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textColor="@color/primary"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/top3test__first__month"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/regular"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/top3test__first__lessonName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/top3test1"
+                android:layout_width="105dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/white_button"
+                android:elevation="10dp"
+                android:gravity="center_vertical"
+                android:onClick="openLearnTestModal"
+                android:orientation="vertical"
+                android:tag="0">
+
+                <TextView
+                    android:id="@+id/top3test__second__dayNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/bold"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textColor="@color/primary"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/top3test__second__month"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/regular"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/top3test__second__lessonName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/top3test3"
+                android:layout_width="105dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/white_button"
+                android:elevation="10dp"
+                android:gravity="center_vertical"
+                android:onClick="openLearnTestModal"
+                android:orientation="vertical"
+                android:tag="2">
+
+                <TextView
+                    android:id="@+id/top3test__third__dayNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/bold"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textColor="@color/primary"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/top3test__third__month"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/regular"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/top3test__third__lessonName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/noTestTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/bold"
+            android:text="Brak sprawdzianów"
+            android:textAlignment="center"
+            android:textSize="56px"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/openNewTestModal"
+            android:layout_width="348dp"
+            android:layout_height="43dp"
+            android:layout_marginStart="11dp"
+            android:layout_marginEnd="11dp"
+            android:background="@drawable/button"
+            android:fontFamily="@font/bold"
+            android:onClick="openAddNewTestModal"
+            android:text="DODAJ NOWY"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="370dp"
+        android:layout_height="270dp"
+        android:background="@drawable/section_background"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.78" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="293dp"
+        android:layout_marginBottom="173dp"
+        android:fontFamily="@font/regular"
+        android:text="Akcje"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView11"
+        app:layout_constraintEnd_toEndOf="@+id/textView11"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView11"
+        app:layout_constraintTop_toTopOf="@+id/textView11"
+        app:layout_constraintVertical_bias="0.181" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="411dp"
+        android:layout_height="70dp"
+        android:background="@drawable/footer_background"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/regular"
+        android:text="Made with passion by"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView13"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.023"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView13"
+        app:layout_constraintVertical_bias="0.191" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/regular"
+        android:text="SakubDev &amp; Kefirx"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView13"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.02"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView13"
+        app:layout_constraintVertical_bias="0.723" />
+
+    <LinearLayout
+        android:id="@+id/modal__learn"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@drawable/modal"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="setActiveLayout"
+            android:orientation="horizontal"
+            android:tag="dashboard2">
+
+            <info.androidhive.fontawesome.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fa_chevron_left_solid"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/primary"
+                android:textSize="40sp"
+                app:solid_icon="true"
+                tools:ignore="MissingClass" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/modal__lessonName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/bold"
+            android:text="MATEMATYKA"
+            android:textSize="35sp" />
+
+        <TextView
+            android:id="@+id/modal__topicName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:textAlignment="center"
+            android:text="FUNKCJA KWADRATOWA"
+            android:textColor="@color/primary"
+            android:textSize="22sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bold"
+            android:paddingVertical="10dp"
+            android:text="Termin:"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/modal__date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bold"
+            android:text="22 PAŹDZIERNIKA"
+            android:textColor="@color/primary"
+            android:textSize="26dp" />
+
+        <Button
+            android:id="@+id/startStudying"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="setActiveLayout"
+            android:tag="startStudying"
+            android:text="ROZPOCZNIJ NAUKĘ" />
+
+        <Button
+            android:id="@+id/deleteTestButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="deleteTest"
+            android:text="USUŃ SPRAWDZIAN" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="345dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="58dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginEnd="104dp"
+        android:layout_marginBottom="105dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/textView11"
+        app:layout_constraintEnd_toEndOf="@+id/textView11"
+        app:layout_constraintHorizontal_bias="0.325"
+        app:layout_constraintStart_toStartOf="@+id/textView11"
+        app:layout_constraintTop_toTopOf="@+id/textView11"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/white_button"
+            android:elevation="10dp"
+            android:onClick="setActiveLayout"
+            android:tag="calendar"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <info.androidhive.fontawesome.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="@string/fa_calendar_alt"
+                android:textColor="@color/primary"
+                android:textSize="50sp"
+                tools:ignore="MissingClass" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/regular"
+                android:text="Otwórz kalendarz" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="25dp"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/white_button"
+            android:elevation="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <info.androidhive.fontawesome.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="@string/fa_question_circle"
+                android:textColor="@color/primary"
+                android:textSize="50sp"
+                tools:ignore="MissingClass" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/regular"
+                android:text="Lorem" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="345dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="58dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginEnd="104dp"
+        android:layout_marginBottom="105dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/textView11"
+        app:layout_constraintEnd_toEndOf="@+id/textView11"
+        app:layout_constraintHorizontal_bias="0.325"
+        app:layout_constraintStart_toStartOf="@+id/textView11"
+        app:layout_constraintTop_toTopOf="@+id/textView11"
+        app:layout_constraintVertical_bias="6.0">
+
+        <LinearLayout
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/white_button"
+            android:onClick="setActiveLayout"
+            android:tag="statistics"
+            android:elevation="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <info.androidhive.fontawesome.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="@string/fa_chart_bar"
+                android:textColor="@color/primary"
+                android:textSize="50sp"
+                tools:ignore="MissingClass" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/regular"
+                android:text="Statystyki" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="25dp"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/white_button"
+            android:elevation="10dp"
+            android:gravity="center"
+            android:onClick="setActiveLayout"
+            android:orientation="vertical"
+            android:tag="settings">
+
+            <info.androidhive.fontawesome.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="@string/fa_cogs_solid"
+                android:textColor="@color/primary"
+                android:textSize="50sp"
+                app:solid_icon="true"
+                tools:ignore="MissingClass" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/regular"
+                android:text="Ustawienia" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/addNewTestModal"
+        android:layout_width="340dp"
+        android:layout_height="400dp"
+        android:background="@drawable/modal"
+        android:orientation="vertical"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/regular"
+            android:text="Przedmiot:"
+            android:textColor="@color/primary"
+            android:textSize="24dp" />
+
+        <Spinner
+            android:id="@+id/lessonsSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/spinner" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/regular"
+            android:text="Dział:"
+            android:textColor="@color/primary"
+            android:textSize="24dp" />
+
+        <Spinner
+            android:id="@+id/topicSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/spinner" />
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/regular"
+            android:text="Data:"
+            android:textColor="@color/primary"
+            android:textSize="24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <EditText
+                android:id="@+id/editTextDay"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/spinner"
+                android:ems="10"
+                android:inputType="number"
+                android:padding="3dp"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/editTextMonth"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/spinner"
+                android:ems="10"
+                android:inputType="number"
+                android:padding="3dp"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/editTextYear"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/spinner"
+                android:ems="10"
+                android:inputType="number"
+                android:padding="3dp"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/regular"
+            android:text="Przypomnienie:"
+            android:textColor="@color/primary"
+            android:textSize="24dp" />
+
+        <Spinner
+            android:id="@+id/notificationSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/spinner" />
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/regular"
+            android:text="Godzina przypominania:"
+            android:textColor="@color/primary"
+            android:textSize="24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editTextNumber"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/spinner"
+                android:ems="10"
+                android:inputType="number"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/bold"
+                android:text=":"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/editTextNumber2"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/spinner"
+                android:ems="10"
+                android:inputType="number"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/addNewTest"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button"
+            android:fontFamily="@font/bold"
+            android:onClick="loadDataNewTest"
+            android:text="DODAJ" />
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:onClick="hideAddNewTestModal"
+            android:text="ANULUJ" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:text="Witaj"
+            android:textSize="40sp" />
+
+        <TextView
+            android:id="@+id/userNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:layout_marginStart="10dp"
+            android:text="Jakub!"
+            android:textColor="@color/primary"
+            android:textSize="40sp" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

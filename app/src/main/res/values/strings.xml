@@ -1,3 +1,20 @@
 <resources>
-    <string name="app_name">CompressStud</string>
+    <string name="app_name">template</string>
+    
+    <string-array name="schoolLevels">
+        <item>Podstawowa</item>
+        <item>Średnia</item>
+    </string-array>
+    <string-array name="musicGenres">
+        <item>Muzyka klasyczna</item>
+        <item>Trap</item>
+        <item>Rap</item>
+        <item>Muzyka Elektroniczna</item>
+        <item>Rock</item>
+    </string-array>
+    <string-array name="notificationDelays">
+        <item>Codziennie</item>
+        <item>Co dwa dni</item>
+        <item>Dzień przed sprawdzianem</item>
+    </string-array>
 </resources>
