@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".SettingsActivity">
 
     <TextView
         android:id="@+id/textView8"
@@ -63,13 +64,11 @@
         app:layout_constraintVertical_bias="0.723" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/backToDashboardButton"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/bold"
         android:text="COFNIJ"
-        android:onClick="setActiveLayout"
-        android:tag="dashboard2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.943"
@@ -100,7 +99,6 @@
             android:fontFamily="@font/regular"
             android:textSize="24sp"
             android:text="Imię"
-            android:onClick="openNameModal"
             />
 
         <TextView
@@ -113,7 +111,6 @@
             android:background="@drawable/settings__option"
             android:fontFamily="@font/regular"
             android:textSize="24sp"
-            android:onClick="openLevelModal"
             android:text="Poziom nauczania" />
         <TextView
             android:id="@+id/openMusicModal"
@@ -125,7 +122,6 @@
             android:background="@drawable/settings__option"
             android:fontFamily="@font/regular"
             android:textSize="24sp"
-            android:onClick="openMusicModal"
             android:text="Preferencje muzyczne" />
         <TextView
             android:id="@+id/openThemeModal"
@@ -137,7 +133,6 @@
             android:background="@drawable/settings__option"
             android:fontFamily="@font/regular"
             android:textSize="24sp"
-            android:onClick="openThemeModal"
             android:text="Motyw" />
         <TextView
             android:id="@+id/openWarningModal"
@@ -149,7 +144,6 @@
             android:background="@drawable/settings__option"
             android:fontFamily="@font/regular"
             android:textSize="24sp"
-            android:onClick="openWideDataWarningModal"
             android:text="Wyczyść dane" />
     </LinearLayout>
     <LinearLayout
@@ -197,7 +191,6 @@
             android:id="@+id/button7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="changeUserInfo"
             android:tag="name"
             android:text="ZATWIERDŹ" />
     </LinearLayout>
@@ -242,7 +235,6 @@
             android:id="@+id/button8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="changeUserInfo"
             android:tag="levelOfEdu"
             android:text="ZATWIERDŹ" />
     </LinearLayout>
@@ -287,7 +279,6 @@
             android:id="@+id/button9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="changeUserInfo"
             android:tag="favType"
             android:text="ZATWIERDŹ" />
     </LinearLayout>
@@ -334,7 +325,6 @@
             android:id="@+id/button10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="changeUserInfo"
             android:tag="theme"
             android:text="ZATWIERDŹ" />
     </LinearLayout>
@@ -378,10 +368,7 @@
             android:id="@+id/button6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="wipeData"
             android:text="TAK, WYCZYŚĆ" />
     </LinearLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

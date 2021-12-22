@@ -18,4 +18,7 @@ interface UserDao {
     @Query("SELECT COUNT(name) FROM userTable")
     fun getUserCount(): Int
 
+    @Query("SELECT * FROM userTable")
+    fun getUserInfo(): User
+
 }

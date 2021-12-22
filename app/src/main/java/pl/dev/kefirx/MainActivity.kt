@@ -2,15 +2,17 @@ package pl.dev.kefirx
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import kotlinx.android.synthetic.main.activity_main.*
 import pl.dev.kefirx.databinding.ActivityMainBinding
-import pl.dev.kefirx.viewModel.UserViewModel
+import pl.dev.kefirx.viewModel.CSViewModel
 
 class MainActivity : AppCompatActivity() {
 
     companion object{
-        lateinit var viewModel: UserViewModel
+        lateinit var viewModel: CSViewModel
     }
 
     private lateinit var binding: ActivityMainBinding
@@ -23,14 +25,35 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider
             .AndroidViewModelFactory
             .getInstance(application)
-            .create(UserViewModel::class.java)
+            .create(CSViewModel::class.java)
 
+        if(viewModel.getUserCountAsync() <= 0) {
+            Log.e("TAG", "Create user")
+            val registerIntent = Intent(this, RegisterActivity::class.java).apply {}
+            startActivity(registerIntent)
+        }
 
-        val registerIntent = Intent(this, RegisterActivity::class.java).apply{}
-        startActivity(registerIntent)
+        setDashboardActuallyInfo()
 
-
-
-
+        //TODO - Change into binding
+        settingsButton.setOnClickListener{
+            Log.e("TAG", "Go to settings")
+            val settingsIntent = Intent(this, SettingsActivity::class.java).apply {}
+            startActivity(settingsIntent)
+        }
+        statisticsButton.setOnClickListener{
+            Log.e("TAG", "Go to statistics")
+            val statisticsIntent = Intent(this, StatisticsActivity::class.java).apply {}
+            startActivity(statisticsIntent)
+        }
     }
+
+
+
+    private fun setDashboardActuallyInfo(){
+        val name = viewModel.getUserInfoAsync().name + " !"
+        userNameTextView.text = name
+    }
+
+
 }
