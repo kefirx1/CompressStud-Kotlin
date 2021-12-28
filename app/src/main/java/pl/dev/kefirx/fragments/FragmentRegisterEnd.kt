@@ -33,8 +33,6 @@ class FragmentRegisterEnd : Fragment() {
 
         MainActivity.viewModel.insertUser(user)
 
-        println(MainActivity.viewModel.getUserCountAsync())
-
         endRegisterButton.setOnClickListener{
             this.activity?.finish()
         }

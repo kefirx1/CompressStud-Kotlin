@@ -1,6 +1,7 @@
 package pl.dev.kefirx.room
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import kotlinx.coroutines.*
 
 
@@ -25,10 +26,8 @@ class CSRepository (application: Application) {
     fun deleteUser(user: User) = CoroutineScope(Dispatchers.IO).launch {
         userDao.delete(user)
     }
-    fun getUserCountAsync():  Deferred<Int> =
-        CoroutineScope(Dispatchers.IO).async {
-            userDao.getUserCount()
-        }
+    fun getUserCountAsync(): Int = userDao.getUserCount()
+
     fun getUserInfoAsync(): Deferred<User> =
         CoroutineScope(Dispatchers.IO).async {
             userDao.getUserInfo()

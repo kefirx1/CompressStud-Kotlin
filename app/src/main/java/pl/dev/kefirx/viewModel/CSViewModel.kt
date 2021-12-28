@@ -2,7 +2,9 @@ package pl.dev.kefirx.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import pl.dev.kefirx.room.User
 import pl.dev.kefirx.room.CSRepository
@@ -15,12 +17,10 @@ class CSViewModel(application: Application) : AndroidViewModel(application) {
     private var CSRepository: CSRepository = CSRepository(application)
     var id: Int = 0
 
-    fun idSetter(id: Int){
+    private fun idSetter(id: Int){
         this.id = id
     }
 
-    private var userCount: Deferred<Int> =
-        CSRepository.getUserCountAsync()
     private var userInfo: Deferred<User> =
         CSRepository.getUserInfoAsync()
     fun insertUser(user:User){
@@ -32,9 +32,9 @@ class CSViewModel(application: Application) : AndroidViewModel(application) {
     fun deleteUser(user:User){
         CSRepository.deleteUser(user)
     }
-    fun getUserCountAsync(): Int = runBlocking {
-        userCount.await()
-    }
+
+    fun getUserCountAsync(): Int = CSRepository.getUserCountAsync()
+
     fun getUserInfoAsync(): User = runBlocking {
         userInfo.await()
     }
