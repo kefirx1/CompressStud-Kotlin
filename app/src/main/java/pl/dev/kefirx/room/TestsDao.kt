@@ -20,6 +20,8 @@ interface TestsDao {
     @Query("SELECT * FROM testsTable WHERE test_id=:id")
     fun getTestByIdInfo(id: Int): Tests
 
+    @Query("DELETE FROM testsTable")
+    fun deleteAllTests()
 
 
 

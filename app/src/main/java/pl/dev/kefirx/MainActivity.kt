@@ -4,15 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_main.*
 import pl.dev.kefirx.databinding.ActivityMainBinding
+import pl.dev.kefirx.room.CSDatabase
+import pl.dev.kefirx.room.User
 import pl.dev.kefirx.viewModel.CSViewModel
 
 class MainActivity : AppCompatActivity() {
 
     companion object{
         lateinit var viewModel: CSViewModel
+
     }
 
     private lateinit var binding: ActivityMainBinding
@@ -21,17 +25,23 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
+    }
 
-        viewModel = ViewModelProvider
-            .AndroidViewModelFactory
-            .getInstance(application)
-            .create(CSViewModel::class.java)
+    override fun onStart() {
+        super.onStart()
 
+        println(123456789)
+
+
+        createNewInstance()
         if(viewModel.getUserCountAsync() <= 0) {
             Log.e("TAG", "Create user")
             val registerIntent = Intent(this, RegisterActivity::class.java).apply {}
             startActivity(registerIntent)
         }
+        CSDatabase.deleteInstanceOfDatabase()
+
+        println("Tutaj to")
 
         setDashboardActuallyInfo()
 
@@ -46,13 +56,23 @@ class MainActivity : AppCompatActivity() {
             val statisticsIntent = Intent(this, StatisticsActivity::class.java).apply {}
             startActivity(statisticsIntent)
         }
+
     }
 
 
 
     private fun setDashboardActuallyInfo(){
-        val name = viewModel.getUserInfoAsync().name + " !"
+        createNewInstance()
+        val name = viewModel.getUserInfoAsync().name + "!"
         userNameTextView.text = name
+        CSDatabase.deleteInstanceOfDatabase()
+    }
+
+    fun createNewInstance(){
+        viewModel = ViewModelProvider
+            .AndroidViewModelFactory
+            .getInstance(application)
+            .create(CSViewModel::class.java)
     }
 
 

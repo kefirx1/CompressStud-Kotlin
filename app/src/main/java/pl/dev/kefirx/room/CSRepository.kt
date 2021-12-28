@@ -33,6 +33,9 @@ class CSRepository (application: Application) {
         CoroutineScope(Dispatchers.IO).async {
             userDao.getUserInfo()
         }
+    fun deleteAllUserInfo() = CoroutineScope(Dispatchers.IO).launch {
+        userDao.deleteAllUserInfo()
+    }
 
 
     fun insertTest(tests: Tests) = CoroutineScope(Dispatchers.IO).launch {
@@ -52,4 +55,7 @@ class CSRepository (application: Application) {
         CoroutineScope(Dispatchers.IO).async {
             testsDao.getTestByIdInfo(id)
         }
+    fun deleteAllTests() = CoroutineScope(Dispatchers.IO).launch {
+        testsDao.deleteAllTests()
+    }
 }

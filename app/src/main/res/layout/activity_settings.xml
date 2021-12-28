@@ -98,9 +98,7 @@
             android:background="@drawable/settings__option"
             android:fontFamily="@font/regular"
             android:textSize="24sp"
-            android:text="Imię"
-            />
-
+            android:text="Imię" />
         <TextView
             android:id="@+id/openLevelModal"
             android:layout_width="match_parent"
@@ -336,7 +334,7 @@
         android:gravity="center"
         android:layout_height="250dp"
         android:orientation="vertical"
-        android:id="@+id/settingsModal"
+        android:id="@+id/wipeDataModal"
         android:background="@drawable/modal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -365,7 +363,7 @@
             android:fontFamily="@font/bold"/>
 
         <Button
-            android:id="@+id/button6"
+            android:id="@+id/wipeDataButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TAK, WYCZYŚĆ" />

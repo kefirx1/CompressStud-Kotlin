@@ -38,6 +38,9 @@ class CSViewModel(application: Application) : AndroidViewModel(application) {
     fun getUserInfoAsync(): User = runBlocking {
         userInfo.await()
     }
+    fun deleteAllUserInfo(){
+        CSRepository.deleteAllUserInfo()
+    }
 
 
     private var allTestsInfo: Deferred<List<Tests>> =
@@ -59,6 +62,9 @@ class CSViewModel(application: Application) : AndroidViewModel(application) {
     fun getTestByIdInfoAsync(id: Int): Tests = runBlocking {
         idSetter(id)
         testByIdInfo.await()
+    }
+    fun deleteAllTests(){
+        CSRepository.deleteAllTests()
     }
 
 

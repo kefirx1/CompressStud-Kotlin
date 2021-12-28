@@ -2,6 +2,7 @@ package pl.dev.kefirx
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_settings.*
 import pl.dev.kefirx.databinding.ActivitySettingsBinding
@@ -18,6 +19,18 @@ class SettingsActivity : AppCompatActivity() {
         backToDashboardButton.setOnClickListener{
             this.finish()
         }
+
+        openWarningModal.setOnClickListener{
+            wipeDataModal.visibility = VISIBLE
+
+            wipeDataButton.setOnClickListener{
+                MainActivity.viewModel.deleteAllTests()
+                MainActivity.viewModel.deleteAllUserInfo()
+                this.finish()
+            }
+        }
+
+
     }
 
 }
