@@ -41,18 +41,7 @@ class MainActivity : AppCompatActivity() {
         }else{
 
             setDashboardActuallyInfo()
-
-            //TODO - Change into binding
-            settingsButton.setOnClickListener{
-                Log.e("TAG", "Go to settings")
-                val settingsIntent = Intent(this, SettingsActivity::class.java).apply {}
-                startActivity(settingsIntent)
-            }
-            statisticsButton.setOnClickListener{
-                Log.e("TAG", "Go to statistics")
-                val statisticsIntent = Intent(this, StatisticsActivity::class.java).apply {}
-                startActivity(statisticsIntent)
-            }
+            setListeners()
 
         }
 
@@ -63,6 +52,20 @@ class MainActivity : AppCompatActivity() {
     private fun setDashboardActuallyInfo(){
         val name = viewModel.getUserInfoAsync().name + "!"
         userNameTextView.text = name
+    }
+
+    private fun setListeners(){
+        //TODO - Change into binding
+        settingsButton.setOnClickListener{
+            Log.e("TAG", "Go to settings")
+            val settingsIntent = Intent(this, SettingsActivity::class.java).apply {}
+            startActivity(settingsIntent)
+        }
+        statisticsButton.setOnClickListener{
+            Log.e("TAG", "Go to statistics")
+            val statisticsIntent = Intent(this, StatisticsActivity::class.java).apply {}
+            startActivity(statisticsIntent)
+        }
     }
 
 
