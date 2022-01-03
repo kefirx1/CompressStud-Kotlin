@@ -3,6 +3,7 @@ package pl.dev.kefirx
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_main.*
@@ -68,6 +69,14 @@ class MainActivity : AppCompatActivity() {
             Log.e("TAG", "Go to calendar")
             val calendarIntent = Intent(this, CalendarActivity::class.java)
             startActivity(calendarIntent)
+        }
+        openNewTestModalButton.setOnClickListener{
+            addNewTestModal.visibility = View.VISIBLE
+
+            cancelNewTestButton.setOnClickListener{
+                addNewTestModal.visibility = View.GONE
+            }
+
         }
     }
 

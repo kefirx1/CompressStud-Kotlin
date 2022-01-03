@@ -167,7 +167,7 @@
             android:visibility="gone" />
 
         <Button
-            android:id="@+id/openNewTestModal"
+            android:id="@+id/openNewTestModalButton"
             android:layout_width="348dp"
             android:layout_height="43dp"
             android:layout_marginStart="11dp"
@@ -640,23 +640,20 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/addNewTest"
+            android:id="@+id/addNewTestButton"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/button"
             android:fontFamily="@font/bold"
-            android:onClick="loadDataNewTest"
             android:text="DODAJ" />
 
         <Button
-            android:id="@+id/cancelButton"
+            android:id="@+id/cancelNewTestButton"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:onClick="hideAddNewTestModal"
             android:text="ANULUJ" />
-
     </LinearLayout>
 
     <LinearLayout
