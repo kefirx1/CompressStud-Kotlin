@@ -77,6 +77,22 @@ class MainActivity : AppCompatActivity() {
                 addNewTestModal.visibility = View.GONE
             }
 
+            timeOfNotificationTimePicker.setIs24HourView(true)
+
+            addNewTestButton.setOnClickListener{
+                //val lesson = lessonsSpinner.selectedItem.toString()
+                //val topic = topicSpinner.selectedItem.toString()
+                val testDate = testDatePicker.dayOfMonth.toString() + "/" + (testDatePicker.month+1).toString() + "/" + testDatePicker.year.toString()
+                val reminder = notificationSpinner.selectedItem.toString()
+                val remindersH = timeOfNotificationTimePicker.hour.toString()
+                val remindersM = timeOfNotificationTimePicker.minute.toString()
+
+                println( testDate + reminder )
+
+            }
+
+
+
         }
     }
 
