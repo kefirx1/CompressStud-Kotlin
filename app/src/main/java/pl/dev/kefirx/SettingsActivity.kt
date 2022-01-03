@@ -94,7 +94,7 @@ class SettingsActivity : AppCompatActivity() {
 
     }
 
-    fun setGoneToAllModals(){
+    private fun setGoneToAllModals(){
         wipeDataModal.visibility = View.GONE
         nameModal.visibility = View.GONE
         levelModal.visibility = View.GONE

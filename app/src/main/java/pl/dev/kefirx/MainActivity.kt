@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         if(viewModel.getUserCountAsync() <= 0) {
             Log.e("TAG", "Create user")
-            val registerIntent = Intent(this, RegisterActivity::class.java).apply {}
+            val registerIntent = Intent(this, RegisterActivity::class.java)
             startActivity(registerIntent)
         }else{
 
@@ -44,10 +44,8 @@ class MainActivity : AppCompatActivity() {
             setListeners()
 
         }
-
-
-
     }
+
 
     private fun setDashboardActuallyInfo(){
         val name = viewModel.getUserInfoAsync().name + "!"
@@ -58,13 +56,18 @@ class MainActivity : AppCompatActivity() {
         //TODO - Change into binding
         settingsButton.setOnClickListener{
             Log.e("TAG", "Go to settings")
-            val settingsIntent = Intent(this, SettingsActivity::class.java).apply {}
+            val settingsIntent = Intent(this, SettingsActivity::class.java)
             startActivity(settingsIntent)
         }
         statisticsButton.setOnClickListener{
             Log.e("TAG", "Go to statistics")
-            val statisticsIntent = Intent(this, StatisticsActivity::class.java).apply {}
+            val statisticsIntent = Intent(this, StatisticsActivity::class.java)
             startActivity(statisticsIntent)
+        }
+        calendarButton.setOnClickListener{
+            Log.e("TAG", "Go to calendar")
+            val calendarIntent = Intent(this, CalendarActivity::class.java)
+            startActivity(calendarIntent)
         }
     }
 

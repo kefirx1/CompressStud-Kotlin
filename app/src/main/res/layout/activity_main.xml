@@ -356,6 +356,7 @@
             android:elevation="10dp"
             android:tag="calendar"
             android:gravity="center"
+            android:id="@+id/calendarButton"
             android:orientation="vertical">
 
             <info.androidhive.fontawesome.FontTextView

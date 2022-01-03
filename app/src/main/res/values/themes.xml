@@ -24,4 +24,13 @@
         <item name="inputBackground">@color/gray</item>
         <item name="settingsOption">@color/white</item>
     </style>
+
+    <style name="Theme.CompressStud.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.CompressStud.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.CompressStud.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
