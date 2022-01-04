@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
@@ -13,7 +14,14 @@ import kotlinx.android.synthetic.main.activity_main.*
 import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.json.GetJSONString
 import pl.dev.kefirx.json.ListOfTopicsJSON
+import pl.dev.kefirx.room.Tests
 import pl.dev.kefirx.viewModel.CSViewModel
+import java.sql.Timestamp
+import java.time.Instant
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,6 +59,7 @@ class MainActivity : AppCompatActivity() {
 
             setDashboardActuallyInfo()
             setListeners()
+            viewModel.getThreeExams().forEach(){ println(it)}
 
         }
     }
@@ -81,6 +90,11 @@ class MainActivity : AppCompatActivity() {
         topicsList.remove(lesson)
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, topicsList)
         topicSpinner.adapter = adapter
+    }
+
+    private fun newTestModalReset(){
+        addNewTestModal.visibility = View.GONE
+        onResume()
     }
 
     private fun setListeners(){
@@ -114,7 +128,6 @@ class MainActivity : AppCompatActivity() {
                 lessonsSpinner.adapter = adapter
             }
 
-
             lessonsSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
@@ -124,34 +137,43 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     setTopicSpinner(levelOfEdu)
                 }
-
                 override fun onNothingSelected(parent: AdapterView<*>?) {
-                    TODO("Not yet implemented")
                 }
-
             }
 
-
-
-
             cancelNewTestButton.setOnClickListener{
-                addNewTestModal.visibility = View.GONE
+                newTestModalReset()
             }
 
             timeOfNotificationTimePicker.setIs24HourView(true)
 
 
             addNewTestButton.setOnClickListener{
-                //val lesson = lessonsSpinner.selectedItem.toString()
-                //val topic = topicSpinner.selectedItem.toString()
-                val testDate = testDatePicker.dayOfMonth.toString() + "/" + (testDatePicker.month+1).toString() + "/" + testDatePicker.year.toString()
-                val reminder = notificationSpinner.selectedItem.toString()
-                val remindersH = timeOfNotificationTimePicker.hour.toString()
-                val remindersM = timeOfNotificationTimePicker.minute.toString()
+                val lesson = lessonsSpinner.selectedItem.toString()
+                val topic = topicSpinner.selectedItem.toString()
+                val dateOfExamLocalDate = LocalDate.of(testDatePicker.year, testDatePicker.month+1, testDatePicker.dayOfMonth)
 
+                //val date = java.time.format.DateTimeFormatter.ISO_INSTANT
+              //      .format(java.time.Instant.ofEpochSecond(dateOfExamLocalDate.toEpochDay()*86400L))
+
+                val dateOfExam = dateOfExamLocalDate.toEpochDay()*86400L
+                var reminder = 0
+                val timeOfRemindH = timeOfNotificationTimePicker.hour.toString()
+                val timeOfRemindM = timeOfNotificationTimePicker.minute.toString()
+                val timeOfLearning = 0
+                val watchedVideos = 0
+
+                when(notificationSpinner.selectedItem.toString()){
+                    "Codziennie" -> reminder = 1
+                    "Co dwa dni" -> reminder = 2
+                    "Dzień przed sprawdzianem" -> reminder = 3
+                }
+
+                viewModel.insertTest(Tests(lesson, topic, dateOfExam, timeOfLearning, watchedVideos, reminder, timeOfRemindH, timeOfRemindM))
+                Log.e("TAG", "Insert test")
+                Toast.makeText(this, "Dodano sprawdzian", Toast.LENGTH_SHORT).show()
+                newTestModalReset()
             }
-
-
 
         }
     }

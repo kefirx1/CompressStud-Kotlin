@@ -2,13 +2,16 @@ package pl.dev.kefirx.room
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
+import java.time.LocalDate
 
 
 @Entity(tableName = "testsTable")
 data class Tests(
     var lesson: String,
     var topic: String,
-    var dateOfExam: String,
+    var dateOfExam: Long,
     var timeOfLearning: Int,
     var watchedVideos: Int,
     var reminder: Int,     //0 - off / 1 - everyday / 2 - every second day / 3 - day before

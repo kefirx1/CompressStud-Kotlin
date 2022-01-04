@@ -23,6 +23,9 @@ interface TestsDao {
     @Query("DELETE FROM testsTable")
     fun deleteAllTests()
 
+    @Query("SELECT * FROM testsTable ORDER BY dateOfExam LIMIT 3")
+    fun getThreeExams(): List<Tests>
+
 
 
 }

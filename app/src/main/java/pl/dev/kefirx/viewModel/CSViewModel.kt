@@ -66,6 +66,7 @@ class CSViewModel(application: Application) : AndroidViewModel(application) {
     fun deleteAllTests(){
         CSRepository.deleteAllTests()
     }
+    fun getThreeExams(): List<Tests> = CSRepository.getThreeExams()
 
 
 

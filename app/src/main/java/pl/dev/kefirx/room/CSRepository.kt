@@ -57,4 +57,5 @@ class CSRepository (application: Application) {
     fun deleteAllTests() = CoroutineScope(Dispatchers.IO).launch {
         testsDao.deleteAllTests()
     }
+    fun getThreeExams(): List<Tests> = testsDao.getThreeExams()
 }
