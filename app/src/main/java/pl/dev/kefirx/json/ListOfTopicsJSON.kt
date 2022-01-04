@@ -1,6 +1,6 @@
 package pl.dev.kefirx.json
 
 data class ListOfTopicsJSON(
-    val Podstawowa: Podstawowa,
-    val Średnia: Średnia
+    val Podstawowa: List<List<String>>,
+    val Srednia: List<List<String>>
 )

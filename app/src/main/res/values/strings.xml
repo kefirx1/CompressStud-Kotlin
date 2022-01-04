@@ -17,6 +17,44 @@
         <item>Co dwa dni</item>
         <item>Dzień przed sprawdzianem</item>
     </string-array>
+    <string-array name="listOfPrimaryLessons">
+        <item>"Język polski"</item>
+        <item>"Język angielski"</item>
+        <item>"Język niemiecki"</item>
+        <item>"Muzyka"</item>
+        <item>"Plastyka"</item>
+        <item>"Historia"</item>
+        <item>"WOS"</item>
+        <item>"Przyroda"</item>
+        <item>"Geografia"</item>
+        <item>"Biologia"</item>
+        <item>"Chemia"</item>
+        <item>"Fizyka"</item>
+        <item>"Matematyka"</item>
+        <item>"Informatyka"</item>
+        <item>"EDB"</item>
+    </string-array>
+    <string-array name="listOfHighLessons">
+        <item>"Język polski"</item>
+        <item>"Język angielski"</item>
+        <item>"Język niemiecki"</item>
+        <item>"Filozofia"</item>
+        <item>"Język łaciński"</item>
+        <item>"Historia muzyki"</item>
+        <item>"Historia tańca"</item>
+        <item>"Historia sztuki"</item>
+        <item>"Historia"</item>
+        <item>"WOS"</item>
+        <item>"Geografia"</item>
+        <item>"Podstawy przedsiębiorczości"</item>
+        <item>"Biologia"</item>
+        <item>"Chemia"</item>
+        <item>"Fizyka"</item>
+        <item>"Matematyka"</item>
+        <item>"Informatyka"</item>
+        <item>"EDB"</item>
+    </string-array>
+
     <string name="title_activity_calendar">CalendarActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>

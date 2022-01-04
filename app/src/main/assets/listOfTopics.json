@@ -1,6 +1,7 @@
 {
-  "Podstawowa": {
-    "Język_polski": [
+  "Podstawowa": [
+    [
+      "Język polski",
       "Pisownia wyrazów `ó`, `u`",
       "Pisownia wyrazów wielką literą",
       "Pisownia `nie` z różnymi częściami mowy",
@@ -121,65 +122,80 @@
       "Kochanowski, fraszki",
       "Kochanowski, `Treny`"
     ],
-    "Język_angielski": [
+    [
+      "Język angielski",
       "Present simple",
       "Past simple"
     ],
-    "Język_niemiecki": [
+    [
+      "Język niemiecki",
       "Czas przeszły",
       "Liczebniki"
     ],
-    "Muzyka": [
+    [
+      "Muzyka",
       "Nuty",
       "Zapis na pięciolinii"
     ],
-    "Plastyka": [
+    [
+      "Plastyka",
       "Malarstwo średniowiecza",
       "Malarstwo renesansu"
     ],
-    "Historia": [
+    [
+      "Historia",
       "Ewolucja człowieka",
       "Mezopotamia"
     ],
-    "WOS": [
+    [
+      "WOS",
       "Grupy społeczne",
       "Konstytucja"
     ],
-    "Przyroda": [
+    [
+      "Przyroda",
       "Zmysły człowieka",
       "Zasady higieny"
     ],
-    "Geografia": [
+    [
+      "Geografia",
       "Rodzaje skał",
       "Królestwa w przyrodzie"
     ],
-    "Biologia": [
+    [
+      "Biologia",
       "Układ krwionośny człowieka",
       "Układ pokarmowy człowieka"
     ],
-    "Chemia": [
+    [
+      "Chemia",
       "Związki chemiczne",
       "Pierwiastki chemiczne"
     ],
-    "Fizyka": [
+    [
+      "Fizyka",
       "Energia kinetyczna",
       "Cykl wody"
     ],
-    "Matematyka": [
+    [
+      "Matematyka",
       "Potęgi",
       "Ułamki"
     ],
-    "Informatyka": [
+    [
+      "Informatyka",
       "Word podstawy",
       "GIMP podstawy"
     ],
-    "EDB": [
+    [
+      "EDB",
       "Rodzaje złamań",
       "Pierwsza pomoc"
     ]
-  },
-  "Średnia": {
-    "Język_polski": [
+  ],
+  "Srednia": [
+    [
+      "Język polski",
       "Starożytność",
       "Filozofia w starożytności",
       "Sztuka starożytności",
@@ -318,7 +334,8 @@
       "Ironia",
       "Interpretacja porównawcza"
     ],
-    "Język_angielski": [
+    [
+      "Język angielski",
       "Tryb rozkazujący",
       "Czasownik be oraz have got",
       "Czasowniki posiłkowe: be, have, do",
@@ -356,71 +373,87 @@
       "Ogłoszenie",
       "Rozprawka"
     ],
-    "Język_niemiecki": [
+    [
+      "Język niemiecki",
       "Czasowniki kommen i wohnnen",
       "Czasownik nieregularny sein"
     ],
-    "Filozofia": [
+    [
+      "Filozofia",
       "Początki filozofii",
       "Grecy, początek nauki",
       "Sceptycyzm"
     ],
-    "Język_łaciński": [
+    [
+      "Język łaciński",
       "Czasowniki w łacinie"
     ],
-    "Historia_muzyki": [
+    [
+      "Historia muzyki",
       "Starożytna muzyka",
       "Średniowieczna muzyka"
     ],
-    "Historia_tańca": [
+    [
+      "Historia tańca",
       "Taniec w Polsce",
       "Taniec w starożytności"
     ],
-    "Historia_sztuki": [
+    [
+      "Historia sztuki",
       "Sztuka średniowiecza",
       "Sztuka starożytności"
     ],
-    "Historia": [
+    [
+      "Historia",
       "Rozbicie dzielnicowe",
       "II Wojna światowa"
     ],
-    "WOS": [
+    [
+      "WOS",
       "Społeczeństwo",
       "Wybory"
     ],
-    "Geografia": [
+    [
+      "Geografia",
       "Geografia Afryki",
       "Rodzaje skał"
     ],
-    "Podstawy_przedsiębiorczości": [
+    [
+      "Podstawy przedsiębiorczości",
       "Popyt i podaż",
       "Rzecznik praw konsumenta"
     ],
-    "Biologia": [
+    [
+      "Biologia",
       "Układ krwionośny człowieka",
       "Układ pokarmowy człowieka"
     ],
-    "Chemia": [
+    [
+      "Chemia",
       "Kwasy",
       "Sole"
     ],
-    "Fizyka": [
+    [
+      "Fizyka",
       "Układ słoneczny",
       "Termodynamika"
     ],
-    "Matematyka": [
+    [
+      "Matematyka",
       "Funkcja liniowa",
       "Funkcja kwadratowa",
       "Funkcja wymierna"
     ],
-    "Informatyka": [
+    [
+      "Informatyka",
       "Access",
       "Relacje baz danych",
       "Excel"
     ],
-    "EDB": [
+    [
+      "EDB",
       "Pierwsza pomoc",
       "Rodzaje urazów"
     ]
-  }
+  ]
 }
