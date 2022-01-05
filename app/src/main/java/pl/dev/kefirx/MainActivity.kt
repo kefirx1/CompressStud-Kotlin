@@ -16,12 +16,9 @@ import pl.dev.kefirx.json.GetJSONString
 import pl.dev.kefirx.json.ListOfTopicsJSON
 import pl.dev.kefirx.room.Tests
 import pl.dev.kefirx.viewModel.CSViewModel
-import java.sql.Timestamp
 import java.time.Instant
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.*
-import kotlin.collections.ArrayList
+import java.time.ZoneId
 
 class MainActivity : AppCompatActivity() {
 
@@ -56,32 +53,124 @@ class MainActivity : AppCompatActivity() {
             val registerIntent = Intent(this, RegisterActivity::class.java)
             startActivity(registerIntent)
         }else{
-
+            hideAllModals()
             setDashboardActuallyInfo()
             setListeners()
-            viewModel.getThreeExams().forEach(){ println(it)}
+            viewModel.getThreeExams().forEach{ println(it)}
 
         }
     }
+    
 
 
     private fun setDashboardActuallyInfo(){
         val name = viewModel.getUserInfoAsync().name + "!"
         userNameTextView.text = name
+
+        checkActuallyDashboardTests()
+
     }
+
+    private fun checkActuallyDashboardTests(){
+
+        val listOfThreeTests = viewModel.getThreeExams()
+
+        fun setTestsNull(){
+            top3test__first__dayNumber.text = ""
+            top3test__second__dayNumber.text = ""
+            top3test__third__dayNumber.text = ""
+            top3test__first__month.text = ""
+            top3test__second__month.text = ""
+            top3test__third__month.text = ""
+            top3test__first__lessonName.text = ""
+            top3test__second__lessonName.text = ""
+            top3test__third__lessonName.text = ""
+        }
+
+        fun setTestOne(){
+
+            val dateLong1 = listOfThreeTests[0].dateOfExam
+            val  dateLocalDate1  = Instant.ofEpochSecond(dateLong1)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate()
+
+            top3test__second__dayNumber.text = dateLocalDate1.dayOfMonth.toString()
+            top3test__second__month.text = Convert.monthMap[dateLocalDate1.monthValue.toString()]
+            top3test__second__lessonName.text = listOfThreeTests[0].lesson
+        }
+
+        fun setTestsTwo(){
+
+            val dateLong1 = listOfThreeTests[0].dateOfExam
+            val  dateLocalDate1  = Instant.ofEpochSecond(dateLong1)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate()
+            val dateLong2 = listOfThreeTests[1].dateOfExam
+            val  dateLocalDate2  = Instant.ofEpochSecond(dateLong2)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate()
+
+            top3test__second__dayNumber.text = dateLocalDate1.dayOfMonth.toString()
+            top3test__second__month.text = Convert.monthMap[dateLocalDate1.monthValue.toString()]
+            top3test__second__lessonName.text = listOfThreeTests[0].lesson
+            top3test__first__dayNumber.text = dateLocalDate2.dayOfMonth.toString()
+            top3test__first__month.text = Convert.monthMap[dateLocalDate2.monthValue.toString()]
+            top3test__first__lessonName.text = listOfThreeTests[1].lesson
+
+        }
+
+        fun setTestsThree(){
+
+            val dateLong1 = listOfThreeTests[0].dateOfExam
+            val  dateLocalDate1  = Instant.ofEpochSecond(dateLong1)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate()
+            val dateLong2 = listOfThreeTests[1].dateOfExam
+            val  dateLocalDate2  = Instant.ofEpochSecond(dateLong2)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate()
+            val dateLong3 = listOfThreeTests[2].dateOfExam
+            val  dateLocalDate3  = Instant.ofEpochSecond(dateLong3)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate()
+
+            top3test__second__dayNumber.text = dateLocalDate1.dayOfMonth.toString()
+            top3test__second__month.text = Convert.monthMap[dateLocalDate1.monthValue.toString()]
+            top3test__second__lessonName.text = listOfThreeTests[0].lesson
+            top3test__first__dayNumber.text = dateLocalDate2.dayOfMonth.toString()
+            top3test__first__month.text = Convert.monthMap[dateLocalDate2.monthValue.toString()]
+            top3test__first__lessonName.text = listOfThreeTests[1].lesson
+            top3test__third__dayNumber.text = dateLocalDate3.dayOfMonth.toString()
+            top3test__third__month.text = Convert.monthMap[dateLocalDate3.monthValue.toString()]
+            top3test__third__lessonName.text = listOfThreeTests[2].lesson
+
+        }
+
+        when(listOfThreeTests.size){
+            0 -> setTestsNull()
+
+            1 -> setTestOne()
+
+            2 -> setTestsTwo()
+
+            3 -> setTestsThree()
+        }
+
+    }
+
 
     private fun setTopicSpinner(levelOfEdu: String){
         val lesson = lessonsSpinner.selectedItem.toString()
         var topicsList: ArrayList<String> = ArrayList()
 
         if(levelOfEdu == "Podstawowa") {
-            listOfTopicsObject.Podstawowa.forEach(){
+            listOfTopicsObject.Podstawowa.forEach{
                 if(it[0] == lesson) {
                     topicsList = it as ArrayList<String>
                 }
             }
         }else if(levelOfEdu == "Średnia"){
-            listOfTopicsObject.Srednia.forEach(){
+            listOfTopicsObject.Srednia.forEach{
                 if(it[0] == lesson) {
                     topicsList = it as ArrayList<String>
                 }
@@ -90,6 +179,10 @@ class MainActivity : AppCompatActivity() {
         topicsList.remove(lesson)
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, topicsList)
         topicSpinner.adapter = adapter
+    }
+
+    private fun hideAllModals(){
+        addNewTestModal.visibility = View.GONE
     }
 
     private fun newTestModalReset(){

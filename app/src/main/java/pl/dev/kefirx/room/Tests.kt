@@ -2,9 +2,6 @@ package pl.dev.kefirx.room
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
-import androidx.room.TypeConverters
-import java.time.LocalDate
 
 
 @Entity(tableName = "testsTable")
