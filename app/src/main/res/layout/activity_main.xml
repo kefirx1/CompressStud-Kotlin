@@ -253,7 +253,7 @@
         app:layout_constraintVertical_bias="0.723" />
 
     <LinearLayout
-        android:id="@+id/modal__learn"
+        android:id="@+id/learnModal"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:padding="10dp"
@@ -262,7 +262,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:paddingHorizontal="10dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -274,6 +274,7 @@
             android:orientation="horizontal">
 
             <info.androidhive.fontawesome.FontTextView
+                android:id="@+id/learnModalBackButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/fa_chevron_left_solid"
@@ -285,7 +286,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/modal__lessonName"
+            android:id="@+id/modalLessonName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -294,7 +295,7 @@
             android:textSize="35sp" />
 
         <TextView
-            android:id="@+id/modal__topicName"
+            android:id="@+id/modalTopicName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/regular"
@@ -312,7 +313,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/modal__date"
+            android:id="@+id/modalDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/bold"

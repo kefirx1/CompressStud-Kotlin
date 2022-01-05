@@ -39,7 +39,6 @@ class MainActivity : AppCompatActivity() {
         listOfTopicsObject  = gson.fromJson(getJSONString.getJsonStringFromAssets(applicationContext, LIST_OF_TOPICS_PATH), ListOfTopicsJSON::class.java)
     }
 
-
     override fun onResume() {
         super.onResume()
 
@@ -60,7 +59,6 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
-    
 
 
     private fun setDashboardActuallyInfo(){
@@ -72,6 +70,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkActuallyDashboardTests(){
+
+        learnModalBackButton.setOnClickListener{
+            learnModal.visibility = View.GONE
+        }
 
         val listOfThreeTests = viewModel.getThreeExams()
 
@@ -87,6 +89,8 @@ class MainActivity : AppCompatActivity() {
             top3test__third__lessonName.text = ""
         }
 
+        //TODO - refactoring of repeating lines
+
         fun setTestOne(){
 
             val dateLong1 = listOfThreeTests[0].dateOfExam
@@ -97,6 +101,16 @@ class MainActivity : AppCompatActivity() {
             top3test__second__dayNumber.text = dateLocalDate1.dayOfMonth.toString()
             top3test__second__month.text = Convert.monthMap[dateLocalDate1.monthValue.toString()]
             top3test__second__lessonName.text = listOfThreeTests[0].lesson
+
+            top3test1.setOnClickListener{
+                hideAllModals()
+                learnModal.visibility = View.VISIBLE
+                modalLessonName.text = listOfThreeTests[0].lesson.uppercase()
+                modalTopicName.text = listOfThreeTests[0].topic.uppercase()
+                modalDate.text = StringBuilder(dateLocalDate1.dayOfMonth.toString()
+                        + " " + Convert.monthFullMap[(dateLocalDate1.monthValue+1).toString()].toString().uppercase())
+            }
+
         }
 
         fun setTestsTwo(){
@@ -116,6 +130,23 @@ class MainActivity : AppCompatActivity() {
             top3test__first__dayNumber.text = dateLocalDate2.dayOfMonth.toString()
             top3test__first__month.text = Convert.monthMap[dateLocalDate2.monthValue.toString()]
             top3test__first__lessonName.text = listOfThreeTests[1].lesson
+
+            top3test1.setOnClickListener{
+                hideAllModals()
+                learnModal.visibility = View.VISIBLE
+                modalLessonName.text = listOfThreeTests[0].lesson.uppercase()
+                modalTopicName.text = listOfThreeTests[0].topic.uppercase()
+                modalDate.text = StringBuilder(dateLocalDate1.dayOfMonth.toString()
+                        + " " + Convert.monthFullMap[(dateLocalDate1.monthValue+1).toString()].toString().uppercase())
+            }
+            top3test2.setOnClickListener{
+                hideAllModals()
+                learnModal.visibility = View.VISIBLE
+                modalLessonName.text = listOfThreeTests[1].lesson.uppercase()
+                modalTopicName.text = listOfThreeTests[1].topic.uppercase()
+                modalDate.text = StringBuilder(dateLocalDate2.dayOfMonth.toString()
+                        + " " + Convert.monthFullMap[(dateLocalDate2.monthValue+1).toString()].toString().uppercase())
+            }
 
         }
 
@@ -144,6 +175,31 @@ class MainActivity : AppCompatActivity() {
             top3test__third__month.text = Convert.monthMap[dateLocalDate3.monthValue.toString()]
             top3test__third__lessonName.text = listOfThreeTests[2].lesson
 
+            top3test1.setOnClickListener{
+                hideAllModals()
+                learnModal.visibility = View.VISIBLE
+                modalLessonName.text = listOfThreeTests[0].lesson.uppercase()
+                modalTopicName.text = listOfThreeTests[0].topic.uppercase()
+                modalDate.text = StringBuilder(dateLocalDate1.dayOfMonth.toString()
+                        + " " + Convert.monthFullMap[(dateLocalDate1.monthValue+1).toString()].toString().uppercase())
+            }
+            top3test2.setOnClickListener{
+                hideAllModals()
+                learnModal.visibility = View.VISIBLE
+                modalLessonName.text = listOfThreeTests[1].lesson.uppercase()
+                modalTopicName.text = listOfThreeTests[1].topic.uppercase()
+                modalDate.text = StringBuilder(dateLocalDate2.dayOfMonth.toString()
+                        + " " + Convert.monthFullMap[(dateLocalDate2.monthValue + 1).toString()].toString().uppercase())
+            }
+            top3test3.setOnClickListener{
+                hideAllModals()
+                learnModal.visibility = View.VISIBLE
+                modalLessonName.text = listOfThreeTests[2].lesson.uppercase()
+                modalTopicName.text = listOfThreeTests[2].topic.uppercase()
+                modalDate.text = StringBuilder(dateLocalDate3.dayOfMonth.toString()
+                        + " " + Convert.monthFullMap[(dateLocalDate3.monthValue+1).toString()].toString().uppercase())
+            }
+
         }
 
         when(listOfThreeTests.size){
@@ -157,7 +213,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
 
     private fun setTopicSpinner(levelOfEdu: String){
         val lesson = lessonsSpinner.selectedItem.toString()
@@ -183,6 +238,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun hideAllModals(){
         addNewTestModal.visibility = View.GONE
+        learnModal.visibility = View.GONE
     }
 
     private fun newTestModalReset(){
@@ -208,6 +264,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(calendarIntent)
         }
         openNewTestModalButton.setOnClickListener{
+            hideAllModals()
             addNewTestModal.visibility = View.VISIBLE
             val levelOfEdu = viewModel.getUserInfoAsync().levelOfEdu
 
