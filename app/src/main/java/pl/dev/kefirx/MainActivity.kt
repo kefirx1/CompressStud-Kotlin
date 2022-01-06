@@ -55,8 +55,6 @@ class MainActivity : AppCompatActivity() {
             hideAllModals()
             setDashboardActuallyInfo()
             setListeners()
-            viewModel.getThreeExams().forEach{ println(it)}
-
         }
     }
 
@@ -89,6 +87,18 @@ class MainActivity : AppCompatActivity() {
             top3test__third__lessonName.text = ""
         }
 
+        fun setDeleteTestButtonListener(test: Tests){
+            deleteTestButton.setOnClickListener{
+                viewModel.deleteTest(test)
+                Log.e("TAG", "Test deleted")
+                top3test1.setOnClickListener(null)
+                top3test2.setOnClickListener(null)
+                top3test3.setOnClickListener(null)
+                setTestsNull()
+                onResume()
+            }
+        }
+
         //TODO - refactoring of repeating lines
 
         fun setTestOne(){
@@ -109,7 +119,9 @@ class MainActivity : AppCompatActivity() {
                 modalTopicName.text = listOfThreeTests[0].topic.uppercase()
                 modalDate.text = StringBuilder(dateLocalDate1.dayOfMonth.toString()
                         + " " + Convert.monthFullMap[(dateLocalDate1.monthValue+1).toString()].toString().uppercase())
+                setDeleteTestButtonListener(listOfThreeTests[0])
             }
+
 
         }
 
@@ -138,6 +150,7 @@ class MainActivity : AppCompatActivity() {
                 modalTopicName.text = listOfThreeTests[0].topic.uppercase()
                 modalDate.text = StringBuilder(dateLocalDate1.dayOfMonth.toString()
                         + " " + Convert.monthFullMap[(dateLocalDate1.monthValue+1).toString()].toString().uppercase())
+                setDeleteTestButtonListener(listOfThreeTests[0])
             }
             top3test2.setOnClickListener{
                 hideAllModals()
@@ -146,6 +159,7 @@ class MainActivity : AppCompatActivity() {
                 modalTopicName.text = listOfThreeTests[1].topic.uppercase()
                 modalDate.text = StringBuilder(dateLocalDate2.dayOfMonth.toString()
                         + " " + Convert.monthFullMap[(dateLocalDate2.monthValue+1).toString()].toString().uppercase())
+                setDeleteTestButtonListener(listOfThreeTests[1])
             }
 
         }
@@ -182,6 +196,7 @@ class MainActivity : AppCompatActivity() {
                 modalTopicName.text = listOfThreeTests[0].topic.uppercase()
                 modalDate.text = StringBuilder(dateLocalDate1.dayOfMonth.toString()
                         + " " + Convert.monthFullMap[(dateLocalDate1.monthValue+1).toString()].toString().uppercase())
+                setDeleteTestButtonListener(listOfThreeTests[0])
             }
             top3test2.setOnClickListener{
                 hideAllModals()
@@ -190,6 +205,7 @@ class MainActivity : AppCompatActivity() {
                 modalTopicName.text = listOfThreeTests[1].topic.uppercase()
                 modalDate.text = StringBuilder(dateLocalDate2.dayOfMonth.toString()
                         + " " + Convert.monthFullMap[(dateLocalDate2.monthValue + 1).toString()].toString().uppercase())
+                setDeleteTestButtonListener(listOfThreeTests[1])
             }
             top3test3.setOnClickListener{
                 hideAllModals()
@@ -198,6 +214,7 @@ class MainActivity : AppCompatActivity() {
                 modalTopicName.text = listOfThreeTests[2].topic.uppercase()
                 modalDate.text = StringBuilder(dateLocalDate3.dayOfMonth.toString()
                         + " " + Convert.monthFullMap[(dateLocalDate3.monthValue+1).toString()].toString().uppercase())
+                setDeleteTestButtonListener(listOfThreeTests[2])
             }
 
         }
@@ -211,6 +228,9 @@ class MainActivity : AppCompatActivity() {
 
             3 -> setTestsThree()
         }
+
+
+
 
     }
 
