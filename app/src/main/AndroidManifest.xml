@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CompressStud">
         <activity
+            android:name=".StudyingActivity"
+            android:exported="false" />
+        <activity
             android:name=".CalendarActivity"
             android:exported="false"
             android:label="@string/title_activity_calendar"

@@ -16,6 +16,7 @@ import pl.dev.kefirx.json.GetJSONString
 import pl.dev.kefirx.json.ListOfTopicsJSON
 import pl.dev.kefirx.room.Tests
 import pl.dev.kefirx.viewModel.CSViewModel
+import java.io.Serializable
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -99,6 +100,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        fun setStartStudyingButtonListener(test: Tests){
+            startStudying.setOnClickListener{
+                val studyingIntent = Intent(this, StudyingActivity::class.java).apply {
+                    putExtra("testId", test.test_id )
+                }
+                startActivity(studyingIntent)
+
+            }
+        }
+
         //TODO - refactoring of repeating lines
 
         fun setTestOne(){
@@ -120,6 +131,7 @@ class MainActivity : AppCompatActivity() {
                 modalDate.text = StringBuilder(dateLocalDate1.dayOfMonth.toString()
                         + " " + Convert.monthFullMap[(dateLocalDate1.monthValue+1).toString()].toString().uppercase())
                 setDeleteTestButtonListener(listOfThreeTests[0])
+                setStartStudyingButtonListener(listOfThreeTests[0])
             }
 
 
@@ -151,6 +163,7 @@ class MainActivity : AppCompatActivity() {
                 modalDate.text = StringBuilder(dateLocalDate1.dayOfMonth.toString()
                         + " " + Convert.monthFullMap[(dateLocalDate1.monthValue+1).toString()].toString().uppercase())
                 setDeleteTestButtonListener(listOfThreeTests[0])
+                setStartStudyingButtonListener(listOfThreeTests[0])
             }
             top3test2.setOnClickListener{
                 hideAllModals()
@@ -160,6 +173,7 @@ class MainActivity : AppCompatActivity() {
                 modalDate.text = StringBuilder(dateLocalDate2.dayOfMonth.toString()
                         + " " + Convert.monthFullMap[(dateLocalDate2.monthValue+1).toString()].toString().uppercase())
                 setDeleteTestButtonListener(listOfThreeTests[1])
+                setStartStudyingButtonListener(listOfThreeTests[1])
             }
 
         }
@@ -197,6 +211,7 @@ class MainActivity : AppCompatActivity() {
                 modalDate.text = StringBuilder(dateLocalDate1.dayOfMonth.toString()
                         + " " + Convert.monthFullMap[(dateLocalDate1.monthValue+1).toString()].toString().uppercase())
                 setDeleteTestButtonListener(listOfThreeTests[0])
+                setStartStudyingButtonListener(listOfThreeTests[0])
             }
             top3test2.setOnClickListener{
                 hideAllModals()
@@ -206,6 +221,7 @@ class MainActivity : AppCompatActivity() {
                 modalDate.text = StringBuilder(dateLocalDate2.dayOfMonth.toString()
                         + " " + Convert.monthFullMap[(dateLocalDate2.monthValue + 1).toString()].toString().uppercase())
                 setDeleteTestButtonListener(listOfThreeTests[1])
+                setStartStudyingButtonListener(listOfThreeTests[1])
             }
             top3test3.setOnClickListener{
                 hideAllModals()
@@ -215,6 +231,7 @@ class MainActivity : AppCompatActivity() {
                 modalDate.text = StringBuilder(dateLocalDate3.dayOfMonth.toString()
                         + " " + Convert.monthFullMap[(dateLocalDate3.monthValue+1).toString()].toString().uppercase())
                 setDeleteTestButtonListener(listOfThreeTests[2])
+                setStartStudyingButtonListener(listOfThreeTests[2])
             }
 
         }
