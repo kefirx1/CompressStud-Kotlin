@@ -1,5 +1,7 @@
 package pl.dev.kefirx
 
+import kotlin.math.roundToInt
+
 object Convert {
 
     val monthMap: Map<String, String> = mapOf("1" to "sty", "2" to "lut", "3" to "mar", "4" to "kwi"
@@ -9,5 +11,15 @@ object Convert {
         , "5" to "maj", "6" to "czerwiec", "7" to "lipiec", "8" to "sierpień"
         , "9" to "wrzesień", "10" to "październik", "11" to "listopad", "12" to "grudzień")
 
+
+    fun getTimeStringFromDouble(time : Double) : String{
+        val resultInt = time.roundToInt()
+        val hours = resultInt % 86400 / 3600
+        val minutes = resultInt % 86400 % 3600 / 60
+        val seconds = resultInt % 86400 % 3600 % 60
+
+        return makeTimeString(hours, minutes, seconds)
+    }
+    private fun makeTimeString(hour: Int, min: Int, sec: Int): String = String.format("%02d:%02d:%02d", hour, min, sec)
 
 }

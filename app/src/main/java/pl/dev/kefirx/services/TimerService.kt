@@ -1,9 +1,8 @@
-package pl.dev.kefirx
+package pl.dev.kefirx.services
 
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import java.net.Inet4Address
 import java.util.*
 
 class TimerService : Service() {

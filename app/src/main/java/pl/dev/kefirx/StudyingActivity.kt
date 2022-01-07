@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_studying.*
 import pl.dev.kefirx.databinding.ActivityStudyingBinding
 import pl.dev.kefirx.room.Tests
+import pl.dev.kefirx.services.TimerService
 import kotlin.math.roundToInt
 
 class StudyingActivity : AppCompatActivity() {
@@ -73,18 +74,9 @@ class StudyingActivity : AppCompatActivity() {
     private val updateTime: BroadcastReceiver = object : BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
             time = intent!!.getDoubleExtra(TimerService.TIME_EXTRA, 0.0)
-            binding.studyingTimeText.text = getTimeStringFromDouble(time)
+            binding.studyingTimeText.text = Convert.getTimeStringFromDouble(time)
         }
     }
-    private fun getTimeStringFromDouble(time : Double) : String{
-        val resultInt = time.roundToInt()
-        val hours = resultInt % 86400 / 3600
-        val minutes = resultInt % 86400 % 3600 / 60
-        val seconds = resultInt % 86400 % 3600 % 60
-
-        return makeTimeString(hours, minutes, seconds)
-    }
-    private fun makeTimeString(hour: Int, min: Int, sec: Int): String = String.format("%02d:%02d:%02d", hour, min, sec)
 
 
     override fun onPause() {
