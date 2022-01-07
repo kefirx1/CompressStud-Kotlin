@@ -50,10 +50,8 @@ class CSRepository (application: Application) {
         CoroutineScope(Dispatchers.IO).async {
             testsDao.getAllTestsInfo()
         }
-    fun getTestByIdInfoAsync(id: Int):  Deferred<Tests> =
-        CoroutineScope(Dispatchers.IO).async {
-            testsDao.getTestByIdInfo(id)
-        }
+    fun getTestByIdInfoAsync(id: Int):  Tests = testsDao.getTestByIdInfo(id)
+
     fun deleteAllTests() = CoroutineScope(Dispatchers.IO).launch {
         testsDao.deleteAllTests()
     }

@@ -45,8 +45,7 @@ class CSViewModel(application: Application) : AndroidViewModel(application) {
 
     private var allTestsInfo: Deferred<List<Tests>> =
         CSRepository.getAllTestsInfoAsync()
-    private var testByIdInfo: Deferred<Tests> =
-        CSRepository.getTestByIdInfoAsync(id)
+
     fun insertTest(tests: Tests){
         CSRepository.insertTest(tests)
     }
@@ -59,10 +58,8 @@ class CSViewModel(application: Application) : AndroidViewModel(application) {
     fun getAllTestsInfoAsync(): List<Tests> = runBlocking {
         allTestsInfo.await()
     }
-    fun getTestByIdInfoAsync(id: Int): Tests = runBlocking {
-        idSetter(id)
-        testByIdInfo.await()
-    }
+    fun getTestByIdInfoAsync(id: Int): Tests = CSRepository.getTestByIdInfoAsync(id)
+
     fun deleteAllTests(){
         CSRepository.deleteAllTests()
     }

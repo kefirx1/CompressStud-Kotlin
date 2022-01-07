@@ -70,7 +70,7 @@
             android:paddingHorizontal="10dp">
 
             <TextView
-                android:id="@+id/test__lessonName"
+                android:id="@+id/testLessonNameText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/regular"
@@ -78,7 +78,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/test__topicName"
+                android:id="@+id/testTopicNameText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/regular"
@@ -127,11 +127,10 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/studyingTime"
+            android:id="@+id/studyingTimeText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/bold"
-            android:text="00:05:20"
             android:textAlignment="textEnd"
             android:textColor="@color/primary"
             android:textSize="24sp" />
@@ -164,15 +163,16 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/studyingPauseButton"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:fontFamily="@font/bold"
+                android:tag="1"
                 android:text="PAUZA" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/studyingStopButton"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/bold"
