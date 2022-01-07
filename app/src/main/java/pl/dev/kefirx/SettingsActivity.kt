@@ -1,15 +1,9 @@
 package pl.dev.kefirx
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintSet.GONE
-import androidx.core.view.isVisible
-import kotlinx.android.synthetic.main.activity_settings.*
-import kotlinx.android.synthetic.main.fragment_register_step2.*
 import pl.dev.kefirx.databinding.ActivitySettingsBinding
 import pl.dev.kefirx.room.User
 
@@ -19,19 +13,19 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        backToDashboardButton.setOnClickListener{
+        binding.backToDashboardButton.setOnClickListener{
             this.finish()
         }
 
-        openNameModal.setOnClickListener{
+        binding.openNameModal.setOnClickListener{
             setGoneToAllModals()
-            nameModal.visibility = VISIBLE
+            binding.nameModal.visibility = VISIBLE
 
-            editNameButton.setOnClickListener{
-                val newName: String = newNameEditText.text.toString()
+            binding.editNameButton.setOnClickListener{
+                val newName: String = binding.newNameEditText.text.toString()
                 val user : User = MainActivity.viewModel.getUserInfoAsync()
                 user.name = newName
                 MainActivity.viewModel.updateUser(user)
@@ -40,12 +34,12 @@ class SettingsActivity : AppCompatActivity() {
 
         }
 
-        openLevelModal.setOnClickListener{
+        binding.openLevelModal.setOnClickListener{
             setGoneToAllModals()
-            levelModal.visibility = VISIBLE
+            binding.levelModal.visibility = VISIBLE
 
-            newLevelButton.setOnClickListener{
-                val newLevel = newLevelSpinner.selectedItem.toString()
+            binding.newLevelButton.setOnClickListener{
+                val newLevel = binding.newLevelSpinner.selectedItem.toString()
                 val user : User = MainActivity.viewModel.getUserInfoAsync()
                 user.levelOfEdu = newLevel
                 MainActivity.viewModel.updateUser(user)
@@ -53,12 +47,12 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
 
-        openMusicModal.setOnClickListener{
+        binding.openMusicModal.setOnClickListener{
             setGoneToAllModals()
-            musicModal.visibility = VISIBLE
+            binding.musicModal.visibility = VISIBLE
 
-            newMusicButton.setOnClickListener{
-                val newFavMusic = newMusicSpinner.selectedItem.toString()
+            binding.newMusicButton.setOnClickListener{
+                val newFavMusic = binding.newMusicSpinner.selectedItem.toString()
                 val user : User = MainActivity.viewModel.getUserInfoAsync()
                 user.musicGenres = newFavMusic
                 MainActivity.viewModel.updateUser(user)
@@ -66,20 +60,20 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
 
-        openThemeModal.setOnClickListener{
+        binding.openThemeModal.setOnClickListener{
             setGoneToAllModals()
-            themeModal.visibility = VISIBLE
+            binding.themeModal.visibility = VISIBLE
 
-            themeButton.setOnClickListener{
+            binding.themeButton.setOnClickListener{
                 this.finish()
             }
         }
 
-        openWarningModal.setOnClickListener{
+        binding.openWarningModal.setOnClickListener{
             setGoneToAllModals()
-            wipeDataModal.visibility = VISIBLE
+            binding.wipeDataModal.visibility = VISIBLE
 
-            wipeDataButton.setOnClickListener{
+            binding.wipeDataButton.setOnClickListener{
                 MainActivity.viewModel.deleteAllTests()
                 MainActivity.viewModel.deleteAllUserInfo()
                 this.finish()
@@ -87,7 +81,7 @@ class SettingsActivity : AppCompatActivity() {
         }
 
 
-        settingsLayout.setOnClickListener{
+        binding.settingsLayout.setOnClickListener{
             setGoneToAllModals()
         }
 
@@ -95,11 +89,11 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun setGoneToAllModals(){
-        wipeDataModal.visibility = View.GONE
-        nameModal.visibility = View.GONE
-        levelModal.visibility = View.GONE
-        musicModal.visibility = View.GONE
-        themeModal.visibility = View.GONE
+        binding.wipeDataModal.visibility = View.GONE
+        binding.nameModal.visibility = View.GONE
+        binding.levelModal.visibility = View.GONE
+        binding.musicModal.visibility = View.GONE
+        binding.themeModal.visibility = View.GONE
     }
 
 }

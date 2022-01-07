@@ -7,11 +7,9 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_studying.*
 import pl.dev.kefirx.databinding.ActivityStudyingBinding
 import pl.dev.kefirx.room.Tests
 import pl.dev.kefirx.services.TimerService
-import kotlin.math.roundToInt
 
 class StudyingActivity : AppCompatActivity() {
 
@@ -43,23 +41,23 @@ class StudyingActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun setListeners(){
-        studyingPauseButton.setOnClickListener{
-            if(studyingPauseButton.text == "PAUZA"){
-                studyingPauseButton.text = "START"
+        binding.studyingPauseButton.setOnClickListener{
+            if(binding.studyingPauseButton.text == "PAUZA"){
+                binding.studyingPauseButton.text = "START"
                 stopTimer()
-            }else if (studyingPauseButton.text == "START"){
-                studyingPauseButton.text = "PAUZA"
+            }else if (binding.studyingPauseButton.text == "START"){
+                binding.studyingPauseButton.text = "PAUZA"
                 startTimer()
             }
         }
-        studyingStopButton.setOnClickListener{
+        binding.studyingStopButton.setOnClickListener{
             finish()
         }
     }
 
     private fun setTestInfo(){
-        testLessonNameText.text = testToStudying.lesson
-        testTopicNameText.text = testToStudying.topic
+        binding.testLessonNameText.text = testToStudying.lesson
+        binding.testTopicNameText.text = testToStudying.topic
     }
 
     private fun startTimer(){

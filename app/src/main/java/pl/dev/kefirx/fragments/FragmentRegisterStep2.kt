@@ -4,17 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.SpinnerAdapter
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_register_step1.*
-import kotlinx.android.synthetic.main.fragment_register_step1.nextStep2Button
-import kotlinx.android.synthetic.main.fragment_register_step2.*
 import pl.dev.kefirx.R
+import pl.dev.kefirx.databinding.FragmentRegisterStep2Binding
 
 class FragmentRegisterStep2 : Fragment() {
+
+    private lateinit var binding: FragmentRegisterStep2Binding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -24,10 +22,11 @@ class FragmentRegisterStep2 : Fragment() {
     override fun onStart() {
         super.onStart()
 
+        binding = FragmentRegisterStep2Binding.inflate(layoutInflater)
 
-        nextStep3Button.setOnClickListener{
+        binding.nextStep3Button.setOnClickListener{
 
-            val levelOfEdu = levelSpinner.selectedItem.toString()
+            val levelOfEdu = binding.levelSpinner.selectedItem.toString()
 
             val personalInformation: ArrayList<String> = arguments?.getStringArrayList("info") as ArrayList<String>
             personalInformation.add(levelOfEdu)

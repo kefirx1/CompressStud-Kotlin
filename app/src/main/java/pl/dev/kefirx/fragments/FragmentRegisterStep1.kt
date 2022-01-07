@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_register_start.*
-import kotlinx.android.synthetic.main.fragment_register_step1.*
 import pl.dev.kefirx.R
+import pl.dev.kefirx.databinding.FragmentRegisterStep1Binding
 
 class FragmentRegisterStep1 : Fragment() {
+
+    private lateinit var binding: FragmentRegisterStep1Binding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -21,11 +22,11 @@ class FragmentRegisterStep1 : Fragment() {
     override fun onStart() {
         super.onStart()
 
+        binding = FragmentRegisterStep1Binding.inflate(layoutInflater)
 
+        binding.nextStep2Button.setOnClickListener{
 
-        nextStep2Button.setOnClickListener{
-
-            val personName = personNameEditText.text.toString()
+            val personName = binding.personNameEditText.text.toString()
 
             val personalInformation: ArrayList<String> = ArrayList()
             personalInformation.add(personName)

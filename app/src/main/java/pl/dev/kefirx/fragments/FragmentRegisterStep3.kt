@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_register_step3.*
 import pl.dev.kefirx.R
+import pl.dev.kefirx.databinding.FragmentRegisterStep3Binding
 
 class FragmentRegisterStep3 : Fragment() {
+
+    private lateinit var binding: FragmentRegisterStep3Binding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -20,9 +22,11 @@ class FragmentRegisterStep3 : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        nextStep4Button.setOnClickListener{
+        binding = FragmentRegisterStep3Binding.inflate(layoutInflater)
 
-            val likeMusic = musicSwitch.isChecked.toString()
+        binding.nextStep4Button.setOnClickListener{
+
+            val likeMusic = binding.musicSwitch.isChecked.toString()
 
             val personalInformation: ArrayList<String> = arguments?.getStringArrayList("info") as ArrayList<String>
             personalInformation.add(likeMusic)

@@ -1,16 +1,18 @@
 package pl.dev.kefirx.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_register_start.*
-import pl.dev.kefirx.*
+import pl.dev.kefirx.R
+import pl.dev.kefirx.databinding.FragmentRegisterStartBinding
 
 
 class FragmentRegisterStart : Fragment() {
+
+    private lateinit var binding: FragmentRegisterStartBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -20,7 +22,9 @@ class FragmentRegisterStart : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        startRegisterButton.setOnClickListener{
+        binding = FragmentRegisterStartBinding.inflate(layoutInflater)
+
+        binding.startRegisterButton.setOnClickListener{
             findNavController().navigate(
                 FragmentRegisterStartDirections.actionFragmentRegisterStartToFragmentRegisterStep1())
         }
