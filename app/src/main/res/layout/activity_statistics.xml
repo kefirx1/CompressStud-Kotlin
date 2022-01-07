@@ -100,11 +100,10 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/settings__studyingTimeValue"
+                android:id="@+id/allStudyingTimeText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/regular"
-                android:text="1 godz 24min"
                 android:textAlignment="textEnd"
                 android:textColor="@color/primary"
                 android:textSize="20sp" />
