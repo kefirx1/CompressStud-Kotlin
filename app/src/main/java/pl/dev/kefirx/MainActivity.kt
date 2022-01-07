@@ -34,9 +34,9 @@ class MainActivity : AppCompatActivity() {
     private val gson = Gson()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        binding = ActivityMainBinding.inflate(layoutInflater)
         listOfTopicsObject  = gson.fromJson(getJSONString.getJsonStringFromAssets(applicationContext, LIST_OF_TOPICS_PATH), ListOfTopicsJSON::class.java)
     }
 
@@ -347,7 +347,7 @@ class MainActivity : AppCompatActivity() {
                 var reminder = 0
                 val timeOfRemindH = timeOfNotificationTimePicker.hour.toString()
                 val timeOfRemindM = timeOfNotificationTimePicker.minute.toString()
-                val timeOfLearning = 0
+                val timeOfLearning = 0.0
                 val watchedVideos = 0
 
                 when(notificationSpinner.selectedItem.toString()){

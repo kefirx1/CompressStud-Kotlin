@@ -9,7 +9,7 @@ data class Tests(
     var lesson: String,
     var topic: String,
     var dateOfExam: Long,
-    var timeOfLearning: Int,
+    var timeOfLearning: Double,
     var watchedVideos: Int,
     var reminder: Int,     //0 - off / 1 - everyday / 2 - every second day / 3 - day before
     var timeOfRemindH: String,
