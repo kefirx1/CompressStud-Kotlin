@@ -25,16 +25,15 @@ class MainActivity : AppCompatActivity() {
         lateinit var viewModel: CSViewModel
         private const val LIST_OF_TOPICS_PATH = "listOfTopics.json"
         lateinit var listOfTopicsObject: ListOfTopicsJSON
+        val gson = Gson()
     }
 
     private lateinit var binding: ActivityMainBinding
-
     private var getJSONString = GetJSONString()
-    private val gson = Gson()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         listOfTopicsObject  = gson.fromJson(getJSONString.getJsonStringFromAssets(applicationContext, LIST_OF_TOPICS_PATH), ListOfTopicsJSON::class.java)
     }

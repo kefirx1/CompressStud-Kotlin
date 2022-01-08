@@ -3,6 +3,8 @@
     package="pl.dev.kefirx">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
@@ -14,7 +16,7 @@
         android:theme="@style/Theme.CompressStud">
         <activity
             android:name=".StudyingActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".CalendarActivity"
             android:exported="false"

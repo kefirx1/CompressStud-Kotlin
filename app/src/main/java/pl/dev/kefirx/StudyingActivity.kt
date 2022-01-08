@@ -7,9 +7,13 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import pl.dev.kefirx.databinding.ActivityStudyingBinding
 import pl.dev.kefirx.room.Tests
 import pl.dev.kefirx.services.TimerService
+import pl.dev.kefirx.youTube.YoutubeRetrofitClient
 
 class StudyingActivity : AppCompatActivity() {
 
@@ -32,9 +36,20 @@ class StudyingActivity : AppCompatActivity() {
         registerReceiver(updateTime, IntentFilter(TimerService.TIMER_UPDATED))
         setListeners()
         setTestInfo()
+
+
+        CoroutineScope(Dispatchers.IO).launch{
+            println(YoutubeRetrofitClient.instance
+                .getResponseAsync("koty")
+                .await()
+                .body()!!.items[0].id.videoId)
+        }
+
+
     }
 
-    override fun onResume() {
+
+        override fun onResume() {
         super.onResume()
         startTimer()
     }
