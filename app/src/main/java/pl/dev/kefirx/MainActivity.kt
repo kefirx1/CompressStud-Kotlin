@@ -76,15 +76,17 @@ class MainActivity : AppCompatActivity() {
         val listOfThreeTests = viewModel.getThreeExams()
 
         fun setTestsNull(){
-            binding.top3TestFirstDayNumber.text = ""
-            binding.top3testSecondDayNumber.text = ""
-            binding.top3TestThirdDayNumber.text = ""
-            binding.top3TestFirstMonth.text = ""
-            binding.top3TestSecondMonth.text = ""
-            binding.top3TestThirdMonth.text = ""
-            binding.top3TestFirstLessonName.text = ""
-            binding.top3TestSecondLessonName.text = ""
-            binding.top3TestThirdLessonName.text = ""
+            with(binding){
+                top3TestFirstDayNumber.text = ""
+                top3testSecondDayNumber.text = ""
+                top3TestThirdDayNumber.text = ""
+                top3TestFirstMonth.text = ""
+                top3TestSecondMonth.text = ""
+                top3TestThirdMonth.text = ""
+                top3TestFirstLessonName.text = ""
+                top3TestSecondLessonName.text = ""
+                top3TestThirdLessonName.text = ""
+            }
         }
 
         fun setDeleteTestButtonListener(test: Tests){
