@@ -7,15 +7,17 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import pl.dev.kefirx.databinding.ActivityStudyingBinding
+import pl.dev.kefirx.json.YoutubeResponseJSON
 import pl.dev.kefirx.room.Tests
 import pl.dev.kefirx.services.TimerService
-import pl.dev.kefirx.youTube.YoutubeAPIService
-import pl.dev.kefirx.youTube.YoutubeRetrofitClient
+import pl.dev.kefirx.youTube.YoutubeObject
 import pl.dev.kefirx.youTube.YoutubeSampleRespose
+
+
+
 
 class StudyingActivity : AppCompatActivity() {
 
@@ -42,22 +44,63 @@ class StudyingActivity : AppCompatActivity() {
 
 //        CoroutineScope(Dispatchers.IO).launch{
 //            println(YoutubeRetrofitClient.instance
-//                .getResponseAsync("koty")
+//                .getResponseAsync("")
 //                .await()
 //                .body()!!.items[0].id.videoId)
 //        }
 
         val responseObject = YoutubeSampleRespose.getSampleResponse(this)
 
+        loadVideos(responseObject)
 
 
 
     }
 
 
-        override fun onResume() {
+    override fun onResume() {
         super.onResume()
         startTimer()
+    }
+
+    private fun loadVideos(responseObject: YoutubeResponseJSON){
+
+
+        val bestOfFiveVideosURL: ArrayList<String> = YoutubeObject.getBestOfFive(responseObject)
+
+        println(bestOfFiveVideosURL)
+
+        lifecycle.addObserver(binding.youtubePlayer1)
+        lifecycle.addObserver(binding.youtubePlayer2)
+        lifecycle.addObserver(binding.youtubePlayer3)
+        lifecycle.addObserver(binding.youtubePlayer4)
+        lifecycle.addObserver(binding.youtubePlayer5)
+
+        binding.youtubePlayer1.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                youTubePlayer.cueVideo(bestOfFiveVideosURL[0], 0f)
+            }
+        })
+        binding.youtubePlayer2.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                youTubePlayer.cueVideo(bestOfFiveVideosURL[1], 0f)
+            }
+        })
+        binding.youtubePlayer3.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                youTubePlayer.cueVideo(bestOfFiveVideosURL[2], 0f)
+            }
+        })
+        binding.youtubePlayer4.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                youTubePlayer.cueVideo(bestOfFiveVideosURL[3], 0f)
+            }
+        })
+        binding.youtubePlayer5.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                youTubePlayer.cueVideo(bestOfFiveVideosURL[4], 0f)
+            }
+        })
     }
 
     @SuppressLint("SetTextI18n")

@@ -1,7 +1,8 @@
 package pl.dev.kefirx.json
 
-data class Item(
+data class Items(
     val etag: String,
     val id: Id,
-    val kind: String
+    val kind: String,
+    val snippet: Snippet
 )

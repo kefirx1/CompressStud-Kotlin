@@ -15,14 +15,14 @@ class FragmentRegisterStep4 : Fragment() {
     private lateinit var binding: FragmentRegisterStep4Binding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        return inflater.inflate(R.layout.fragment_register_step4, container, false)
+        binding = FragmentRegisterStep4Binding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onStart() {
         super.onStart()
 
-        binding = FragmentRegisterStep4Binding.inflate(layoutInflater)
+
 
         binding.nextStep5Button.setOnClickListener{
 

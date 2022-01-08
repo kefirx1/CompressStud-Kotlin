@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         if(viewModel.getUserCountAsync() <= 0) {
             Log.e("TAG", "Create user")
             val registerIntent = Intent(this, RegisterActivity::class.java)
+            Log.e("TAG", "Start act")
             startActivity(registerIntent)
         }else{
             hideAllModals()

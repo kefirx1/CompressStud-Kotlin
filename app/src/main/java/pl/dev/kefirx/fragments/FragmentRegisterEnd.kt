@@ -16,13 +16,13 @@ class FragmentRegisterEnd : Fragment() {
     private lateinit var binding: FragmentRegisterEndBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        return inflater.inflate(R.layout.fragment_register_end, container, false)
+        binding = FragmentRegisterEndBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onStart() {
         super.onStart()
-        binding = FragmentRegisterEndBinding.inflate(layoutInflater)
+
 
         val personalInformation: ArrayList<String> = arguments?.getStringArrayList("info") as ArrayList<String>
 

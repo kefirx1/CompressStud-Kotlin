@@ -2,6 +2,7 @@ package pl.dev.kefirx
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import pl.dev.kefirx.databinding.ActivityMainBinding
 
 class RegisterActivity : AppCompatActivity() {
@@ -10,7 +11,8 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.e("TAG", "Register")
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_register)
     }
 }
