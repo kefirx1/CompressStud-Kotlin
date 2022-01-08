@@ -13,7 +13,9 @@ import kotlinx.coroutines.launch
 import pl.dev.kefirx.databinding.ActivityStudyingBinding
 import pl.dev.kefirx.room.Tests
 import pl.dev.kefirx.services.TimerService
+import pl.dev.kefirx.youTube.YoutubeAPIService
 import pl.dev.kefirx.youTube.YoutubeRetrofitClient
+import pl.dev.kefirx.youTube.YoutubeSampleRespose
 
 class StudyingActivity : AppCompatActivity() {
 
@@ -38,12 +40,16 @@ class StudyingActivity : AppCompatActivity() {
         setTestInfo()
 
 
-        CoroutineScope(Dispatchers.IO).launch{
-            println(YoutubeRetrofitClient.instance
-                .getResponseAsync("koty")
-                .await()
-                .body()!!.items[0].id.videoId)
-        }
+//        CoroutineScope(Dispatchers.IO).launch{
+//            println(YoutubeRetrofitClient.instance
+//                .getResponseAsync("koty")
+//                .await()
+//                .body()!!.items[0].id.videoId)
+//        }
+
+        val responseObject = YoutubeSampleRespose.getSampleResponse(this)
+
+
 
 
     }
