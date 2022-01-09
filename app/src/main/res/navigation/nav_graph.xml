@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_fragmentRegisterStep3_to_fragmentRegisterStep4"
             app:destination="@id/fragmentRegisterStep4" />
+        <action
+            android:id="@+id/action_fragmentRegisterStep3_to_fragmentRegisterEnd"
+            app:destination="@id/fragmentRegisterEnd" />
     </fragment>
     <fragment
         android:id="@+id/fragmentRegisterStep4"

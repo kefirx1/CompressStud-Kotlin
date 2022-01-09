@@ -23,7 +23,6 @@ class FragmentRegisterStep4 : Fragment() {
         super.onStart()
 
 
-
         binding.nextStep5Button.setOnClickListener{
 
             val favMusic = binding.favMusicSpinner.selectedItem.toString()

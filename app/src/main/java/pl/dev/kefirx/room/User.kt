@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class User(
     var name: String,
     var levelOfEdu: String,
-    var likeMusic: String,
+    var likeMusic: Boolean,
     var musicGenres: String){
 
     @PrimaryKey(autoGenerate = true)

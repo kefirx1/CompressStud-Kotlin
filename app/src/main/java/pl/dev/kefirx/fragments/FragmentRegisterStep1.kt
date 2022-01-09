@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import pl.dev.kefirx.R
 import pl.dev.kefirx.databinding.FragmentRegisterStep1Binding
+import pl.dev.kefirx.room.User
 
 class FragmentRegisterStep1 : Fragment() {
 
@@ -21,6 +22,7 @@ class FragmentRegisterStep1 : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
 
 
         binding.nextStep2Button.setOnClickListener{

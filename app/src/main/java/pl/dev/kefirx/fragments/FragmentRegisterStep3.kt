@@ -24,14 +24,23 @@ class FragmentRegisterStep3 : Fragment() {
 
         binding.nextStep4Button.setOnClickListener{
 
-            val likeMusic = binding.musicSwitch.isChecked.toString()
+            val likeMusic = binding.musicSwitch.isChecked
 
             val personalInformation: ArrayList<String> = arguments?.getStringArrayList("info") as ArrayList<String>
-            personalInformation.add(likeMusic)
+            personalInformation.add(likeMusic.toString())
 
-            findNavController().navigate(
-                FragmentRegisterStep3Directions.actionFragmentRegisterStep3ToFragmentRegisterStep4().actionId,
-                bundleOf("info" to personalInformation))
+            if(likeMusic){
+                findNavController().navigate(
+                    FragmentRegisterStep3Directions.actionFragmentRegisterStep3ToFragmentRegisterStep4().actionId,
+                    bundleOf("info" to personalInformation))
+            }else{
+                personalInformation.add("")
+                findNavController().navigate(
+                    FragmentRegisterStep3Directions.actionFragmentRegisterStep3ToFragmentRegisterEnd().actionId,
+                    bundleOf("info" to personalInformation))
+            }
+
+
         }
 
     }

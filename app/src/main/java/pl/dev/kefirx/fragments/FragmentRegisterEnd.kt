@@ -2,6 +2,7 @@ package pl.dev.kefirx.fragments
 
 import android.app.Activity
 import android.os.Bundle
+import android.text.BoringLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +29,7 @@ class FragmentRegisterEnd : Fragment() {
 
         val name = personalInformation[0]
         val levelOfEdu = personalInformation[1]
-        val likeMusic = personalInformation[2]
+        val likeMusic = personalInformation[2].toBoolean()
         val musicGenres = personalInformation[3]
         val user  = User(name, levelOfEdu, likeMusic, musicGenres)
 

@@ -65,10 +65,7 @@ class StudyingActivity : AppCompatActivity() {
 
     private fun loadVideos(responseObject: YoutubeResponseJSON){
 
-
         val bestOfFiveVideosURL: ArrayList<String> = YoutubeObject.getBestOfFive(responseObject)
-
-        println(bestOfFiveVideosURL)
 
         lifecycle.addObserver(binding.youtubePlayer1)
         lifecycle.addObserver(binding.youtubePlayer2)

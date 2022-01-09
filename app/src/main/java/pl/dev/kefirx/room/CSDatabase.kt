@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
 
-@Database(entities = [User::class, Tests::class], version = 7, exportSchema = false)
+@Database(entities = [User::class, Tests::class], version = 9, exportSchema = false)
 abstract class CSDatabase: RoomDatabase() {
 
     abstract fun userDao(): UserDao
