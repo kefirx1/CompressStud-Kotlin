@@ -236,30 +236,49 @@
             android:layout_height="wrap_content"
             android:text="ZATWIERDŹ" />
     </LinearLayout>
+
     <LinearLayout
-        android:visibility="gone"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:orientation="vertical"
         android:id="@+id/musicModal"
-        android:gravity="center"
+        android:layout_width="350dp"
+        android:layout_height="237dp"
         android:background="@drawable/modal"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/newMusicSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:scaleX="1.3"
+            android:scaleY="1.3"
+            android:text="Słuchasz muzyki podczas nauki?"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.565"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.291"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+
         <TextView
-            android:id="@+id/textView21"
+            android:id="@+id/newFavMusicTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/regular"
             android:text="Podaj nowy ulubiony typ muzyki"
             android:textAlignment="center"
-            android:layout_marginTop="10dp"
-            android:textSize="20sp"
             android:textColor="@color/primary"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/regular"/>
+            android:textSize="20sp" />
 
         <Spinner
             android:id="@+id/newMusicSpinner"

@@ -56,6 +56,9 @@ class MainActivity : AppCompatActivity() {
             setDashboardActuallyInfo()
             setListeners()
         }
+
+        println(viewModel.getUserInfoAsync())
+
     }
 
 
