@@ -4,7 +4,6 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.format.DateFormat.getLongDateFormat
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -16,16 +15,15 @@ import com.google.gson.Gson
 import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.json.GetJSONString
 import pl.dev.kefirx.json.ListOfTopicsJSON
-import pl.dev.kefirx.reminder.*
 import pl.dev.kefirx.reminder.Notification
 import pl.dev.kefirx.room.Tests
 import pl.dev.kefirx.viewModel.CSViewModel
-import java.text.DateFormat
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         private const val LIST_OF_TOPICS_PATH = "listOfTopics.json"
         lateinit var listOfTopicsObject: ListOfTopicsJSON
         val gson = Gson()
+
     }
 
     private lateinit var binding: ActivityMainBinding
@@ -403,12 +402,12 @@ class MainActivity : AppCompatActivity() {
         val title = "Tytuł"
         val message = "Wiadomosc"
 
-        intent.putExtra(titleExtra, title)
-        intent.putExtra(messageExtra, message)
+        intent.putExtra(Notification.TITLE_EXTRA, title)
+        intent.putExtra(Notification.MESSAGE_EXTRA, message)
 
         val pendingIntent = PendingIntent.getBroadcast(
             applicationContext,
-            NOTIFICATION_ID,
+            Notification.NOTIFICATION_ID,
             intent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
@@ -457,7 +456,7 @@ class MainActivity : AppCompatActivity() {
         val name = "Notif Channel"
         val desc = "A description"
         val importance = NotificationManager.IMPORTANCE_DEFAULT
-        val channel = NotificationChannel(CHANNEL_ID, name, importance)
+        val channel = NotificationChannel(Notification.CHANNEL_ID, name, importance)
         channel.description = desc
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)

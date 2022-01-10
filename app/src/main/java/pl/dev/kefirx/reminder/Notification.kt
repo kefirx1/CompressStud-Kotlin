@@ -9,19 +9,22 @@ import androidx.core.app.NotificationCompat
 import pl.dev.kefirx.R
 
 
-const val NOTIFICATION_ID = 1
-const val CHANNEL_ID = "CHANNEL1"
-const val messageExtra = "messageExtra"
-const val titleExtra = "titleExtra"
+
 
 class Notification: BroadcastReceiver() {
 
+    companion object{
+        const val NOTIFICATION_ID = 1
+        const val CHANNEL_ID = "CHANNEL1"
+        const val MESSAGE_EXTRA = "messageExtra"
+        const val TITLE_EXTRA = "titleExtra"
+    }
 
     override fun onReceive(context: Context, intent: Intent) {
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setContentTitle(intent.getStringExtra(titleExtra))
-            .setContentText(intent.getStringExtra(messageExtra))
+            .setContentTitle(intent.getStringExtra(TITLE_EXTRA))
+            .setContentText(intent.getStringExtra(MESSAGE_EXTRA))
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .build()
 
