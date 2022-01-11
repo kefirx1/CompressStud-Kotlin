@@ -1,6 +1,6 @@
 package pl.dev.kefirx.youTube
 
-import pl.dev.kefirx.json.YoutubeResponseJSON
+import pl.dev.kefirx.json.ytResponse.YoutubeResponseJSON
 
 class YoutubeObject{
 

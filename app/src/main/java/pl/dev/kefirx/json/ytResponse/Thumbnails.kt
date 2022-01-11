@@ -1,4 +1,4 @@
-package pl.dev.kefirx.json
+package pl.dev.kefirx.json.ytResponse
 
 data class Thumbnails(
     val default: Default,

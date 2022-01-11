@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import pl.dev.kefirx.databinding.ActivityStudyingBinding
-import pl.dev.kefirx.json.YoutubeResponseJSON
+import pl.dev.kefirx.json.ytResponse.YoutubeResponseJSON
 import pl.dev.kefirx.room.Tests
 import pl.dev.kefirx.services.TimerService
 import pl.dev.kefirx.youTube.YoutubeObject

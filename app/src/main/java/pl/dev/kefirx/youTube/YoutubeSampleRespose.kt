@@ -3,7 +3,7 @@ package pl.dev.kefirx.youTube
 import android.content.Context
 import pl.dev.kefirx.MainActivity
 import pl.dev.kefirx.json.GetJSONString
-import pl.dev.kefirx.json.YoutubeResponseJSON
+import pl.dev.kefirx.json.ytResponse.YoutubeResponseJSON
 
 object YoutubeSampleRespose {
 

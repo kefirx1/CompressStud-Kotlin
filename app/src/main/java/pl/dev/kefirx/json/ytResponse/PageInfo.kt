@@ -1,4 +1,4 @@
-package pl.dev.kefirx.json
+package pl.dev.kefirx.json.ytResponse
 
 data class PageInfo(
     val resultsPerPage: Int,

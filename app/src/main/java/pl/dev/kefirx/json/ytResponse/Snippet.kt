@@ -1,4 +1,6 @@
-package pl.dev.kefirx.json
+package pl.dev.kefirx.json.ytResponse
+
+import pl.dev.kefirx.json.ytResponse.Thumbnails
 
 data class Snippet(
     val channelId: String,

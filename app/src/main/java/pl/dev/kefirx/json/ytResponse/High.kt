@@ -1,6 +1,6 @@
-package pl.dev.kefirx.json
+package pl.dev.kefirx.json.ytResponse
 
-data class Medium(
+data class High(
     val height: Int,
     val url: String,
     val width: Int
