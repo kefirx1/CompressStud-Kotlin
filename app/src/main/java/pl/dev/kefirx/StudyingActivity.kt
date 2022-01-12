@@ -9,6 +9,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import pl.dev.kefirx.classes.Convert
 import pl.dev.kefirx.databinding.ActivityStudyingBinding
 import pl.dev.kefirx.json.ytResponse.YoutubeResponseJSON
 import pl.dev.kefirx.room.Tests

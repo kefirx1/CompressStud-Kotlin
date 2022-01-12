@@ -2,6 +2,7 @@ package pl.dev.kefirx
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import pl.dev.kefirx.classes.Convert
 import pl.dev.kefirx.databinding.ActivityStatisticsBinding
 
 class StatisticsActivity : AppCompatActivity() {

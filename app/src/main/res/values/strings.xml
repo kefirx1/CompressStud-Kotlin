@@ -13,6 +13,7 @@
         <item>Rock</item>
     </string-array>
     <string-array name="notificationDelays">
+        <item>Brak</item>
         <item>Codziennie</item>
         <item>Co dwa dni</item>
         <item>Dzień przed sprawdzianem</item>

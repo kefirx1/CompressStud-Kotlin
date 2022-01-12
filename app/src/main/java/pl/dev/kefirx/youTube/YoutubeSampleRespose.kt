@@ -1,11 +1,14 @@
 package pl.dev.kefirx.youTube
 
 import android.content.Context
+import com.google.gson.Gson
 import pl.dev.kefirx.MainActivity
 import pl.dev.kefirx.json.GetJSONString
 import pl.dev.kefirx.json.ytResponse.YoutubeResponseJSON
 
 object YoutubeSampleRespose {
+
+    private val gson = Gson()
 
     fun getSampleResponse(context: Context): YoutubeResponseJSON {
 
@@ -13,7 +16,7 @@ object YoutubeSampleRespose {
         val getJsonString = GetJSONString()
         val jsonResponseString = getJsonString.getJsonStringFromAssets(context, sampleOfYoutubeResponsePath)
 
-        return MainActivity.gson.fromJson(jsonResponseString, YoutubeResponseJSON::class.java)
+        return gson.fromJson(jsonResponseString, YoutubeResponseJSON::class.java)
 
     }
 

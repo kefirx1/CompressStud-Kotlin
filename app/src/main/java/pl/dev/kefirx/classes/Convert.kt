@@ -1,5 +1,7 @@
-package pl.dev.kefirx
+package pl.dev.kefirx.classes
 
+import pl.dev.kefirx.databinding.ActivityMainBinding
+import java.util.*
 import kotlin.math.roundToInt
 
 object Convert {
@@ -20,6 +22,9 @@ object Convert {
 
         return makeTimeString(hours, minutes, seconds)
     }
+
+
+
     private fun makeTimeString(hour: Int, min: Int, sec: Int): String = String.format("%02d:%02d:%02d", hour, min, sec)
 
 }

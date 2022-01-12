@@ -1,7 +1,7 @@
 package pl.dev.kefirx
 
-import android.app.*
-import android.content.Context
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -12,30 +12,32 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
+import pl.dev.kefirx.classes.DashboardView
+import pl.dev.kefirx.classes.ModalsView
 import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.json.GetJSONString
 import pl.dev.kefirx.json.ListOfTopicsJSON
 import pl.dev.kefirx.reminder.BootReceiver
 import pl.dev.kefirx.room.Tests
 import pl.dev.kefirx.viewModel.CSViewModel
-import java.time.Instant
-import java.time.ZoneId
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class MainActivity : AppCompatActivity() {
+open class MainActivity : AppCompatActivity() {
 
     companion object{
         lateinit var viewModel: CSViewModel
         private const val LIST_OF_TOPICS_PATH = "listOfTopics.json"
-        lateinit var listOfTopicsObject: ListOfTopicsJSON
-        val gson = Gson()
-
     }
 
-    private lateinit var binding: ActivityMainBinding
+    protected lateinit var binding: ActivityMainBinding
+    private lateinit var listOfTopicsObject: ListOfTopicsJSON
+    private lateinit var dashboardView: DashboardView
+    private lateinit var modalsView: ModalsView
     private var getJSONString = GetJSONString()
+    private val gson = Gson()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +45,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         listOfTopicsObject  = gson.fromJson(getJSONString.getJsonStringFromAssets(applicationContext, LIST_OF_TOPICS_PATH), ListOfTopicsJSON::class.java)
+
+        dashboardView = DashboardView()
+        modalsView = ModalsView()
+
     }
 
     override fun onResume() {
@@ -59,208 +65,20 @@ class MainActivity : AppCompatActivity() {
             Log.e("TAG", "Start act")
             startActivity(registerIntent)
         }else{
-            hideAllModals()
+            modalsView.hideAllModals()
             setDashboardActuallyInfo()
             setListeners()
         }
 
-        println(viewModel.getUserInfoAsync())
-
     }
-
 
     private fun setDashboardActuallyInfo(){
         val name = viewModel.getUserInfoAsync().name + "!"
         binding.userNameTextView.text = name
 
-        checkActuallyDashboardTests()
-
+        dashboardView.setBestOfThreeView(viewModel.getThreeExams())
     }
 
-    private fun checkActuallyDashboardTests(){
-
-        binding.learnModalBackButton.setOnClickListener{
-            binding.learnModal.visibility = View.GONE
-        }
-
-        val listOfThreeTests = viewModel.getThreeExams()
-
-        fun setTestsNull(){
-            with(binding){
-                top3TestFirstDayNumber.text = ""
-                top3testSecondDayNumber.text = ""
-                top3TestThirdDayNumber.text = ""
-                top3TestFirstMonth.text = ""
-                top3TestSecondMonth.text = ""
-                top3TestThirdMonth.text = ""
-                top3TestFirstLessonName.text = ""
-                top3TestSecondLessonName.text = ""
-                top3TestThirdLessonName.text = ""
-            }
-        }
-
-        fun setDeleteTestButtonListener(test: Tests){
-            binding.deleteTestButton.setOnClickListener{
-                viewModel.deleteTest(test)
-                Log.e("TAG", "Test deleted")
-                binding.top3test1.setOnClickListener(null)
-                binding.top3test2.setOnClickListener(null)
-                binding.top3test3.setOnClickListener(null)
-                setTestsNull()
-                onResume()
-            }
-        }
-
-        fun setStartStudyingButtonListener(test: Tests){
-            binding.startStudying.setOnClickListener{
-                val studyingIntent = Intent(this, StudyingActivity::class.java).apply {
-                    putExtra("testId", test.test_id )
-                }
-                startActivity(studyingIntent)
-
-            }
-        }
-
-        //TODO - refactoring of repeating lines
-
-        fun setTestOne(){
-
-            val dateLong1 = listOfThreeTests[0].dateOfExam
-            val  dateLocalDate1  = Instant.ofEpochSecond(dateLong1)
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate()
-
-            binding.top3testSecondDayNumber.text = dateLocalDate1.dayOfMonth.toString()
-            binding.top3TestSecondMonth.text = Convert.monthMap[dateLocalDate1.monthValue.toString()]
-            binding.top3TestSecondLessonName.text = listOfThreeTests[0].lesson
-
-            binding.top3test1.setOnClickListener{
-                hideAllModals()
-                binding.learnModal.visibility = View.VISIBLE
-                binding.modalLessonName.text = listOfThreeTests[0].lesson.uppercase()
-                binding.modalTopicName.text = listOfThreeTests[0].topic.uppercase()
-                binding.modalDate.text = StringBuilder(dateLocalDate1.dayOfMonth.toString()
-                        + " " + Convert.monthFullMap[(dateLocalDate1.monthValue+1).toString()].toString().uppercase())
-                setDeleteTestButtonListener(listOfThreeTests[0])
-                setStartStudyingButtonListener(listOfThreeTests[0])
-            }
-
-
-        }
-
-        fun setTestsTwo(){
-
-            val dateLong1 = listOfThreeTests[0].dateOfExam
-            val  dateLocalDate1  = Instant.ofEpochSecond(dateLong1)
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate()
-            val dateLong2 = listOfThreeTests[1].dateOfExam
-            val  dateLocalDate2  = Instant.ofEpochSecond(dateLong2)
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate()
-
-            binding.top3testSecondDayNumber.text = dateLocalDate1.dayOfMonth.toString()
-            binding.top3TestSecondMonth.text = Convert.monthMap[dateLocalDate1.monthValue.toString()]
-            binding.top3TestSecondLessonName.text = listOfThreeTests[0].lesson
-            binding.top3TestFirstDayNumber.text = dateLocalDate2.dayOfMonth.toString()
-            binding.top3TestFirstMonth.text = Convert.monthMap[dateLocalDate2.monthValue.toString()]
-            binding.top3TestFirstLessonName.text = listOfThreeTests[1].lesson
-
-            binding.top3test1.setOnClickListener{
-                hideAllModals()
-                binding.learnModal.visibility = View.VISIBLE
-                binding.modalLessonName.text = listOfThreeTests[0].lesson.uppercase()
-                binding.modalTopicName.text = listOfThreeTests[0].topic.uppercase()
-                binding.modalDate.text = StringBuilder(dateLocalDate1.dayOfMonth.toString()
-                        + " " + Convert.monthFullMap[(dateLocalDate1.monthValue+1).toString()].toString().uppercase())
-                setDeleteTestButtonListener(listOfThreeTests[0])
-                setStartStudyingButtonListener(listOfThreeTests[0])
-            }
-            binding.top3test2.setOnClickListener{
-                hideAllModals()
-                binding.learnModal.visibility = View.VISIBLE
-                binding.modalLessonName.text = listOfThreeTests[1].lesson.uppercase()
-                binding.modalTopicName.text = listOfThreeTests[1].topic.uppercase()
-                binding.modalDate.text = StringBuilder(dateLocalDate2.dayOfMonth.toString()
-                        + " " + Convert.monthFullMap[(dateLocalDate2.monthValue+1).toString()].toString().uppercase())
-                setDeleteTestButtonListener(listOfThreeTests[1])
-                setStartStudyingButtonListener(listOfThreeTests[1])
-            }
-
-        }
-
-        fun setTestsThree(){
-
-            val dateLong1 = listOfThreeTests[0].dateOfExam
-            val  dateLocalDate1  = Instant.ofEpochSecond(dateLong1)
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate()
-            val dateLong2 = listOfThreeTests[1].dateOfExam
-            val  dateLocalDate2  = Instant.ofEpochSecond(dateLong2)
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate()
-            val dateLong3 = listOfThreeTests[2].dateOfExam
-            val  dateLocalDate3  = Instant.ofEpochSecond(dateLong3)
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate()
-
-            binding.top3testSecondDayNumber.text = dateLocalDate1.dayOfMonth.toString()
-            binding.top3TestSecondMonth.text = Convert.monthMap[dateLocalDate1.monthValue.toString()]
-            binding.top3TestSecondLessonName.text = listOfThreeTests[0].lesson
-            binding.top3TestFirstDayNumber.text = dateLocalDate2.dayOfMonth.toString()
-            binding.top3TestFirstMonth.text = Convert.monthMap[dateLocalDate2.monthValue.toString()]
-            binding.top3TestFirstLessonName.text = listOfThreeTests[1].lesson
-            binding.top3TestThirdDayNumber.text = dateLocalDate3.dayOfMonth.toString()
-            binding.top3TestThirdMonth.text = Convert.monthMap[dateLocalDate3.monthValue.toString()]
-            binding.top3TestThirdLessonName.text = listOfThreeTests[2].lesson
-
-            binding.top3test1.setOnClickListener{
-                hideAllModals()
-                binding.learnModal.visibility = View.VISIBLE
-                binding.modalLessonName.text = listOfThreeTests[0].lesson.uppercase()
-                binding.modalTopicName.text = listOfThreeTests[0].topic.uppercase()
-                binding.modalDate.text = StringBuilder(dateLocalDate1.dayOfMonth.toString()
-                        + " " + Convert.monthFullMap[(dateLocalDate1.monthValue+1).toString()].toString().uppercase())
-                setDeleteTestButtonListener(listOfThreeTests[0])
-                setStartStudyingButtonListener(listOfThreeTests[0])
-            }
-            binding.top3test2.setOnClickListener{
-                hideAllModals()
-                binding.learnModal.visibility = View.VISIBLE
-                binding.modalLessonName.text = listOfThreeTests[1].lesson.uppercase()
-                binding.modalTopicName.text = listOfThreeTests[1].topic.uppercase()
-                binding.modalDate.text = StringBuilder(dateLocalDate2.dayOfMonth.toString()
-                        + " " + Convert.monthFullMap[(dateLocalDate2.monthValue + 1).toString()].toString().uppercase())
-                setDeleteTestButtonListener(listOfThreeTests[1])
-                setStartStudyingButtonListener(listOfThreeTests[1])
-            }
-            binding.top3test3.setOnClickListener{
-                hideAllModals()
-                binding.learnModal.visibility = View.VISIBLE
-                binding.modalLessonName.text = listOfThreeTests[2].lesson.uppercase()
-                binding.modalTopicName.text = listOfThreeTests[2].topic.uppercase()
-                binding.modalDate.text = StringBuilder(dateLocalDate3.dayOfMonth.toString()
-                        + " " + Convert.monthFullMap[(dateLocalDate3.monthValue+1).toString()].toString().uppercase())
-                setDeleteTestButtonListener(listOfThreeTests[2])
-                setStartStudyingButtonListener(listOfThreeTests[2])
-            }
-
-        }
-
-        when(listOfThreeTests.size){
-            0 -> setTestsNull()
-
-            1 -> setTestOne()
-
-            2 -> setTestsTwo()
-
-            3 -> setTestsThree()
-        }
-
-
-
-
-    }
 
     private fun setTopicSpinner(levelOfEdu: String){
         val lesson = binding.lessonsSpinner.selectedItem.toString()
@@ -284,17 +102,6 @@ class MainActivity : AppCompatActivity() {
         binding.topicSpinner.adapter = adapter
     }
 
-
-    private fun hideAllModals(){
-        binding.addNewTestModal.visibility = View.GONE
-        binding.learnModal.visibility = View.GONE
-    }
-
-    private fun newTestModalReset(){
-        binding.addNewTestModal.visibility = View.GONE
-        onResume()
-    }
-
     private fun setListeners(){
 
         binding.settingsButton.setOnClickListener{
@@ -313,7 +120,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(calendarIntent)
         }
         binding.openNewTestModalButton.setOnClickListener{
-            hideAllModals()
+            modalsView.hideAllModals()
 
 
             binding.addNewTestModal.visibility = View.VISIBLE
@@ -343,17 +150,17 @@ class MainActivity : AppCompatActivity() {
             }
 
             binding.cancelNewTestButton.setOnClickListener{
-                newTestModalReset()
+                modalsView.newTestModalReset()
             }
 
             binding.timeOfNotificationTimePicker.setIs24HourView(true)
 
 
             binding.addNewTestButton.setOnClickListener{
-                
+
                 val lesson = binding.lessonsSpinner.selectedItem.toString()
                 val topic = binding.topicSpinner.selectedItem.toString()
-                val dateOfExam = getTime()
+                val dateOfExam = getTimeInMillis()
                 var reminder = 0
                 val timeOfRemindH = binding.timeOfNotificationTimePicker.hour.toString()
                 val timeOfRemindM = binding.timeOfNotificationTimePicker.minute.toString()
@@ -372,7 +179,7 @@ class MainActivity : AppCompatActivity() {
                 Log.e("TAG", "Insert test")
                 Toast.makeText(this, "Dodano sprawdzian", Toast.LENGTH_SHORT).show()
 
-                newTestModalReset()
+                modalsView.newTestModalReset()
             }
 
         }
@@ -393,7 +200,7 @@ class MainActivity : AppCompatActivity() {
             PendingIntent.getBroadcast(applicationContext, BootReceiver.NOTIFICATION_ID, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         }
 
-        val timeInMillis = getTime()
+        val timeInMillis = getTimeInMillis()
 
         alarmManager.setInexactRepeating(
             AlarmManager.RTC_WAKEUP,
@@ -404,7 +211,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun getTime(): Long{
+    private fun getTimeInMillis(): Long{
         val hour = binding.timeOfNotificationTimePicker.hour
         val minute = binding.timeOfNotificationTimePicker.minute
         val year = binding.testDatePicker.year
