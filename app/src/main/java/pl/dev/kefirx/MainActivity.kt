@@ -15,11 +15,10 @@ import com.google.gson.Gson
 import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.json.GetJSONString
 import pl.dev.kefirx.json.ListOfTopicsJSON
-import pl.dev.kefirx.reminder.Notification
+import pl.dev.kefirx.reminder.BootReceiver
 import pl.dev.kefirx.room.Tests
 import pl.dev.kefirx.viewModel.CSViewModel
 import java.time.Instant
-import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
 import kotlin.collections.ArrayList
@@ -350,34 +349,16 @@ class MainActivity : AppCompatActivity() {
             binding.timeOfNotificationTimePicker.setIs24HourView(true)
 
 
-            createNotificationChannel()
             binding.addNewTestButton.setOnClickListener{
-
-
-
-
-                scheduleNotification()
-
-
+                
                 val lesson = binding.lessonsSpinner.selectedItem.toString()
                 val topic = binding.topicSpinner.selectedItem.toString()
-                val dateOfExamLocalDate = LocalDate.of(binding.testDatePicker.year, binding.testDatePicker.month+1, binding.testDatePicker.dayOfMonth)
-
-                //val date = java.time.format.DateTimeFormatter.ISO_INSTANT
-              //      .format(java.time.Instant.ofEpochSecond(dateOfExamLocalDate.toEpochDay()*86400L))
-
-                val dateOfExam = dateOfExamLocalDate.toEpochDay()*86400L
+                val dateOfExam = getTime()
                 var reminder = 0
                 val timeOfRemindH = binding.timeOfNotificationTimePicker.hour.toString()
                 val timeOfRemindM = binding.timeOfNotificationTimePicker.minute.toString()
                 val timeOfLearning = 0.0
                 val watchedVideos = 0
-
-
-
-
-
-
 
                 when(binding.notificationSpinner.selectedItem.toString()){
                     "Codziennie" -> reminder = 1
@@ -385,10 +366,11 @@ class MainActivity : AppCompatActivity() {
                     "Dzień przed sprawdzianem" -> reminder = 3
                 }
 
+                schedulePushNotifications(lesson, topic)
+
                 viewModel.insertTest(Tests(lesson, topic, dateOfExam, timeOfLearning, watchedVideos, reminder, timeOfRemindH, timeOfRemindM))
                 Log.e("TAG", "Insert test")
                 Toast.makeText(this, "Dodano sprawdzian", Toast.LENGTH_SHORT).show()
-
 
                 newTestModalReset()
             }
@@ -396,49 +378,31 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun scheduleNotification(){
+    private fun schedulePushNotifications(lesson: String, topic: String) {
 
-        val intent = Intent(applicationContext, Notification::class.java)
-        val title = "Tytuł"
-        val message = "Wiadomosc"
+        val title = "Czas na naukę!"
+        val message = "$lesson - $topic"
 
-        intent.putExtra(Notification.TITLE_EXTRA, title)
-        intent.putExtra(Notification.MESSAGE_EXTRA, message)
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        val alarmPendingIntent by lazy {
+            val intent = Intent(applicationContext, BootReceiver::class.java)
 
-        val pendingIntent = PendingIntent.getBroadcast(
-            applicationContext,
-            Notification.NOTIFICATION_ID,
-            intent,
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+            intent.putExtra(BootReceiver.TITLE_EXTRA, title)
+            intent.putExtra(BootReceiver.MESSAGE_EXTRA, message)
 
-        val alarmManger = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            PendingIntent.getBroadcast(applicationContext, BootReceiver.NOTIFICATION_ID, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        }
 
-        val time = getTime()
-        alarmManger.setExactAndAllowWhileIdle(
+        val timeInMillis = getTime()
+
+        alarmManager.setInexactRepeating(
             AlarmManager.RTC_WAKEUP,
-            time,
-            pendingIntent
+            timeInMillis,
+            AlarmManager.INTERVAL_DAY,
+            alarmPendingIntent
         )
-        showAlert(time, title, message)
-
 
     }
-
-    private fun showAlert(time: Long, title: String, message: String) {
-        val date = Date(time)
-        val dateFormat = android.text.format.DateFormat.getLongDateFormat(applicationContext)
-        val timeFormat = android.text.format.DateFormat.getTimeFormat(applicationContext)
-
-        AlertDialog.Builder(this)
-            .setTitle("Tytuł tej notyfikacji na s")
-            .setMessage(
-                "Title: " + title +
-                        "\nMessage: " + message +
-                        "\nAt: " + dateFormat.format(date) + " " + timeFormat.format(date))
-            .setPositiveButton("Okay"){_,_ ->}
-            .show()
-    }
-
 
     private fun getTime(): Long{
         val hour = binding.timeOfNotificationTimePicker.hour
@@ -451,19 +415,5 @@ class MainActivity : AppCompatActivity() {
         calendar.set(year, month, dayOfMonth, hour, minute)
         return calendar.timeInMillis
     }
-
-    private fun createNotificationChannel(){
-        val name = "Notif Channel"
-        val desc = "A description"
-        val importance = NotificationManager.IMPORTANCE_DEFAULT
-        val channel = NotificationChannel(Notification.CHANNEL_ID, name, importance)
-        channel.description = desc
-        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
-
-
-    }
-
-
 
 }

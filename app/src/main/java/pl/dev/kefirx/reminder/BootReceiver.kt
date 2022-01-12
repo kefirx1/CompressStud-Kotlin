@@ -1,6 +1,5 @@
 package pl.dev.kefirx.reminder
 
-
 import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -8,10 +7,7 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import pl.dev.kefirx.R
 
-
-
-
-class Notification: BroadcastReceiver() {
+class BootReceiver : BroadcastReceiver() {
 
     companion object{
         const val NOTIFICATION_ID = 1
@@ -21,6 +17,14 @@ class Notification: BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
+        if (intent.action == "android.intent.action.BOOT_COMPLETED") {
+            schedulePushNotifications(context, intent)
+        }else{
+            schedulePushNotifications(context, intent)
+        }
+    }
+
+    private fun schedulePushNotifications(context: Context, intent: Intent){
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setContentTitle(intent.getStringExtra(TITLE_EXTRA))
@@ -32,8 +36,6 @@ class Notification: BroadcastReceiver() {
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.notify(NOTIFICATION_ID, notification)
 
-
     }
-
 
 }
