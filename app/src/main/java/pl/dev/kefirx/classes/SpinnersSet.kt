@@ -1,6 +1,6 @@
 package pl.dev.kefirx.classes
 
-import android.R
+import android.R.layout
 import android.widget.ArrayAdapter
 import pl.dev.kefirx.MainActivity
 import pl.dev.kefirx.MainActivity.Companion.listOfTopicsObject
@@ -27,10 +27,8 @@ class SpinnersSet {
                 }
             }
         }
-        val adapter = ArrayAdapter(instance, R.layout.simple_spinner_item, topicsList.subList(1, topicsList.lastIndex))
+        val adapter = ArrayAdapter(instance, layout.simple_spinner_item, topicsList.subList(1, topicsList.lastIndex))
         binding.topicSpinner.adapter = adapter
-
-        println(binding.topicSpinner.selectedItem)
 
     }
 

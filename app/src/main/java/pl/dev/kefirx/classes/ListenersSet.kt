@@ -1,6 +1,6 @@
 package pl.dev.kefirx.classes
 
-import android.R
+import android.R.layout
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -8,9 +8,13 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import pl.dev.kefirx.*
+import pl.dev.kefirx.CalendarActivity
+import pl.dev.kefirx.MainActivity
+import pl.dev.kefirx.SettingsActivity
+import pl.dev.kefirx.StatisticsActivity
 import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.room.Tests
+import java.util.*
 
 class ListenersSet {
 
@@ -18,6 +22,8 @@ class ListenersSet {
 
         val modalsView = ModalsView(binding, instance)
         val spinnersSet = SpinnersSet()
+
+        setCurrentDateTime(binding)
 
         binding.settingsButton.setOnClickListener{
             Log.e("TAG", "Go to settings")
@@ -36,20 +42,17 @@ class ListenersSet {
         }
         binding.openNewTestModalButton.setOnClickListener{
             modalsView.hideAllModals()
-
-            println("Siema")
-
-
+            
             binding.addNewTestModal.visibility = View.VISIBLE
             val levelOfEdu = MainActivity.viewModel.getUserInfoAsync().levelOfEdu
 
             if(levelOfEdu == "Podstawowa"){
                 val lessonsList = instance.resources.getStringArray(pl.dev.kefirx.R.array.listOfPrimaryLessons)
-                val adapter = ArrayAdapter(applicationContext, R.layout.simple_spinner_item, lessonsList)
+                val adapter = ArrayAdapter(applicationContext, layout.simple_spinner_item, lessonsList)
                 binding.lessonsSpinner.adapter = adapter
             }else if(levelOfEdu == "Średnia"){
                 val lessonsList = instance.resources.getStringArray(pl.dev.kefirx.R.array.listOfHighLessons)
-                val adapter = ArrayAdapter(applicationContext, R.layout.simple_spinner_item, lessonsList)
+                val adapter = ArrayAdapter(applicationContext, layout.simple_spinner_item, lessonsList)
                 binding.lessonsSpinner.adapter = adapter
             }
 
@@ -101,6 +104,20 @@ class ListenersSet {
             }
 
         }
+    }
+
+
+    private fun setCurrentDateTime(binding: ActivityMainBinding){
+        val currentDate = Calendar.getInstance()
+        val currentYear = currentDate.get(Calendar.YEAR)
+        val currentMonth = currentDate.get(Calendar.MONTH)
+        val currentDay = currentDate.get(Calendar.DAY_OF_MONTH)
+        val currentHour = currentDate.get(Calendar.HOUR)
+        val currentMinute = currentDate.get(Calendar.MINUTE)
+
+        binding.testDatePicker.updateDate(currentYear,currentMonth, currentDay)
+        binding.timeOfNotificationTimePicker.hour = currentHour
+        binding.timeOfNotificationTimePicker.minute = currentMinute
     }
 
 

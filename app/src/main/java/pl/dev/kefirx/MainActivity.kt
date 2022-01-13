@@ -64,7 +64,7 @@ open class MainActivity : AppCompatActivity() {
             startActivity(registerIntent)
         }else{
             modalsView.hideAllModals()
-            setDashboardActuallyInfo()
+            setDashboardCurrentInfo()
             listenersSet.setMainActivityListeners(binding, applicationContext, this)
         }
 
@@ -75,7 +75,7 @@ open class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun setDashboardActuallyInfo(){
+    private fun setDashboardCurrentInfo(){
         val name = viewModel.getUserInfoAsync().name + "!"
         binding.userNameTextView.text = name
 

@@ -1,7 +1,5 @@
 package pl.dev.kefirx.classes
 
-import pl.dev.kefirx.databinding.ActivityMainBinding
-import java.util.*
 import kotlin.math.roundToInt
 
 object Convert {
