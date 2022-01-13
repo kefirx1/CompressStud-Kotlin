@@ -4,14 +4,14 @@ import android.view.View
 import pl.dev.kefirx.MainActivity
 import pl.dev.kefirx.databinding.ActivityMainBinding
 
-class ModalsView(val binding: ActivityMainBinding, private val instance: MainActivity){
+class ModalsView{
 
-    fun hideAllModals(){
+    fun hideAllModals(binding: ActivityMainBinding){
         binding.addNewTestModal.visibility = View.INVISIBLE
         binding.learnModal.visibility = View.INVISIBLE
     }
 
-    fun newTestModalReset(){
+    fun newTestModalReset(binding: ActivityMainBinding, instance: MainActivity){
         binding.addNewTestModal.visibility = View.INVISIBLE
         instance.callOnResume()
     }

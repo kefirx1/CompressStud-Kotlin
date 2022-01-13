@@ -14,7 +14,7 @@ import java.time.ZoneId
 
 class DashboardBestThreeView(val binding: ActivityMainBinding, private val applicationContext: Context, private val instance: MainActivity){
 
-    private var modalsView = ModalsView(binding, instance)
+    private var modalsView = ModalsView()
 
     fun setBestOfThreeView(listOfThreeTests: List<Tests>){
 
@@ -63,7 +63,7 @@ class DashboardBestThreeView(val binding: ActivityMainBinding, private val appli
         binding.top3TestSecondLessonName.text = listOfThreeTests[0].lesson
 
         binding.top3test1.setOnClickListener{
-            modalsView.hideAllModals()
+            modalsView.hideAllModals(binding)
             binding.learnModal.visibility = View.VISIBLE
             binding.modalLessonName.text = listOfThreeTests[0].lesson.uppercase()
             binding.modalTopicName.text = listOfThreeTests[0].topic.uppercase()
@@ -88,7 +88,7 @@ class DashboardBestThreeView(val binding: ActivityMainBinding, private val appli
 
 
         binding.top3test2.setOnClickListener{
-            modalsView.hideAllModals()
+            modalsView.hideAllModals(binding)
             binding.learnModal.visibility = View.VISIBLE
             binding.modalLessonName.text = listOfThreeTests[1].lesson.uppercase()
             binding.modalTopicName.text = listOfThreeTests[1].topic.uppercase()
@@ -110,7 +110,7 @@ class DashboardBestThreeView(val binding: ActivityMainBinding, private val appli
         binding.top3TestThirdLessonName.text = listOfThreeTests[2].lesson
 
         binding.top3test3.setOnClickListener{
-            modalsView.hideAllModals()
+            modalsView.hideAllModals(binding)
             binding.learnModal.visibility = View.VISIBLE
             binding.modalLessonName.text = listOfThreeTests[2].lesson.uppercase()
             binding.modalTopicName.text = listOfThreeTests[2].topic.uppercase()

@@ -21,8 +21,9 @@ class ListenersSet {
 
     fun setMainActivityListeners(binding: ActivityMainBinding, applicationContext: Context, instance: MainActivity){
 
-        val modalsView = ModalsView(binding, instance)
+        val modalsView = ModalsView()
         val spinnersSet = SpinnersSet()
+        val notification = Notification()
 
         setCurrentDateTime(binding)
 
@@ -42,7 +43,7 @@ class ListenersSet {
             instance.startActivity(calendarIntent)
         }
         binding.openNewTestModalButton.setOnClickListener{
-            modalsView.hideAllModals()
+            modalsView.hideAllModals(binding)
 
             binding.addNewTestModal.visibility = View.VISIBLE
             val levelOfEdu = viewModel.getUserInfoAsync().levelOfEdu
@@ -71,7 +72,7 @@ class ListenersSet {
             }
 
             binding.cancelNewTestButton.setOnClickListener{
-                modalsView.newTestModalReset()
+                modalsView.newTestModalReset(binding, instance)
             }
 
             binding.timeOfNotificationTimePicker.setIs24HourView(true)
@@ -81,7 +82,7 @@ class ListenersSet {
 
                 val lesson = binding.lessonsSpinner.selectedItem.toString()
                 val topic = binding.topicSpinner.selectedItem.toString()
-                val dateOfExam = instance.getTimeInMillis() //TODO
+                val dateOfExam = notification.getTimeInMillis(binding)
                 var reminder = 0
                 val timeOfRemindH = binding.timeOfNotificationTimePicker.hour.toString()
                 val timeOfRemindM = binding.timeOfNotificationTimePicker.minute.toString()
@@ -95,13 +96,13 @@ class ListenersSet {
                 }
 
                 //TODO
-                instance.schedulePushNotifications(lesson, topic)
+                notification.schedulePushNotifications(lesson, topic, binding, applicationContext, instance)
 
                 viewModel.insertTest(Tests(lesson, topic, dateOfExam, timeOfLearning, watchedVideos, reminder, timeOfRemindH, timeOfRemindM))
                 Log.e("TAG", "Insert test")
                 Toast.makeText(applicationContext, "Dodano sprawdzian", Toast.LENGTH_SHORT).show()
 
-                modalsView.newTestModalReset()
+                modalsView.newTestModalReset(binding, instance)
             }
 
         }
