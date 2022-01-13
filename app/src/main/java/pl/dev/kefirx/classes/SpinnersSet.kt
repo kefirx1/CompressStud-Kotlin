@@ -10,25 +10,27 @@ class SpinnersSet {
 
     fun setMATopicSpinner(binding: ActivityMainBinding, instance: MainActivity, levelOfEdu: String){
 
-            val lesson = binding.lessonsSpinner.selectedItem.toString()
-            var topicsList: ArrayList<String> = ArrayList()
+        val lesson = binding.lessonsSpinner.selectedItem.toString()
 
-            if(levelOfEdu == "Podstawowa") {
-                listOfTopicsObject.Podstawowa.forEach{
-                    if(it[0] == lesson) {
-                        topicsList = it as ArrayList<String>
-                    }
-                }
-            }else if(levelOfEdu == "Średnia"){
-                listOfTopicsObject.Srednia.forEach{
-                    if(it[0] == lesson) {
-                        topicsList = it as ArrayList<String>
-                    }
+        var topicsList: ArrayList<String> = ArrayList()
+
+        if(levelOfEdu == "Podstawowa") {
+            listOfTopicsObject.Podstawowa.forEach{
+                if(it[0] == lesson) {
+                    topicsList = it as ArrayList<String>
                 }
             }
-            topicsList.remove(lesson)
-            val adapter = ArrayAdapter(instance, R.layout.simple_spinner_item, topicsList)
-            binding.topicSpinner.adapter = adapter
+        }else if(levelOfEdu == "Średnia"){
+            listOfTopicsObject.Srednia.forEach{
+                if(it[0] == lesson) {
+                    topicsList = it as ArrayList<String>
+                }
+            }
+        }
+        val adapter = ArrayAdapter(instance, R.layout.simple_spinner_item, topicsList.subList(1, topicsList.lastIndex))
+        binding.topicSpinner.adapter = adapter
+
+        println(binding.topicSpinner.selectedItem)
 
     }
 

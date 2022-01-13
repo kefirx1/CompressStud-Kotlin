@@ -37,6 +37,8 @@ class ListenersSet {
         binding.openNewTestModalButton.setOnClickListener{
             modalsView.hideAllModals()
 
+            println("Siema")
+
 
             binding.addNewTestModal.visibility = View.VISIBLE
             val levelOfEdu = MainActivity.viewModel.getUserInfoAsync().levelOfEdu
@@ -58,7 +60,6 @@ class ListenersSet {
                     position: Int,
                     id: Long
                 ) {
-                    //TODO
                     spinnersSet.setMATopicSpinner(binding, instance, levelOfEdu)
                 }
                 override fun onNothingSelected(parent: AdapterView<*>?) {
