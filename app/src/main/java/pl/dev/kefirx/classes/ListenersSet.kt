@@ -12,11 +12,12 @@ import pl.dev.kefirx.*
 import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.room.Tests
 
-class Listeners {
+class ListenersSet {
 
     fun setMainActivityListeners(binding: ActivityMainBinding, applicationContext: Context, instance: MainActivity){
 
         val modalsView = ModalsView(binding, instance)
+        val spinnersSet = SpinnersSet()
 
         binding.settingsButton.setOnClickListener{
             Log.e("TAG", "Go to settings")
@@ -58,7 +59,7 @@ class Listeners {
                     id: Long
                 ) {
                     //TODO
-                    instance.setTopicSpinner(levelOfEdu)
+                    spinnersSet.setMATopicSpinner(binding, instance, levelOfEdu)
                 }
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                 }
@@ -100,5 +101,8 @@ class Listeners {
 
         }
     }
+
+
+
 
 }

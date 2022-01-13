@@ -5,34 +5,34 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
-import pl.dev.kefirx.classes.DashboardView
-import pl.dev.kefirx.classes.Listeners
+import pl.dev.kefirx.classes.DashboardBestThreeView
+import pl.dev.kefirx.classes.ListenersSet
 import pl.dev.kefirx.classes.ModalsView
+import pl.dev.kefirx.classes.SpinnersSet
 import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.json.GetJSONString
 import pl.dev.kefirx.json.ListOfTopicsJSON
 import pl.dev.kefirx.reminder.BootReceiver
 import pl.dev.kefirx.viewModel.CSViewModel
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 open class MainActivity : AppCompatActivity() {
 
     companion object{
         lateinit var viewModel: CSViewModel
-        private const val LIST_OF_TOPICS_PATH = "listOfTopics.json"
+        const val LIST_OF_TOPICS_PATH = "listOfTopics.json"
+        lateinit var listOfTopicsObject: ListOfTopicsJSON
     }
 
     protected lateinit var binding: ActivityMainBinding
-    private lateinit var listOfTopicsObject: ListOfTopicsJSON
-    private lateinit var dashboardView: DashboardView
+    private lateinit var dashboardBestThreeView: DashboardBestThreeView
     private lateinit var modalsView: ModalsView
-    private lateinit var listeners: Listeners
+    private lateinit var listenersSet: ListenersSet
+    private lateinit var spinnersSet: SpinnersSet
     private var getJSONString = GetJSONString()
     private val gson = Gson()
 
@@ -44,9 +44,9 @@ open class MainActivity : AppCompatActivity() {
         listOfTopicsObject  = gson.fromJson(getJSONString.getJsonStringFromAssets(applicationContext, LIST_OF_TOPICS_PATH), ListOfTopicsJSON::class.java)
 
         modalsView = ModalsView(binding, this)
-        dashboardView = DashboardView(binding, applicationContext, this)
-        listeners = Listeners()
-
+        dashboardBestThreeView = DashboardBestThreeView(binding, applicationContext, this)
+        listenersSet = ListenersSet()
+        spinnersSet = SpinnersSet()
     }
 
     override fun onResume() {
@@ -65,7 +65,7 @@ open class MainActivity : AppCompatActivity() {
         }else{
             modalsView.hideAllModals()
             setDashboardActuallyInfo()
-            listeners.setMainActivityListeners(binding, applicationContext, this)
+            listenersSet.setMainActivityListeners(binding, applicationContext, this)
         }
 
     }
@@ -74,34 +74,12 @@ open class MainActivity : AppCompatActivity() {
         onResume()
     }
 
+
     private fun setDashboardActuallyInfo(){
         val name = viewModel.getUserInfoAsync().name + "!"
         binding.userNameTextView.text = name
 
-        dashboardView.setBestOfThreeView(viewModel.getThreeExams())
-    }
-
-
-    fun setTopicSpinner(levelOfEdu: String){
-        val lesson = binding.lessonsSpinner.selectedItem.toString()
-        var topicsList: ArrayList<String> = ArrayList()
-
-        if(levelOfEdu == "Podstawowa") {
-            listOfTopicsObject.Podstawowa.forEach{
-                if(it[0] == lesson) {
-                    topicsList = it as ArrayList<String>
-                }
-            }
-        }else if(levelOfEdu == "Średnia"){
-            listOfTopicsObject.Srednia.forEach{
-                if(it[0] == lesson) {
-                    topicsList = it as ArrayList<String>
-                }
-            }
-        }
-        topicsList.remove(lesson)
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, topicsList)
-        binding.topicSpinner.adapter = adapter
+        dashboardBestThreeView.setBestOfThreeView(viewModel.getThreeExams())
     }
 
     fun schedulePushNotifications(lesson: String, topic: String) {

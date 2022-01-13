@@ -11,7 +11,7 @@ import pl.dev.kefirx.room.Tests
 import java.time.Instant
 import java.time.ZoneId
 
-class DashboardView(val binding: ActivityMainBinding, private val applicationContext: Context, private val instance: MainActivity){
+class DashboardBestThreeView(val binding: ActivityMainBinding, private val applicationContext: Context, private val instance: MainActivity){
 
     private var modalsView = ModalsView(binding, instance)
 
@@ -35,7 +35,6 @@ class DashboardView(val binding: ActivityMainBinding, private val applicationCon
         }
 
     }
-
 
     private fun setTestsNull(){
         with(binding){
