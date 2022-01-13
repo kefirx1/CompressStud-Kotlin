@@ -1,12 +1,10 @@
 package pl.dev.kefirx
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import pl.dev.kefirx.MainActivity.Companion.viewModel
 import pl.dev.kefirx.databinding.ActivitySettingsBinding
 import pl.dev.kefirx.room.User
@@ -14,7 +12,6 @@ import pl.dev.kefirx.room.User
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingsBinding
-    var tempDeleteVar = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,35 +77,6 @@ class SettingsActivity : AppCompatActivity() {
 
         }
 
-        binding.openThemeModal.setOnClickListener{
-            setGoneToAllModals()
-            binding.themeModal.visibility = VISIBLE
-
-            setThemeModalView()
-
-
-            binding.themeSwitch.setOnClickListener{
-                val isChecked = binding.themeSwitch.isChecked
-                if(isChecked){
-                    val user : User = viewModel.getUserInfoAsync()
-                    user.theme = AppCompatDelegate.MODE_NIGHT_YES
-                    viewModel.updateUser(user)
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                }else{
-                    val user : User = viewModel.getUserInfoAsync()
-                    user.theme = AppCompatDelegate.MODE_NIGHT_NO
-                    viewModel.updateUser(user)
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                }
-                setThemeModalView()
-            }
-
-            binding.themeButton.setOnClickListener{
-                this.finish()
-            }
-
-        }
-
         binding.openWarningModal.setOnClickListener{
             setGoneToAllModals()
             binding.wipeDataModal.visibility = VISIBLE
@@ -116,7 +84,6 @@ class SettingsActivity : AppCompatActivity() {
             binding.wipeDataButton.setOnClickListener{
                 viewModel.deleteAllTests()
                 viewModel.deleteAllUserInfo()
-                tempDeleteVar = true
                 this.finish()
             }
         }
@@ -139,7 +106,6 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun isLikeMusicTrue() = viewModel.getUserInfoAsync().likeMusic
     private fun isMusicGenresEmpty() = viewModel.getUserInfoAsync().musicGenres == ""
-    private fun isThemeNight() = viewModel.getUserInfoAsync().theme
 
     private fun setMusicModalView(){
         if(isLikeMusicTrue()){
@@ -169,14 +135,10 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun setThemeModalView(){
-        binding.themeSwitch.isChecked = isThemeNight() == AppCompatDelegate.MODE_NIGHT_YES
-    }
 
     override fun onStop() {
         super.onStop()
 
-        if(!tempDeleteVar){
             if(!isLikeMusicTrue()){
                 val user : User = viewModel.getUserInfoAsync()
                 user.musicGenres = ""
@@ -188,7 +150,7 @@ class SettingsActivity : AppCompatActivity() {
                     viewModel.updateUser(user)
                 }
             }
-        }
+
     }
 
 

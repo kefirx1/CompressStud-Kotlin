@@ -49,11 +49,11 @@ class ListenersSet {
 
             if(levelOfEdu == "Podstawowa"){
                 val lessonsList = instance.resources.getStringArray(pl.dev.kefirx.R.array.listOfPrimaryLessons)
-                val adapter = ArrayAdapter(applicationContext, layout.simple_spinner_item, lessonsList)
+                val adapter = ArrayAdapter(instance, layout.simple_spinner_item, lessonsList)
                 binding.lessonsSpinner.adapter = adapter
             }else if(levelOfEdu == "Średnia"){
                 val lessonsList = instance.resources.getStringArray(pl.dev.kefirx.R.array.listOfHighLessons)
-                val adapter = ArrayAdapter(applicationContext, layout.simple_spinner_item, lessonsList)
+                val adapter = ArrayAdapter(instance, layout.simple_spinner_item, lessonsList)
                 binding.lessonsSpinner.adapter = adapter
             }
 

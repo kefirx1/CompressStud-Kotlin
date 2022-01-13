@@ -30,8 +30,7 @@ class FragmentRegisterEnd : Fragment() {
         val levelOfEdu = personalInformation[1]
         val likeMusic = personalInformation[2].toBoolean()
         val musicGenres = personalInformation[3]
-        val theme = AppCompatDelegate.MODE_NIGHT_YES
-        val user  = User(name, levelOfEdu, likeMusic, musicGenres, theme)
+        val user  = User(name, levelOfEdu, likeMusic, musicGenres)
 
 
         viewModel.insertUser(user)

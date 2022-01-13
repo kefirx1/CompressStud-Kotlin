@@ -9,8 +9,7 @@ data class User(
     var name: String,
     var levelOfEdu: String,
     var likeMusic: Boolean,
-    var musicGenres: String,
-    var theme: Int){
+    var musicGenres: String){
 
     @PrimaryKey(autoGenerate = true)
     var user_id: Int = 0

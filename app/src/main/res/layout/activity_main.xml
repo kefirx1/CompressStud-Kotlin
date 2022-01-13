@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <!--    android:layout_width="370dp"-->
     <!--    android:layout_height="208dp"-->
 
@@ -154,17 +153,6 @@
 
             </LinearLayout>
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/noTestTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/bold"
-            android:text="Brak sprawdzianów"
-            android:textAlignment="center"
-            android:textSize="56px"
-            android:visibility="gone" />
 
         <Button
             android:id="@+id/openNewTestModalButton"
@@ -509,7 +497,7 @@
             android:id="@+id/lessonsSpinner"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:background="@drawable/spinner" />
+            android:background="@drawable/spinner"/>
 
         <TextView
             android:id="@+id/textView18"

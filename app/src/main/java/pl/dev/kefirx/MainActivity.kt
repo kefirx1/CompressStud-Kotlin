@@ -77,10 +77,6 @@ open class MainActivity : AppCompatActivity() {
 
 
     private fun setDashboardCurrentInfo(){
-        val theme = viewModel.getUserInfoAsync().theme
-        if(theme == AppCompatDelegate.MODE_NIGHT_YES){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        }
         val name = viewModel.getUserInfoAsync().name + "!"
         binding.userNameTextView.text = name
         dashboardBestThreeView.setBestOfThreeView(viewModel.getThreeExams())
