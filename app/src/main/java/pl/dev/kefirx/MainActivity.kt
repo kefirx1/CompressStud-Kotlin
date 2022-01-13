@@ -5,20 +5,17 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import pl.dev.kefirx.classes.DashboardView
+import pl.dev.kefirx.classes.Listeners
 import pl.dev.kefirx.classes.ModalsView
 import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.json.GetJSONString
 import pl.dev.kefirx.json.ListOfTopicsJSON
 import pl.dev.kefirx.reminder.BootReceiver
-import pl.dev.kefirx.room.Tests
 import pl.dev.kefirx.viewModel.CSViewModel
 import java.util.*
 import kotlin.collections.ArrayList
@@ -35,9 +32,9 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var listOfTopicsObject: ListOfTopicsJSON
     private lateinit var dashboardView: DashboardView
     private lateinit var modalsView: ModalsView
+    private lateinit var listeners: Listeners
     private var getJSONString = GetJSONString()
     private val gson = Gson()
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,8 +45,7 @@ open class MainActivity : AppCompatActivity() {
 
         modalsView = ModalsView(binding, this)
         dashboardView = DashboardView(binding, applicationContext, this)
-
-        onResume()
+        listeners = Listeners()
 
     }
 
@@ -69,7 +65,7 @@ open class MainActivity : AppCompatActivity() {
         }else{
             modalsView.hideAllModals()
             setDashboardActuallyInfo()
-            setListeners()
+            listeners.setMainActivityListeners(binding, applicationContext, this)
         }
 
     }
@@ -86,7 +82,7 @@ open class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun setTopicSpinner(levelOfEdu: String){
+    fun setTopicSpinner(levelOfEdu: String){
         val lesson = binding.lessonsSpinner.selectedItem.toString()
         var topicsList: ArrayList<String> = ArrayList()
 
@@ -108,90 +104,7 @@ open class MainActivity : AppCompatActivity() {
         binding.topicSpinner.adapter = adapter
     }
 
-    private fun setListeners(){
-
-        binding.settingsButton.setOnClickListener{
-            Log.e("TAG", "Go to settings")
-            val settingsIntent = Intent(this, SettingsActivity::class.java)
-            startActivity(settingsIntent)
-        }
-        binding.statisticsButton.setOnClickListener{
-            Log.e("TAG", "Go to statistics")
-            val statisticsIntent = Intent(this, StatisticsActivity::class.java)
-            startActivity(statisticsIntent)
-        }
-        binding.calendarButton.setOnClickListener{
-            Log.e("TAG", "Go to calendar")
-            val calendarIntent = Intent(this, CalendarActivity::class.java)
-            startActivity(calendarIntent)
-        }
-        binding.openNewTestModalButton.setOnClickListener{
-            modalsView.hideAllModals()
-
-
-            binding.addNewTestModal.visibility = View.VISIBLE
-            val levelOfEdu = viewModel.getUserInfoAsync().levelOfEdu
-
-            if(levelOfEdu == "Podstawowa"){
-                val lessonsList = resources.getStringArray(R.array.listOfPrimaryLessons)
-                val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, lessonsList)
-                binding.lessonsSpinner.adapter = adapter
-            }else if(levelOfEdu == "Średnia"){
-                val lessonsList = resources.getStringArray(R.array.listOfHighLessons)
-                val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, lessonsList)
-                binding.lessonsSpinner.adapter = adapter
-            }
-
-            binding.lessonsSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    setTopicSpinner(levelOfEdu)
-                }
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                }
-            }
-
-            binding.cancelNewTestButton.setOnClickListener{
-                modalsView.newTestModalReset()
-            }
-
-            binding.timeOfNotificationTimePicker.setIs24HourView(true)
-
-
-            binding.addNewTestButton.setOnClickListener{
-
-                val lesson = binding.lessonsSpinner.selectedItem.toString()
-                val topic = binding.topicSpinner.selectedItem.toString()
-                val dateOfExam = getTimeInMillis()
-                var reminder = 0
-                val timeOfRemindH = binding.timeOfNotificationTimePicker.hour.toString()
-                val timeOfRemindM = binding.timeOfNotificationTimePicker.minute.toString()
-                val timeOfLearning = 0.0
-                val watchedVideos = 0
-
-                when(binding.notificationSpinner.selectedItem.toString()){
-                    "Codziennie" -> reminder = 1
-                    "Co dwa dni" -> reminder = 2
-                    "Dzień przed sprawdzianem" -> reminder = 3
-                }
-
-                schedulePushNotifications(lesson, topic)
-
-                viewModel.insertTest(Tests(lesson, topic, dateOfExam, timeOfLearning, watchedVideos, reminder, timeOfRemindH, timeOfRemindM))
-                Log.e("TAG", "Insert test")
-                Toast.makeText(this, "Dodano sprawdzian", Toast.LENGTH_SHORT).show()
-
-                modalsView.newTestModalReset()
-            }
-
-        }
-    }
-
-    private fun schedulePushNotifications(lesson: String, topic: String) {
+    fun schedulePushNotifications(lesson: String, topic: String) {
 
         val title = "Czas na naukę!"
         val message = "$lesson - $topic"
@@ -217,7 +130,7 @@ open class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun getTimeInMillis(): Long{
+    fun getTimeInMillis(): Long{
         val hour = binding.timeOfNotificationTimePicker.hour
         val minute = binding.timeOfNotificationTimePicker.minute
         val year = binding.testDatePicker.year
