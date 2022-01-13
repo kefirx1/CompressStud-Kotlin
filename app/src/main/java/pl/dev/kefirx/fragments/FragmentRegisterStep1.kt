@@ -1,9 +1,11 @@
 package pl.dev.kefirx.fragments
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -26,11 +28,16 @@ class FragmentRegisterStep1 : Fragment() {
             val personName = binding.personNameEditText.text.toString()
 
             val personalInformation: ArrayList<String> = ArrayList()
-            personalInformation.add(personName)
 
-            findNavController().navigate(
-                FragmentRegisterStep1Directions.actionFragmentRegisterStep1ToFragmentRegisterStep2().actionId,
-                bundleOf("info" to personalInformation))
+            if(personName.isNotBlank()){
+                personalInformation.add(personName)
+                findNavController().navigate(
+                    FragmentRegisterStep1Directions.actionFragmentRegisterStep1ToFragmentRegisterStep2().actionId,
+                    bundleOf("info" to personalInformation))
+            }else{
+                Toast.makeText(this.activity, "Podaj poprawne imię", Toast.LENGTH_SHORT).show()
+            }
+
         }
 
     }

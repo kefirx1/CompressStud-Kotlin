@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import pl.dev.kefirx.classes.DashboardBestThreeView
@@ -76,9 +77,12 @@ open class MainActivity : AppCompatActivity() {
 
 
     private fun setDashboardCurrentInfo(){
+        val theme = viewModel.getUserInfoAsync().theme
+        if(theme == AppCompatDelegate.MODE_NIGHT_YES){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
         val name = viewModel.getUserInfoAsync().name + "!"
         binding.userNameTextView.text = name
-
         dashboardBestThreeView.setBestOfThreeView(viewModel.getThreeExams())
     }
 
