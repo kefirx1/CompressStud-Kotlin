@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import pl.dev.kefirx.classes.Convert
@@ -18,14 +19,13 @@ import pl.dev.kefirx.youTube.YoutubeObject
 import pl.dev.kefirx.youTube.YoutubeSampleRespose
 
 
-
-
 class StudyingActivity : AppCompatActivity() {
 
     private lateinit var testToStudying: Tests
     private lateinit var binding: ActivityStudyingBinding
     private lateinit var serviceIntent: Intent
     private var time = 0.0
+    private var watchedVideos = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +36,7 @@ class StudyingActivity : AppCompatActivity() {
         testToStudying = MainActivity.viewModel.getTestByIdInfoAsync(idTestToStudying)
 
         time = testToStudying.timeOfLearning
+        watchedVideos = testToStudying.watchedVideos
 
         serviceIntent = Intent(applicationContext, TimerService::class.java)
         registerReceiver(updateTime, IntentFilter(TimerService.TIMER_UPDATED))
@@ -64,6 +65,10 @@ class StudyingActivity : AppCompatActivity() {
         startTimer()
     }
 
+    private fun addWatchedVideos(){
+        watchedVideos++
+    }
+
     private fun loadVideos(responseObject: YoutubeResponseJSON){
 
         val bestOfFiveVideosURL: ArrayList<String> = YoutubeObject.getBestOfFive(responseObject)
@@ -78,27 +83,83 @@ class StudyingActivity : AppCompatActivity() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 youTubePlayer.cueVideo(bestOfFiveVideosURL[0], 0f)
             }
+
+            override fun onStateChange(
+                youTubePlayer: YouTubePlayer,
+                state: PlayerConstants.PlayerState
+            ) {
+                super.onStateChange(youTubePlayer, state)
+                if(state.name == "ENDED"){
+                    addWatchedVideos()
+                }
+            }
+
         })
         binding.youtubePlayer2.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 youTubePlayer.cueVideo(bestOfFiveVideosURL[1], 0f)
             }
+
+            override fun onStateChange(
+                youTubePlayer: YouTubePlayer,
+                state: PlayerConstants.PlayerState
+            ) {
+                super.onStateChange(youTubePlayer, state)
+                if(state.name == "ENDED"){
+                    addWatchedVideos()
+                }
+            }
+
         })
         binding.youtubePlayer3.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 youTubePlayer.cueVideo(bestOfFiveVideosURL[2], 0f)
             }
+
+            override fun onStateChange(
+                youTubePlayer: YouTubePlayer,
+                state: PlayerConstants.PlayerState
+            ) {
+                super.onStateChange(youTubePlayer, state)
+                if(state.name == "ENDED"){
+                    addWatchedVideos()
+                }
+            }
+
         })
         binding.youtubePlayer4.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 youTubePlayer.cueVideo(bestOfFiveVideosURL[3], 0f)
             }
+
+            override fun onStateChange(
+                youTubePlayer: YouTubePlayer,
+                state: PlayerConstants.PlayerState
+            ) {
+                super.onStateChange(youTubePlayer, state)
+                if(state.name == "ENDED"){
+                    addWatchedVideos()
+                }
+            }
+
         })
         binding.youtubePlayer5.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 youTubePlayer.cueVideo(bestOfFiveVideosURL[4], 0f)
             }
+
+            override fun onStateChange(
+                youTubePlayer: YouTubePlayer,
+                state: PlayerConstants.PlayerState
+            ) {
+                super.onStateChange(youTubePlayer, state)
+                if(state.name == "ENDED"){
+                    addWatchedVideos()
+                }
+            }
+
         })
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -143,6 +204,7 @@ class StudyingActivity : AppCompatActivity() {
         super.onPause()
         stopService(serviceIntent)
         testToStudying.timeOfLearning = time
+        testToStudying.watchedVideos = watchedVideos
         MainActivity.viewModel.updateTest(testToStudying)
     }
 }

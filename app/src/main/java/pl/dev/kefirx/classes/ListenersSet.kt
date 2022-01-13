@@ -42,7 +42,7 @@ class ListenersSet {
         }
         binding.openNewTestModalButton.setOnClickListener{
             modalsView.hideAllModals()
-            
+
             binding.addNewTestModal.visibility = View.VISIBLE
             val levelOfEdu = MainActivity.viewModel.getUserInfoAsync().levelOfEdu
 
