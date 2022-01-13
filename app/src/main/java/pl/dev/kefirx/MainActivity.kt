@@ -46,8 +46,10 @@ open class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         listOfTopicsObject  = gson.fromJson(getJSONString.getJsonStringFromAssets(applicationContext, LIST_OF_TOPICS_PATH), ListOfTopicsJSON::class.java)
 
-        dashboardView = DashboardView()
-        modalsView = ModalsView()
+        modalsView = ModalsView(binding, this)
+        dashboardView = DashboardView(binding, applicationContext, this)
+
+        onResume()
 
     }
 
@@ -70,6 +72,10 @@ open class MainActivity : AppCompatActivity() {
             setListeners()
         }
 
+    }
+
+    fun callOnResume(){
+        onResume()
     }
 
     private fun setDashboardActuallyInfo(){

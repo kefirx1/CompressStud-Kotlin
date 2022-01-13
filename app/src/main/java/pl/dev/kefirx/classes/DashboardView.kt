@@ -1,17 +1,19 @@
 package pl.dev.kefirx.classes
 
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.View
 import pl.dev.kefirx.MainActivity
 import pl.dev.kefirx.StudyingActivity
+import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.room.Tests
 import java.time.Instant
 import java.time.ZoneId
 
-class DashboardView: MainActivity() {
+class DashboardView(val binding: ActivityMainBinding, private val applicationContext: Context, private val instance: MainActivity){
 
-    private var modalsView = ModalsView()
+    private var modalsView = ModalsView(binding, instance)
 
     fun setBestOfThreeView(listOfThreeTests: List<Tests>){
 
@@ -31,6 +33,7 @@ class DashboardView: MainActivity() {
                     setSecondTest(listOfThreeTests)
                     setThirdTest(listOfThreeTests)}
         }
+
     }
 
 
@@ -51,13 +54,13 @@ class DashboardView: MainActivity() {
     private fun setFirstTest(listOfThreeTests: List<Tests>){
 
         val dateLong1 = listOfThreeTests[0].dateOfExam
-        val  dateLocalDate1  = Instant.ofEpochSecond(dateLong1)
+        val  dateLocalDate1  = Instant.ofEpochMilli(dateLong1)
             .atZone(ZoneId.systemDefault())
             .toLocalDate()
 
-        binding.top3TestFirstDayNumber.text = dateLocalDate1.dayOfMonth.toString()
-        binding.top3TestFirstMonth.text = Convert.monthMap[dateLocalDate1.monthValue.toString()]
-        binding.top3TestFirstLessonName.text = listOfThreeTests[1].lesson
+        binding.top3testSecondDayNumber.text = dateLocalDate1.dayOfMonth.toString()
+        binding.top3TestSecondMonth.text = Convert.monthMap[dateLocalDate1.monthValue.toString()]
+        binding.top3TestSecondLessonName.text = listOfThreeTests[0].lesson
 
         binding.top3test1.setOnClickListener{
             modalsView.hideAllModals()
@@ -65,7 +68,7 @@ class DashboardView: MainActivity() {
             binding.modalLessonName.text = listOfThreeTests[0].lesson.uppercase()
             binding.modalTopicName.text = listOfThreeTests[0].topic.uppercase()
             binding.modalDate.text = StringBuilder(dateLocalDate1.dayOfMonth.toString()
-                    + " " + Convert.monthFullMap[(dateLocalDate1.monthValue+1).toString()].toString().uppercase())
+                    + " " + Convert.monthFullMap[(dateLocalDate1.monthValue).toString()].toString().uppercase())
             setDeleteTestButtonListener(listOfThreeTests[0])
             setStartStudyingButtonListener(listOfThreeTests[0])
         }
@@ -74,13 +77,15 @@ class DashboardView: MainActivity() {
     private fun setSecondTest(listOfThreeTests: List<Tests>){
 
         val dateLong2 = listOfThreeTests[1].dateOfExam
-        val  dateLocalDate2  = Instant.ofEpochSecond(dateLong2)
+        val  dateLocalDate2  = Instant.ofEpochMilli(dateLong2)
             .atZone(ZoneId.systemDefault())
             .toLocalDate()
 
-        binding.top3testSecondDayNumber.text = dateLocalDate2.dayOfMonth.toString()
-        binding.top3TestSecondMonth.text = Convert.monthMap[dateLocalDate2.monthValue.toString()]
-        binding.top3TestSecondLessonName.text = listOfThreeTests[0].lesson
+        binding.top3TestFirstDayNumber.text = dateLocalDate2.dayOfMonth.toString()
+        binding.top3TestFirstMonth.text = Convert.monthMap[dateLocalDate2.monthValue.toString()]
+        binding.top3TestFirstLessonName.text = listOfThreeTests[1].lesson
+
+
 
         binding.top3test2.setOnClickListener{
             modalsView.hideAllModals()
@@ -88,7 +93,7 @@ class DashboardView: MainActivity() {
             binding.modalLessonName.text = listOfThreeTests[1].lesson.uppercase()
             binding.modalTopicName.text = listOfThreeTests[1].topic.uppercase()
             binding.modalDate.text = StringBuilder(dateLocalDate2.dayOfMonth.toString()
-                    + " " + Convert.monthFullMap[(dateLocalDate2.monthValue + 1).toString()].toString().uppercase())
+                    + " " + Convert.monthFullMap[(dateLocalDate2.monthValue).toString()].toString().uppercase())
             setDeleteTestButtonListener(listOfThreeTests[1])
             setStartStudyingButtonListener(listOfThreeTests[1])
         }
@@ -96,7 +101,7 @@ class DashboardView: MainActivity() {
     private fun setThirdTest(listOfThreeTests: List<Tests>){
 
         val dateLong3 = listOfThreeTests[2].dateOfExam
-        val  dateLocalDate3  = Instant.ofEpochSecond(dateLong3)
+        val  dateLocalDate3  = Instant.ofEpochMilli(dateLong3)
             .atZone(ZoneId.systemDefault())
             .toLocalDate()
 
@@ -110,7 +115,7 @@ class DashboardView: MainActivity() {
             binding.modalLessonName.text = listOfThreeTests[2].lesson.uppercase()
             binding.modalTopicName.text = listOfThreeTests[2].topic.uppercase()
             binding.modalDate.text = StringBuilder(dateLocalDate3.dayOfMonth.toString()
-                    + " " + Convert.monthFullMap[(dateLocalDate3.monthValue+1).toString()].toString().uppercase())
+                    + " " + Convert.monthFullMap[(dateLocalDate3.monthValue).toString()].toString().uppercase())
             setDeleteTestButtonListener(listOfThreeTests[2])
             setStartStudyingButtonListener(listOfThreeTests[2])
         }
@@ -118,13 +123,13 @@ class DashboardView: MainActivity() {
 
     private fun setDeleteTestButtonListener(test: Tests){
         binding.deleteTestButton.setOnClickListener{
-            viewModel.deleteTest(test)
+            MainActivity.viewModel.deleteTest(test)
             Log.e("TAG", "Test deleted")
             binding.top3test1.setOnClickListener(null)
             binding.top3test2.setOnClickListener(null)
             binding.top3test3.setOnClickListener(null)
             setTestsNull()
-            onResume()
+            instance.callOnResume()
         }
     }
 
@@ -133,7 +138,7 @@ class DashboardView: MainActivity() {
             val studyingIntent = Intent(applicationContext, StudyingActivity::class.java).apply {
                 putExtra("testId", test.test_id )
             }
-            startActivity(studyingIntent)
+            instance.startActivity(studyingIntent)
         }
     }
 
