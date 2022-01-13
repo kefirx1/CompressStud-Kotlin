@@ -1,20 +1,19 @@
 package pl.dev.kefirx.room
 
 import android.app.Application
-import androidx.lifecycle.LiveData
 import kotlinx.coroutines.*
 
 
 class CSRepository (application: Application) {
 
-    private lateinit var userDao: UserDao
-    private lateinit var testsDao: TestsDao
+    private var userDao: UserDao
+    private var testsDao: TestsDao
 
     init{
         val database = CSDatabase
             .getInstance(application.applicationContext)
         userDao = database!!.userDao()
-        testsDao = database!!.testsDao()
+        testsDao = database.testsDao()
     }
 
     fun insertUser(user: User) = CoroutineScope(Dispatchers.IO).launch {

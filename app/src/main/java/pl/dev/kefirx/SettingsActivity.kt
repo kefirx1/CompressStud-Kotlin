@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
+import pl.dev.kefirx.MainActivity.Companion.viewModel
 import pl.dev.kefirx.databinding.ActivitySettingsBinding
 import pl.dev.kefirx.room.User
 
@@ -26,9 +27,9 @@ class SettingsActivity : AppCompatActivity() {
 
             binding.editNameButton.setOnClickListener{
                 val newName: String = binding.newNameEditText.text.toString()
-                val user : User = MainActivity.viewModel.getUserInfoAsync()
+                val user : User = viewModel.getUserInfoAsync()
                 user.name = newName
-                MainActivity.viewModel.updateUser(user)
+                viewModel.updateUser(user)
                 this.finish()
             }
 
@@ -40,9 +41,9 @@ class SettingsActivity : AppCompatActivity() {
 
             binding.newLevelButton.setOnClickListener{
                 val newLevel = binding.newLevelSpinner.selectedItem.toString()
-                val user : User = MainActivity.viewModel.getUserInfoAsync()
+                val user : User = viewModel.getUserInfoAsync()
                 user.levelOfEdu = newLevel
-                MainActivity.viewModel.updateUser(user)
+                viewModel.updateUser(user)
                 this.finish()
             }
         }
@@ -56,13 +57,13 @@ class SettingsActivity : AppCompatActivity() {
             binding.newMusicSwitch.setOnClickListener{
                 val isChecked = binding.newMusicSwitch.isChecked
                 if(isChecked){
-                    val user : User = MainActivity.viewModel.getUserInfoAsync()
+                    val user : User = viewModel.getUserInfoAsync()
                     user.likeMusic = true
-                    MainActivity.viewModel.updateUser(user)
+                    viewModel.updateUser(user)
                 }else{
-                    val user : User = MainActivity.viewModel.getUserInfoAsync()
+                    val user : User = viewModel.getUserInfoAsync()
                     user.likeMusic = false
-                    MainActivity.viewModel.updateUser(user)
+                    viewModel.updateUser(user)
                 }
                 setMusicModalView()
             }
@@ -83,8 +84,8 @@ class SettingsActivity : AppCompatActivity() {
             binding.wipeDataModal.visibility = VISIBLE
 
             binding.wipeDataButton.setOnClickListener{
-                MainActivity.viewModel.deleteAllTests()
-                MainActivity.viewModel.deleteAllUserInfo()
+                viewModel.deleteAllTests()
+                viewModel.deleteAllUserInfo()
                 this.finish()
             }
         }
@@ -105,21 +106,21 @@ class SettingsActivity : AppCompatActivity() {
         binding.themeModal.visibility = View.GONE
     }
 
-    private fun isLikeMusicTrue() = MainActivity.viewModel.getUserInfoAsync().likeMusic
-    private fun isMusicGenresEmpty() = MainActivity.viewModel.getUserInfoAsync().musicGenres == ""
+    private fun isLikeMusicTrue() = viewModel.getUserInfoAsync().likeMusic
+    private fun isMusicGenresEmpty() = viewModel.getUserInfoAsync().musicGenres == ""
 
     private fun setMusicModalView(){
         if(isLikeMusicTrue()){
-            binding.newMusicSpinner.visibility = View.VISIBLE
-            binding.newFavMusicTextView.visibility = View.VISIBLE
+            binding.newMusicSpinner.visibility = VISIBLE
+            binding.newFavMusicTextView.visibility = VISIBLE
             binding.newMusicSwitch.isChecked = true
             binding.newMusicButton.setOnClickListener{
                 val newFavMusic = binding.newMusicSpinner.selectedItem.toString()
                 val likeMusic = binding.newMusicSwitch.isChecked
-                val user : User = MainActivity.viewModel.getUserInfoAsync()
+                val user : User = viewModel.getUserInfoAsync()
                 user.musicGenres = newFavMusic
                 user.likeMusic = likeMusic
-                MainActivity.viewModel.updateUser(user)
+                viewModel.updateUser(user)
                 this.finish()
             }
         }else{
@@ -127,10 +128,10 @@ class SettingsActivity : AppCompatActivity() {
             binding.newFavMusicTextView.visibility = View.GONE
             binding.newMusicButton.setOnClickListener{
                 val likeMusic = binding.newMusicSwitch.isChecked
-                val user : User = MainActivity.viewModel.getUserInfoAsync()
+                val user : User = viewModel.getUserInfoAsync()
                 user.musicGenres = ""
                 user.likeMusic = likeMusic
-                MainActivity.viewModel.updateUser(user)
+                viewModel.updateUser(user)
                 this.finish()
             }
         }
@@ -140,14 +141,14 @@ class SettingsActivity : AppCompatActivity() {
         super.onStop()
 
         if(!isLikeMusicTrue()){
-            val user : User = MainActivity.viewModel.getUserInfoAsync()
+            val user : User = viewModel.getUserInfoAsync()
             user.musicGenres = ""
-            MainActivity.viewModel.updateUser(user)
+            viewModel.updateUser(user)
         }else{
             if(isMusicGenresEmpty()){
-                val user : User = MainActivity.viewModel.getUserInfoAsync()
+                val user : User = viewModel.getUserInfoAsync()
                 user.musicGenres = "Trap"
-                MainActivity.viewModel.updateUser(user)
+                viewModel.updateUser(user)
             }
         }
 

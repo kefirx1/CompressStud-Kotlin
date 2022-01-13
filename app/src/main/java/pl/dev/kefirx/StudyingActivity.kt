@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import pl.dev.kefirx.MainActivity.Companion.viewModel
 import pl.dev.kefirx.classes.Convert
 import pl.dev.kefirx.databinding.ActivityStudyingBinding
 import pl.dev.kefirx.json.ytResponse.YoutubeResponseJSON
@@ -33,7 +34,7 @@ class StudyingActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val idTestToStudying = intent.getIntExtra("testId", -1)
-        testToStudying = MainActivity.viewModel.getTestByIdInfoAsync(idTestToStudying)
+        testToStudying = viewModel.getTestByIdInfoAsync(idTestToStudying)
 
         time = testToStudying.timeOfLearning
         watchedVideos = testToStudying.watchedVideos
@@ -42,7 +43,6 @@ class StudyingActivity : AppCompatActivity() {
         registerReceiver(updateTime, IntentFilter(TimerService.TIMER_UPDATED))
         setListeners()
         setTestInfo()
-
 
 //        CoroutineScope(Dispatchers.IO).launch{
 //            println(YoutubeRetrofitClient.instance
@@ -54,8 +54,6 @@ class StudyingActivity : AppCompatActivity() {
         val responseObject = YoutubeSampleRespose.getSampleResponse(this)
 
         loadVideos(responseObject)
-
-
 
     }
 
@@ -205,6 +203,6 @@ class StudyingActivity : AppCompatActivity() {
         stopService(serviceIntent)
         testToStudying.timeOfLearning = time
         testToStudying.watchedVideos = watchedVideos
-        MainActivity.viewModel.updateTest(testToStudying)
+        viewModel.updateTest(testToStudying)
     }
 }

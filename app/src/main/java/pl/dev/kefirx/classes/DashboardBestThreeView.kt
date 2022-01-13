@@ -5,6 +5,7 @@ import android.content.Intent
 import android.util.Log
 import android.view.View
 import pl.dev.kefirx.MainActivity
+import pl.dev.kefirx.MainActivity.Companion.viewModel
 import pl.dev.kefirx.StudyingActivity
 import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.room.Tests
@@ -122,7 +123,7 @@ class DashboardBestThreeView(val binding: ActivityMainBinding, private val appli
 
     private fun setDeleteTestButtonListener(test: Tests){
         binding.deleteTestButton.setOnClickListener{
-            MainActivity.viewModel.deleteTest(test)
+            viewModel.deleteTest(test)
             Log.e("TAG", "Test deleted")
             binding.top3test1.setOnClickListener(null)
             binding.top3test2.setOnClickListener(null)

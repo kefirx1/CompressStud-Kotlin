@@ -1,14 +1,11 @@
 package pl.dev.kefirx.fragments
 
-import android.app.Activity
 import android.os.Bundle
-import android.text.BoringLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import pl.dev.kefirx.MainActivity
-import pl.dev.kefirx.R
+import pl.dev.kefirx.MainActivity.Companion.viewModel
 import pl.dev.kefirx.databinding.FragmentRegisterEndBinding
 import pl.dev.kefirx.room.User
 
@@ -16,7 +13,7 @@ class FragmentRegisterEnd : Fragment() {
 
     private lateinit var binding: FragmentRegisterEndBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentRegisterEndBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -33,7 +30,7 @@ class FragmentRegisterEnd : Fragment() {
         val musicGenres = personalInformation[3]
         val user  = User(name, levelOfEdu, likeMusic, musicGenres)
 
-        MainActivity.viewModel.insertUser(user)
+        viewModel.insertUser(user)
 
         binding.endRegisterButton.setOnClickListener{
             this.activity?.finish()

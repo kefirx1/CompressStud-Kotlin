@@ -7,14 +7,13 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import pl.dev.kefirx.R
 import pl.dev.kefirx.databinding.FragmentRegisterStep4Binding
 
 class FragmentRegisterStep4 : Fragment() {
 
     private lateinit var binding: FragmentRegisterStep4Binding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentRegisterStep4Binding.inflate(inflater, container, false)
         return binding.root
     }

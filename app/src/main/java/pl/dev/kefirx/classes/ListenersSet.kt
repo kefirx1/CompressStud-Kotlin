@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import pl.dev.kefirx.CalendarActivity
 import pl.dev.kefirx.MainActivity
+import pl.dev.kefirx.MainActivity.Companion.viewModel
 import pl.dev.kefirx.SettingsActivity
 import pl.dev.kefirx.StatisticsActivity
 import pl.dev.kefirx.databinding.ActivityMainBinding
@@ -44,7 +45,7 @@ class ListenersSet {
             modalsView.hideAllModals()
 
             binding.addNewTestModal.visibility = View.VISIBLE
-            val levelOfEdu = MainActivity.viewModel.getUserInfoAsync().levelOfEdu
+            val levelOfEdu = viewModel.getUserInfoAsync().levelOfEdu
 
             if(levelOfEdu == "Podstawowa"){
                 val lessonsList = instance.resources.getStringArray(pl.dev.kefirx.R.array.listOfPrimaryLessons)
@@ -96,7 +97,7 @@ class ListenersSet {
                 //TODO
                 instance.schedulePushNotifications(lesson, topic)
 
-                MainActivity.viewModel.insertTest(Tests(lesson, topic, dateOfExam, timeOfLearning, watchedVideos, reminder, timeOfRemindH, timeOfRemindM))
+                viewModel.insertTest(Tests(lesson, topic, dateOfExam, timeOfLearning, watchedVideos, reminder, timeOfRemindH, timeOfRemindM))
                 Log.e("TAG", "Insert test")
                 Toast.makeText(applicationContext, "Dodano sprawdzian", Toast.LENGTH_SHORT).show()
 

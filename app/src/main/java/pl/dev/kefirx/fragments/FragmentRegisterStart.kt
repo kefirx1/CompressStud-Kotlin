@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import pl.dev.kefirx.R
 import pl.dev.kefirx.databinding.FragmentRegisterStartBinding
 
 
@@ -15,7 +14,7 @@ class FragmentRegisterStart : Fragment() {
 
     private lateinit var binding: FragmentRegisterStartBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentRegisterStartBinding.inflate(inflater, container, false)
         return binding.root
     }

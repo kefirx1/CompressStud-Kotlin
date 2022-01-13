@@ -2,68 +2,58 @@ package pl.dev.kefirx.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import pl.dev.kefirx.room.User
 import pl.dev.kefirx.room.CSRepository
 import pl.dev.kefirx.room.Tests
-import kotlin.properties.Delegates
+import pl.dev.kefirx.room.User
 
 class CSViewModel(application: Application) : AndroidViewModel(application) {
 
-
-    private var CSRepository: CSRepository = CSRepository(application)
-    var id: Int = 0
-
-    private fun idSetter(id: Int){
-        this.id = id
-    }
+    private var cSRepository: CSRepository = CSRepository(application)
 
     private var userInfo: Deferred<User> =
-        CSRepository.getUserInfoAsync()
+        cSRepository.getUserInfoAsync()
     fun insertUser(user:User){
-        CSRepository.insertUser(user)
+        cSRepository.insertUser(user)
     }
     fun updateUser(user:User){
-        CSRepository.updateUser(user)
+        cSRepository.updateUser(user)
     }
     fun deleteUser(user:User){
-        CSRepository.deleteUser(user)
+        cSRepository.deleteUser(user)
     }
-
-    fun getUserCountAsync(): Int = CSRepository.getUserCountAsync()
+    fun getUserCountAsync(): Int = cSRepository.getUserCountAsync()
 
     fun getUserInfoAsync(): User = runBlocking {
         userInfo.await()
     }
     fun deleteAllUserInfo(){
-        CSRepository.deleteAllUserInfo()
+        cSRepository.deleteAllUserInfo()
     }
 
 
     private var allTestsInfo: Deferred<List<Tests>> =
-        CSRepository.getAllTestsInfoAsync()
+        cSRepository.getAllTestsInfoAsync()
 
     fun insertTest(tests: Tests){
-        CSRepository.insertTest(tests)
+        cSRepository.insertTest(tests)
     }
     fun updateTest(tests: Tests){
-        CSRepository.updateTest(tests)
+        cSRepository.updateTest(tests)
     }
     fun deleteTest(tests: Tests){
-        CSRepository.deleteTest(tests)
+        cSRepository.deleteTest(tests)
     }
     fun getAllTestsInfoAsync(): List<Tests> = runBlocking {
         allTestsInfo.await()
     }
-    fun getTestByIdInfoAsync(id: Int): Tests = CSRepository.getTestByIdInfoAsync(id)
+    fun getTestByIdInfoAsync(id: Int): Tests = cSRepository.getTestByIdInfoAsync(id)
 
     fun deleteAllTests(){
-        CSRepository.deleteAllTests()
+        cSRepository.deleteAllTests()
     }
-    fun getThreeExams(): List<Tests> = CSRepository.getThreeExams()
+    fun getThreeExams(): List<Tests> = cSRepository.getThreeExams()
 
 
 

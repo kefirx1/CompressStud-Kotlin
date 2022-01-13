@@ -11,7 +11,7 @@ data class Tests(
     var dateOfExam: Long,
     var timeOfLearning: Double,
     var watchedVideos: Int,
-    var reminder: Int,     //0 - off / 1 - everyday / 2 - every second day / 3 - day before
+    var reminder: Int,
     var timeOfRemindH: String,
     var timeOfRemindM: String){
 
