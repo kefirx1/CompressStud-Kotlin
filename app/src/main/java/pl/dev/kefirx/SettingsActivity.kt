@@ -3,6 +3,7 @@ package pl.dev.kefirx
 import android.os.Bundle
 import android.view.View
 import android.view.View.VISIBLE
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import pl.dev.kefirx.MainActivity.Companion.viewModel
 import pl.dev.kefirx.databinding.ActivitySettingsBinding
@@ -28,9 +29,15 @@ class SettingsActivity : AppCompatActivity() {
             binding.editNameButton.setOnClickListener{
                 val newName: String = binding.newNameEditText.text.toString()
                 val user : User = viewModel.getUserInfoAsync()
-                user.name = newName
-                viewModel.updateUser(user)
-                this.finish()
+
+                if(newName.isNotBlank()){
+                    user.name = newName
+                    viewModel.updateUser(user)
+                    this.finish()
+                }else{
+                    Toast.makeText(this, "Podaj poprawne imię", Toast.LENGTH_SHORT).show()
+                }
+
             }
 
         }
