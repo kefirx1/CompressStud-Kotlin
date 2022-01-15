@@ -17,11 +17,11 @@ class BootReceiver : BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == "android.intent.action.BOOT_COMPLETED") {
+       // if (intent.action == "android.intent.action.BOOT_COMPLETED") {
             schedulePushNotifications(context, intent)
-        }else{
-            schedulePushNotifications(context, intent)
-        }
+        //}else{
+          //  schedulePushNotifications(context, intent)
+        //}
     }
 
     private fun schedulePushNotifications(context: Context, intent: Intent){

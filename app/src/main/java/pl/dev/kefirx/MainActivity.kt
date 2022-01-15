@@ -1,7 +1,5 @@
 package pl.dev.kefirx
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,9 +13,7 @@ import pl.dev.kefirx.classes.SpinnersSet
 import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.json.GetJSONString
 import pl.dev.kefirx.json.ListOfTopicsJSON
-import pl.dev.kefirx.reminder.BootReceiver
 import pl.dev.kefirx.viewModel.CSViewModel
-import java.util.*
 
 
 open class MainActivity : AppCompatActivity() {

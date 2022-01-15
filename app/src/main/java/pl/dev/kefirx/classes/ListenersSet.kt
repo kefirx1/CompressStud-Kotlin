@@ -95,8 +95,9 @@ class ListenersSet {
                     "Dzień przed sprawdzianem" -> reminder = 3
                 }
 
-                //TODO
-                notification.schedulePushNotifications(lesson, topic, binding, applicationContext, instance)
+                if(reminder!=0){
+                    //notification.schedulePushNotifications(lesson, topic, reminder, binding, applicationContext, instance)
+                }
 
                 viewModel.insertTest(Tests(lesson, topic, dateOfExam, timeOfLearning, watchedVideos, reminder, timeOfRemindH, timeOfRemindM))
                 Log.e("TAG", "Insert test")
@@ -114,7 +115,7 @@ class ListenersSet {
         val currentYear = currentDate.get(Calendar.YEAR)
         val currentMonth = currentDate.get(Calendar.MONTH)
         val currentDay = currentDate.get(Calendar.DAY_OF_MONTH)
-        val currentHour = currentDate.get(Calendar.HOUR)
+        val currentHour = currentDate.get(Calendar.HOUR_OF_DAY)
         val currentMinute = currentDate.get(Calendar.MINUTE)
 
         binding.testDatePicker.updateDate(currentYear,currentMonth, currentDay)
