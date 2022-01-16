@@ -1,10 +1,22 @@
 package pl.dev.kefirx
 
+import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.ClipDescription
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.room.util.TableInfo
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import pl.dev.kefirx.classes.DashboardBestThreeView
 import pl.dev.kefirx.classes.ListenersSet
@@ -31,6 +43,9 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var spinnersSet: SpinnersSet
     private var getJSONString = GetJSONString()
     private val gson = Gson()
+
+    private val channelID = "1"
+    private var notificationManager: NotificationManager? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,6 +79,10 @@ open class MainActivity : AppCompatActivity() {
             listenersSet.setMainActivityListeners(binding, applicationContext, this)
         }
 
+
+
+
+
     }
 
     fun callOnResume(){
@@ -75,7 +94,49 @@ open class MainActivity : AppCompatActivity() {
         val name = viewModel.getUserInfoAsync().name + "!"
         binding.userNameTextView.text = name
         dashboardBestThreeView.setBestOfThreeView(viewModel.getThreeExams())
+
+//        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+//
+//        createNotificationChannel(channelID, "DemoChannel", "this is a demo")
+//
+//        displayNotification()
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
+    private fun displayNotification(){
+        val notificationId = 45
+        val tapResultIntent = Intent(this, CalendarActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            tapResultIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+
+
+        val notification = NotificationCompat.Builder(applicationContext, channelID)
+            .setContentTitle("Demo title")
+            .setContentText("Demo notifi")
+            .setSmallIcon(R.drawable.ic_baseline_menu_book_24)
+            .setAutoCancel(true)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
+            .build()
+        notificationManager?.notify(notificationId, notification)
+
+    }
+
+    private fun createNotificationChannel(id: String, name: String, channelDescription: String){
+        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(id, name, importance).apply {
+                description = channelDescription
+            }
+            notificationManager?.createNotificationChannel(channel)
+
+
+        }
+    }
 
 }

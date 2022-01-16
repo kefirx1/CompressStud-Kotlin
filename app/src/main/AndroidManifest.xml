@@ -47,11 +47,8 @@
             </intent-filter>
         </activity>
         <service android:name=".services.TimerService" />
-<!--        <receiver android:name=".reminder.Notification"-->
-<!--            android:enabled="true">-->
-<!--        </receiver>-->
         <receiver android:name=".reminder.BootReceiver" android:enabled="true"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>

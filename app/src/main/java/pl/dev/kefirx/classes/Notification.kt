@@ -1,6 +1,7 @@
 package pl.dev.kefirx.classes
 
 import android.app.AlarmManager
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -13,25 +14,40 @@ import java.util.*
 class Notification {
 
 
-    fun schedulePushNotifications(lesson: String, topic: String, reminder: Int, binding: ActivityMainBinding, applicationContext: Context, instance: MainActivity) {
+
+
+    fun schedulePushNotifications(lesson: String, topic: String, reminder: Int, dateOfExam: Long, binding: ActivityMainBinding, applicationContext: Context, instance: MainActivity) {
 
         val title = "Czas na naukę!"
         val message = "$lesson - $topic"
 
         val alarmManager = instance.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
-        val alarmPendingIntent by lazy {
-            val intent = Intent(applicationContext, BootReceiver::class.java)
 
-            intent.putExtra(BootReceiver.TITLE_EXTRA, title)
-            intent.putExtra(BootReceiver.MESSAGE_EXTRA, message)
+        val intent = Intent(applicationContext, BootReceiver::class.java)
 
-            PendingIntent.getBroadcast(applicationContext, BootReceiver.NOTIFICATION_ID, intent, 0)
-        }
+        intent.putExtra(BootReceiver.TITLE_EXTRA, title)
+        intent.putExtra(BootReceiver.MESSAGE_EXTRA, message)
+
+        val pendingIntent = PendingIntent.getActivity(
+            applicationContext,
+            BootReceiver.NOTIFICATION_ID,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
 
 
-        val timeInMillis = getTimeInMillis(binding)
 
-//        when(reminder){
+//        val alarmPendingIntent by lazy {
+//            val intent = Intent(applicationContext, BootReceiver::class.java)
+//
+//            intent.putExtra(BootReceiver.TITLE_EXTRA, title)
+//            intent.putExtra(BootReceiver.MESSAGE_EXTRA, message)
+//
+//            PendingIntent.getActivity(applicationContext, BootReceiver.NOTIFICATION_ID, intent, PendingIntent.FLAG_IMMUTABLE)
+//        }
+
+
+        //        when(reminder){
 //            1 -> alarmManager.setInexactRepeating(
 //                AlarmManager.RTC_WAKEUP,
 //                timeInMillis,
@@ -52,26 +68,25 @@ class Notification {
 //        }
 
 
-        val date = Date(timeInMillis)
+        val date = Date(dateOfExam)
 
         println(date)
 
-        println(reminder)
         when(reminder){
             1 -> alarmManager.setAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
-                timeInMillis,
-                alarmPendingIntent
+                dateOfExam,
+                pendingIntent
             )
             2 -> alarmManager.setAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
-                timeInMillis,
-                alarmPendingIntent
+                dateOfExam,
+                pendingIntent
             )
             3 -> alarmManager.setAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
-                timeInMillis-86400000,
-                alarmPendingIntent
+                dateOfExam - 86400000,
+                pendingIntent
             )
         }
 

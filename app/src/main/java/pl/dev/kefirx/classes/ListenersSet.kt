@@ -96,7 +96,7 @@ class ListenersSet {
                 }
 
                 if(reminder!=0){
-                    //notification.schedulePushNotifications(lesson, topic, reminder, binding, applicationContext, instance)
+                    notification.schedulePushNotifications(lesson, topic, reminder, dateOfExam, binding, applicationContext, instance)
                 }
 
                 viewModel.insertTest(Tests(lesson, topic, dateOfExam, timeOfLearning, watchedVideos, reminder, timeOfRemindH, timeOfRemindM))
