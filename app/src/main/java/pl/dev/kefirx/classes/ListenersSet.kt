@@ -1,24 +1,36 @@
 package pl.dev.kefirx.classes
 
 import android.R.layout
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.ViewModelProvider
 import pl.dev.kefirx.CalendarActivity
 import pl.dev.kefirx.MainActivity
 import pl.dev.kefirx.MainActivity.Companion.viewModel
 import pl.dev.kefirx.SettingsActivity
 import pl.dev.kefirx.StatisticsActivity
 import pl.dev.kefirx.databinding.ActivityMainBinding
+import pl.dev.kefirx.reminder.NotificationReceiver
+import pl.dev.kefirx.reminder.NotificationReceiver.Companion.channelID
+import pl.dev.kefirx.reminder.NotificationReceiver.Companion.messageExtra
+import pl.dev.kefirx.reminder.NotificationReceiver.Companion.notificationID
+import pl.dev.kefirx.reminder.NotificationReceiver.Companion.titleExtra
 import pl.dev.kefirx.room.Tests
+import pl.dev.kefirx.viewModel.CSViewModel
 import java.util.*
 
 class ListenersSet {
 
+    @RequiresApi(Build.VERSION_CODES.S)
     fun setMainActivityListeners(binding: ActivityMainBinding, applicationContext: Context, instance: MainActivity){
 
         val modalsView = ModalsView()
@@ -95,12 +107,24 @@ class ListenersSet {
                     "Dzień przed sprawdzianem" -> reminder = 3
                 }
 
+                val newTest = Tests(lesson, topic, dateOfExam, timeOfLearning, watchedVideos, reminder, timeOfRemindH, timeOfRemindM)
+
+                viewModel.insertTest(newTest)
+                Log.e("TAG", "Insert test")
+
+                println(newTest.dateOfExam)
+
+                restartViewModel(instance)
+
                 if(reminder!=0){
-                    notification.schedulePushNotifications(lesson, topic, reminder, dateOfExam, binding, applicationContext, instance)
+
+                    notificationID = viewModel.getNewestExam().test_id
+                    channelID = "channel" + (viewModel.getNewestExam().test_id).toString()
+
+                    instance.createNotificationChannel()
+                    scheduleNotification(applicationContext,instance, lesson, topic, reminder, dateOfExam)
                 }
 
-                viewModel.insertTest(Tests(lesson, topic, dateOfExam, timeOfLearning, watchedVideos, reminder, timeOfRemindH, timeOfRemindM))
-                Log.e("TAG", "Insert test")
                 Toast.makeText(applicationContext, "Dodano sprawdzian", Toast.LENGTH_SHORT).show()
 
                 modalsView.newTestModalReset(binding, instance)
@@ -108,6 +132,43 @@ class ListenersSet {
 
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.S)
+    private fun scheduleNotification(applicationContext: Context, instance: MainActivity, lesson: String, topic: String, reminder: Int, dateOfExam: Long) {
+        val intent = Intent(applicationContext, NotificationReceiver::class.java)
+        val title = "Czas na naukę!"
+        val message = "$lesson - $topic"
+
+        intent.putExtra(titleExtra, title)
+        intent.putExtra(messageExtra, message)
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            applicationContext,
+            notificationID,
+            intent,
+            PendingIntent.FLAG_MUTABLE
+        )
+
+        val alarmManager = instance.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            dateOfExam,
+            pendingIntent
+        )
+
+    }
+
+
+    companion object{
+        fun restartViewModel(instance: MainActivity){
+            viewModel = ViewModelProvider
+                .AndroidViewModelFactory
+                .getInstance(instance.application)
+                .create(CSViewModel::class.java)
+        }
+    }
+
 
 
     private fun setCurrentDateTime(binding: ActivityMainBinding){

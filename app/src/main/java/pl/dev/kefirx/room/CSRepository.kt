@@ -55,4 +55,6 @@ class CSRepository (application: Application) {
         testsDao.deleteAllTests()
     }
     fun getThreeExams(): List<Tests> = testsDao.getThreeExams()
+
+    fun getNewestExam(): Tests = testsDao.getNewestExam()
 }

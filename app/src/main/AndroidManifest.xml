@@ -17,6 +17,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CompressStud">
+        <receiver android:name=".reminder.NotificationReceiver"
+            android:exported="false"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
         <activity
             android:name=".StudyingActivity"
             android:exported="true" />
@@ -47,12 +54,6 @@
             </intent-filter>
         </activity>
         <service android:name=".services.TimerService" />
-        <receiver android:name=".reminder.BootReceiver" android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>

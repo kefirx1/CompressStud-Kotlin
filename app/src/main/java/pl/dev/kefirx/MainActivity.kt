@@ -4,19 +4,17 @@ import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.ClipDescription
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.room.util.TableInfo
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import pl.dev.kefirx.classes.DashboardBestThreeView
 import pl.dev.kefirx.classes.ListenersSet
@@ -25,6 +23,8 @@ import pl.dev.kefirx.classes.SpinnersSet
 import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.json.GetJSONString
 import pl.dev.kefirx.json.ListOfTopicsJSON
+import pl.dev.kefirx.reminder.NotificationReceiver
+import pl.dev.kefirx.reminder.NotificationReceiver.Companion.channelID
 import pl.dev.kefirx.viewModel.CSViewModel
 
 
@@ -34,6 +34,7 @@ open class MainActivity : AppCompatActivity() {
         lateinit var viewModel: CSViewModel
         const val LIST_OF_TOPICS_PATH = "listOfTopics.json"
         lateinit var listOfTopicsObject: ListOfTopicsJSON
+
     }
 
     protected lateinit var binding: ActivityMainBinding
@@ -43,9 +44,6 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var spinnersSet: SpinnersSet
     private var getJSONString = GetJSONString()
     private val gson = Gson()
-
-    private val channelID = "1"
-    private var notificationManager: NotificationManager? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +58,18 @@ open class MainActivity : AppCompatActivity() {
         spinnersSet = SpinnersSet()
     }
 
+    fun createNotificationChannel() {
+        val name = "Notif channel"
+        val desc = "Desc channel"
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel= NotificationChannel(channelID, name, importance)
+        channel.description = desc
+
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onResume() {
         super.onResume()
 
@@ -77,14 +87,22 @@ open class MainActivity : AppCompatActivity() {
             modalsView.hideAllModals(binding)
             setDashboardCurrentInfo()
             listenersSet.setMainActivityListeners(binding, applicationContext, this)
+
+
+
+            val receiver = ComponentName(applicationContext, NotificationReceiver::class.java)
+
+            packageManager.setComponentEnabledSetting(
+                receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP
+            )
+
         }
-
-
-
-
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     fun callOnResume(){
         onResume()
     }
@@ -94,49 +112,6 @@ open class MainActivity : AppCompatActivity() {
         val name = viewModel.getUserInfoAsync().name + "!"
         binding.userNameTextView.text = name
         dashboardBestThreeView.setBestOfThreeView(viewModel.getThreeExams())
-
-//        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-//
-//        createNotificationChannel(channelID, "DemoChannel", "this is a demo")
-//
-//        displayNotification()
-    }
-
-    @SuppressLint("UnspecifiedImmutableFlag")
-    private fun displayNotification(){
-        val notificationId = 45
-        val tapResultIntent = Intent(this, CalendarActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(
-            this,
-            0,
-            tapResultIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-
-
-
-        val notification = NotificationCompat.Builder(applicationContext, channelID)
-            .setContentTitle("Demo title")
-            .setContentText("Demo notifi")
-            .setSmallIcon(R.drawable.ic_baseline_menu_book_24)
-            .setAutoCancel(true)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setContentIntent(pendingIntent)
-            .build()
-        notificationManager?.notify(notificationId, notification)
-
-    }
-
-    private fun createNotificationChannel(id: String, name: String, channelDescription: String){
-        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(id, name, importance).apply {
-                description = channelDescription
-            }
-            notificationManager?.createNotificationChannel(channel)
-
-
-        }
     }
 
 }

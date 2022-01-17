@@ -26,6 +26,9 @@ interface TestsDao {
     @Query("SELECT * FROM testsTable ORDER BY dateOfExam LIMIT 3")
     fun getThreeExams(): List<Tests>
 
+    @Query("SELECT * FROM testsTable ORDER BY test_id DESC LIMIT 1")
+    fun getNewestExam(): Tests
+
 
 
 }
