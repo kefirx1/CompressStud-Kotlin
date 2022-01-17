@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "615547554826",
-    "project_id": "compressstud",
-    "storage_bucket": "compressstud.appspot.com"
+    "project_number": "700875626070",
+    "project_id": "compressstud-kotlin",
+    "storage_bucket": "compressstud-kotlin.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:615547554826:android:950133737f589f1627e3f3",
+        "mobilesdk_app_id": "1:700875626070:android:6d520de918472821d18df7",
         "android_client_info": {
           "package_name": "pl.dev.kefirx"
         }
       },
       "oauth_client": [
         {
-          "client_id": "615547554826-l8meuojm2h5ris10unsi8qo2k6fgjtja.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "pl.dev.kefirx",
-            "certificate_hash": "95663bad331d5b194695d9462c2104e1987562ac"
-          }
-        },
-        {
-          "client_id": "615547554826-vks9r0q1vp51g24vvdbfptd47hbi2tut.apps.googleusercontent.com",
+          "client_id": "700875626070-akhqnm4gbj2qma549cb0pst7afccluf2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAjt49DcG9PsmTDoXKqWr2A-nVYrRYjHu0"
+          "current_key": "AIzaSyCuSxFM6js5eG1J8bPLkHnX5s_AvDXzdio"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "615547554826-vks9r0q1vp51g24vvdbfptd47hbi2tut.apps.googleusercontent.com",
+              "client_id": "700875626070-akhqnm4gbj2qma549cb0pst7afccluf2.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

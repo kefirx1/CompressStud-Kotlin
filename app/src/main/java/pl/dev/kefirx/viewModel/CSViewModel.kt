@@ -10,50 +10,51 @@ import pl.dev.kefirx.room.User
 
 class CSViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var cSRepository: CSRepository = CSRepository(application)
+    private var csRepository: CSRepository = CSRepository(application)
 
     private var userInfo: Deferred<User> =
-        cSRepository.getUserInfoAsync()
+        csRepository.getUserInfoAsync()
     fun insertUser(user:User){
-        cSRepository.insertUser(user)
+        csRepository.insertUser(user)
     }
     fun updateUser(user:User){
-        cSRepository.updateUser(user)
+        csRepository.updateUser(user)
     }
     fun deleteUser(user:User){
-        cSRepository.deleteUser(user)
+        csRepository.deleteUser(user)
     }
-    fun getUserCountAsync(): Int = cSRepository.getUserCountAsync()
+    fun getUserCountAsync(): Int = csRepository.getUserCountAsync()
 
     fun getUserInfoAsync(): User = runBlocking {
         userInfo.await()
     }
     fun deleteAllUserInfo(){
-        cSRepository.deleteAllUserInfo()
+        csRepository.deleteAllUserInfo()
     }
 
 
     private var allTestsInfo: Deferred<List<Tests>> =
-        cSRepository.getAllTestsInfoAsync()
+        csRepository.getAllTestsInfoAsync()
 
     fun insertTest(tests: Tests){
-        cSRepository.insertTest(tests)
+        csRepository.insertTest(tests)
     }
     fun updateTest(tests: Tests){
-        cSRepository.updateTest(tests)
+        csRepository.updateTest(tests)
     }
     fun deleteTest(tests: Tests){
-        cSRepository.deleteTest(tests)
+        csRepository.deleteTest(tests)
     }
     fun getAllTestsInfoAsync(): List<Tests> = runBlocking {
         allTestsInfo.await()
     }
-    fun getTestByIdInfoAsync(id: Int): Tests = cSRepository.getTestByIdInfoAsync(id)
+    fun getTestByIdInfoAsync(id: Int): Tests = csRepository.getTestByIdInfoAsync(id)
 
     fun deleteAllTests(){
-        cSRepository.deleteAllTests()
+        csRepository.deleteAllTests()
     }
-    fun getThreeExams(): List<Tests> = cSRepository.getThreeExams()
+    fun getThreeExams(): List<Tests> = csRepository.getThreeExams()
+    fun getNewestExam(): Tests = csRepository.getNewestExam()
 
 
 
