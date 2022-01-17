@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import pl.dev.kefirx.MainActivity
 import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.reminder.BootReceiver
+import java.time.Instant
+import java.time.ZoneId
 import java.util.*
 
 class Notification {
@@ -36,6 +38,11 @@ class Notification {
             AlarmManager.INTERVAL_DAY,
             alarmPendingIntent
         )
+        val  dateLocalDate2  = Instant.ofEpochMilli(timeInMillis)
+            .atZone(ZoneId.systemDefault())
+            .toLocalDateTime()
+
+        println(dateLocalDate2)
 
     }
 
