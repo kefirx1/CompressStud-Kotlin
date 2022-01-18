@@ -111,15 +111,9 @@ class ListenersSet {
 
                 println(newTest.dateOfExam)
 
-                restartViewModel(instance)
+//                restartViewModel(instance)
 
                 if(reminder!=0){
-
-                    notificationID = viewModel.getNewestExam().test_id
-                    channelID = "channel" + (viewModel.getNewestExam().test_id).toString()
-
-                    println(notificationID)
-                    println(channelID)
 
                     instance.createNotificationChannel()
                     scheduleNotification(applicationContext,instance, lesson, topic, reminder, dateOfExam)
@@ -151,10 +145,10 @@ class ListenersSet {
         val alarmManager = instance.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         when(reminder){
-            1 -> alarmManager.setInexactRepeating(
+            1 -> alarmManager.setExactAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
                 dateOfExam,
-                AlarmManager.INTERVAL_DAY,
+//                AlarmManager.INTERVAL_DAY,
                 pendingIntent
             )
             2 -> alarmManager.setInexactRepeating(
@@ -171,7 +165,7 @@ class ListenersSet {
         }
 
     }
-    
+
     companion object{
         fun restartViewModel(instance: MainActivity){
             viewModel = ViewModelProvider
