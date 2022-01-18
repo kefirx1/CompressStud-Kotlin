@@ -16,6 +16,7 @@ class DashboardBestThreeView(val binding: ActivityMainBinding, private val appli
 
     private var modalsView = ModalsView()
 
+
     fun setBestOfThreeView(listOfThreeTests: List<Tests>){
 
         binding.learnModalBackButton.setOnClickListener{
@@ -51,6 +52,7 @@ class DashboardBestThreeView(val binding: ActivityMainBinding, private val appli
         }
     }
 
+
     private fun setFirstTest(listOfThreeTests: List<Tests>){
 
         val dateLong1 = listOfThreeTests[0].dateOfExam
@@ -74,6 +76,7 @@ class DashboardBestThreeView(val binding: ActivityMainBinding, private val appli
         }
 
     }
+
     private fun setSecondTest(listOfThreeTests: List<Tests>){
 
         val dateLong2 = listOfThreeTests[1].dateOfExam
@@ -98,6 +101,7 @@ class DashboardBestThreeView(val binding: ActivityMainBinding, private val appli
             setStartStudyingButtonListener(listOfThreeTests[1])
         }
     }
+
     private fun setThirdTest(listOfThreeTests: List<Tests>){
 
         val dateLong3 = listOfThreeTests[2].dateOfExam

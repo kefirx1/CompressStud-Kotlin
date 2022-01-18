@@ -5,13 +5,11 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import pl.dev.kefirx.CalendarActivity
 import pl.dev.kefirx.MainActivity
@@ -30,7 +28,6 @@ import java.util.*
 
 class ListenersSet {
 
-    @RequiresApi(Build.VERSION_CODES.S)
     fun setMainActivityListeners(binding: ActivityMainBinding, applicationContext: Context, instance: MainActivity){
 
         val modalsView = ModalsView()
@@ -121,6 +118,9 @@ class ListenersSet {
                     notificationID = viewModel.getNewestExam().test_id
                     channelID = "channel" + (viewModel.getNewestExam().test_id).toString()
 
+                    println(notificationID)
+                    println(channelID)
+
                     instance.createNotificationChannel()
                     scheduleNotification(applicationContext,instance, lesson, topic, reminder, dateOfExam)
                 }
@@ -133,7 +133,6 @@ class ListenersSet {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.S)
     private fun scheduleNotification(applicationContext: Context, instance: MainActivity, lesson: String, topic: String, reminder: Int, dateOfExam: Long) {
         val intent = Intent(applicationContext, NotificationReceiver::class.java)
         val title = "Czas na naukę!"
@@ -146,20 +145,33 @@ class ListenersSet {
             applicationContext,
             notificationID,
             intent,
-            PendingIntent.FLAG_MUTABLE
+            PendingIntent.FLAG_IMMUTABLE
         )
 
         val alarmManager = instance.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            dateOfExam,
-            pendingIntent
-        )
+        when(reminder){
+            1 -> alarmManager.setInexactRepeating(
+                AlarmManager.RTC_WAKEUP,
+                dateOfExam,
+                AlarmManager.INTERVAL_DAY,
+                pendingIntent
+            )
+            2 -> alarmManager.setInexactRepeating(
+                AlarmManager.RTC_WAKEUP,
+                dateOfExam,
+                AlarmManager.INTERVAL_DAY*2,
+               pendingIntent
+            )
+            3 -> alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                dateOfExam-86400000,
+                pendingIntent
+            )
+        }
 
     }
-
-
+    
     companion object{
         fun restartViewModel(instance: MainActivity){
             viewModel = ViewModelProvider

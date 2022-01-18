@@ -1,19 +1,14 @@
 package pl.dev.kefirx
 
-import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import pl.dev.kefirx.classes.DashboardBestThreeView
@@ -34,7 +29,6 @@ open class MainActivity : AppCompatActivity() {
         lateinit var viewModel: CSViewModel
         const val LIST_OF_TOPICS_PATH = "listOfTopics.json"
         lateinit var listOfTopicsObject: ListOfTopicsJSON
-
     }
 
     protected lateinit var binding: ActivityMainBinding
@@ -44,7 +38,6 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var spinnersSet: SpinnersSet
     private var getJSONString = GetJSONString()
     private val gson = Gson()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +49,10 @@ open class MainActivity : AppCompatActivity() {
         dashboardBestThreeView = DashboardBestThreeView(binding, applicationContext, this)
         listenersSet = ListenersSet()
         spinnersSet = SpinnersSet()
+
     }
+
+
 
     fun createNotificationChannel() {
         val name = "Notif channel"
@@ -69,7 +65,7 @@ open class MainActivity : AppCompatActivity() {
         notificationManager.createNotificationChannel(channel)
     }
 
-    @RequiresApi(Build.VERSION_CODES.S)
+
     override fun onResume() {
         super.onResume()
 
@@ -102,7 +98,6 @@ open class MainActivity : AppCompatActivity() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.S)
     fun callOnResume(){
         onResume()
     }
