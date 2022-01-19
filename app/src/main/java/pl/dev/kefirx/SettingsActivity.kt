@@ -104,6 +104,8 @@ class SettingsActivity : AppCompatActivity() {
         binding.themeModal.visibility = View.GONE
     }
 
+
+    //TODO
     private fun isLikeMusicTrue() = viewModel.getUserInfoAsync().likeMusic
     private fun isMusicGenresEmpty() = viewModel.getUserInfoAsync().musicGenres == ""
 
