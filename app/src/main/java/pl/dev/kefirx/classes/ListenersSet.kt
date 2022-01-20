@@ -10,7 +10,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import pl.dev.kefirx.CalendarActivity
 import pl.dev.kefirx.MainActivity
 import pl.dev.kefirx.MainActivity.Companion.viewModel
@@ -18,12 +17,10 @@ import pl.dev.kefirx.SettingsActivity
 import pl.dev.kefirx.StatisticsActivity
 import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.reminder.NotificationReceiver
-import pl.dev.kefirx.reminder.NotificationReceiver.Companion.channelID
 import pl.dev.kefirx.reminder.NotificationReceiver.Companion.messageExtra
 import pl.dev.kefirx.reminder.NotificationReceiver.Companion.notificationID
 import pl.dev.kefirx.reminder.NotificationReceiver.Companion.titleExtra
 import pl.dev.kefirx.room.Tests
-import pl.dev.kefirx.viewModel.CSViewModel
 import java.util.*
 
 class ListenersSet {
@@ -109,9 +106,6 @@ class ListenersSet {
                 viewModel.insertTest(newTest)
                 Log.e("TAG", "Insert test")
 
-                println(newTest.dateOfExam)
-
-//                restartViewModel(instance)
 
                 if(reminder!=0){
 
@@ -166,16 +160,6 @@ class ListenersSet {
 
     }
 
-    companion object{
-        fun restartViewModel(instance: MainActivity){
-            viewModel = ViewModelProvider
-                .AndroidViewModelFactory
-                .getInstance(instance.application)
-                .create(CSViewModel::class.java)
-        }
-    }
-
-
 
     private fun setCurrentDateTime(binding: ActivityMainBinding){
         val currentDate = Calendar.getInstance()
@@ -189,8 +173,5 @@ class ListenersSet {
         binding.timeOfNotificationTimePicker.hour = currentHour
         binding.timeOfNotificationTimePicker.minute = currentMinute
     }
-
-
-
 
 }

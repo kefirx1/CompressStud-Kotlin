@@ -44,12 +44,6 @@ open class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         listOfTopicsObject  = gson.fromJson(getJSONString.getJsonStringFromAssets(applicationContext, LIST_OF_TOPICS_PATH), ListOfTopicsJSON::class.java)
-
-        modalsView = ModalsView()
-        dashboardBestThreeView = DashboardBestThreeView(binding, applicationContext, this)
-        listenersSet = ListenersSet()
-        spinnersSet = SpinnersSet()
-
     }
 
 
@@ -77,14 +71,18 @@ open class MainActivity : AppCompatActivity() {
         if(viewModel.getUserCountAsync() <= 0) {
             Log.e("TAG", "Create user")
             val registerIntent = Intent(this, RegisterActivity::class.java)
-            Log.e("TAG", "Start act")
             startActivity(registerIntent)
         }else{
+            modalsView = ModalsView()
+            dashboardBestThreeView = DashboardBestThreeView(binding, applicationContext, this)
+            listenersSet = ListenersSet()
+            spinnersSet = SpinnersSet()
+
+
+            dashboardBestThreeView.resetListeners()
             modalsView.hideAllModals(binding)
             setDashboardCurrentInfo()
             listenersSet.setMainActivityListeners(binding, applicationContext, this)
-
-
 
             val receiver = ComponentName(applicationContext, NotificationReceiver::class.java)
 

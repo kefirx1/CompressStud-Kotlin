@@ -40,6 +40,7 @@ class DashboardBestThreeView(val binding: ActivityMainBinding, private val appli
     }
 
     private fun setTestsNull(){
+        println("null")
         with(binding){
             top3TestFirstDayNumber.text = ""
             top3testSecondDayNumber.text = ""
@@ -55,7 +56,6 @@ class DashboardBestThreeView(val binding: ActivityMainBinding, private val appli
 
 
     private fun setFirstTest(listOfThreeTests: List<Tests>){
-
         val dateLong1 = listOfThreeTests[0].dateOfExam
         val  dateLocalDate1  = Instant.ofEpochMilli(dateLong1)
             .atZone(ZoneId.of("Europe/Warsaw"))
@@ -148,6 +148,12 @@ class DashboardBestThreeView(val binding: ActivityMainBinding, private val appli
             }
             instance.startActivity(studyingIntent)
         }
+    }
+
+    fun resetListeners(){
+        binding.top3test1.setOnClickListener(null)
+        binding.top3test2.setOnClickListener(null)
+        binding.top3test3.setOnClickListener(null)
     }
 
 
