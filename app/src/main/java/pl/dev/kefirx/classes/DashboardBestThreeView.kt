@@ -11,6 +11,7 @@ import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.room.Tests
 import java.time.Instant
 import java.time.ZoneId
+import java.util.*
 
 class DashboardBestThreeView(val binding: ActivityMainBinding, private val applicationContext: Context, private val instance: MainActivity){
 
@@ -57,8 +58,9 @@ class DashboardBestThreeView(val binding: ActivityMainBinding, private val appli
 
         val dateLong1 = listOfThreeTests[0].dateOfExam
         val  dateLocalDate1  = Instant.ofEpochMilli(dateLong1)
-            .atZone(ZoneId.systemDefault())
-            .toLocalDate()
+            .atZone(ZoneId.of("Europe/Warsaw"))
+            .toLocalDateTime()
+
 
         binding.top3testSecondDayNumber.text = dateLocalDate1.dayOfMonth.toString()
         binding.top3TestSecondMonth.text = Convert.monthMap[dateLocalDate1.monthValue.toString()]
@@ -81,8 +83,9 @@ class DashboardBestThreeView(val binding: ActivityMainBinding, private val appli
 
         val dateLong2 = listOfThreeTests[1].dateOfExam
         val  dateLocalDate2  = Instant.ofEpochMilli(dateLong2)
-            .atZone(ZoneId.systemDefault())
-            .toLocalDate()
+            .atZone(ZoneId.of("Europe/Warsaw"))
+            .toLocalDateTime()
+
 
         binding.top3TestFirstDayNumber.text = dateLocalDate2.dayOfMonth.toString()
         binding.top3TestFirstMonth.text = Convert.monthMap[dateLocalDate2.monthValue.toString()]
@@ -106,12 +109,13 @@ class DashboardBestThreeView(val binding: ActivityMainBinding, private val appli
 
         val dateLong3 = listOfThreeTests[2].dateOfExam
         val  dateLocalDate3  = Instant.ofEpochMilli(dateLong3)
-            .atZone(ZoneId.systemDefault())
-            .toLocalDate()
+            .atZone(ZoneId.of("Europe/Warsaw"))
+            .toLocalDateTime()
 
         binding.top3TestThirdDayNumber.text = dateLocalDate3.dayOfMonth.toString()
         binding.top3TestThirdMonth.text = Convert.monthMap[dateLocalDate3.monthValue.toString()]
         binding.top3TestThirdLessonName.text = listOfThreeTests[2].lesson
+
 
         binding.top3test3.setOnClickListener{
             modalsView.hideAllModals(binding)

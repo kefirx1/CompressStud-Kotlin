@@ -3,6 +3,7 @@ package pl.dev.kefirx.classes
 import android.content.Context
 import pl.dev.kefirx.MainActivity
 import pl.dev.kefirx.databinding.ActivityMainBinding
+import java.time.ZoneId
 import java.util.*
 
 class Notification {
@@ -50,6 +51,10 @@ class Notification {
 
         val calendar = Calendar.getInstance()
         calendar.set(year, month, dayOfMonth, hour, minute, 0)
+        calendar.timeZone = TimeZone.getTimeZone(ZoneId.of("Europe/Warsaw"))
+
+        println(calendar.time)
+
         return calendar.timeInMillis
     }
 
