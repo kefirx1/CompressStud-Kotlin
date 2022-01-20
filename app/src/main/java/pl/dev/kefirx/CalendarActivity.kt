@@ -7,7 +7,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.applandeo.materialcalendarview.EventDay
-import pl.dev.kefirx.MainActivity.Companion.viewModel
 import pl.dev.kefirx.databinding.ActivityCalendarBinding
 import pl.dev.kefirx.room.Tests
 import pl.dev.kefirx.viewModel.CSViewModel
@@ -15,6 +14,7 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class CalendarActivity : AppCompatActivity() {
@@ -23,6 +23,8 @@ class CalendarActivity : AppCompatActivity() {
     private val events: MutableList<EventDay> = ArrayList()
     private lateinit var binding: ActivityCalendarBinding
     private val examsToViewList: ArrayList<Tests> = ArrayList()
+    private val examsToEvent: HashMap<EventDay, Tests> = HashMap()
+    private lateinit var viewModel: CSViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,19 +47,12 @@ class CalendarActivity : AppCompatActivity() {
         setEventsToDays()
 
         binding.calendarView.setOnDayClickListener { eventDay ->
-            val clickedDayCalendar: Calendar = eventDay.calendar
-            var exam = Tests("","",0,0.0,0,0,"", "")
-            val calendarDay = clickedDayCalendar.timeInMillis
+            val exam: Tests
 
             if( events.contains(eventDay)){
                 binding.examCalendarLayout.visibility = View.VISIBLE
 
-                examsToViewList.forEach{
-                    if(it.dateOfExam/1000/60/60/24 == (calendarDay/1000/60/60/24)+1){
-                        exam = it
-                    }
-                    return@forEach
-                }
+                exam = examsToEvent[eventDay]!!
 
                 setExamDetails(exam)
                 setStartStudyingButtonListener(exam)
@@ -85,6 +80,7 @@ class CalendarActivity : AppCompatActivity() {
             Log.e("TAG", "Test deleted")
             examsToViewList.clear()
             events.clear()
+            examsToEvent.clear()
             binding.examCalendarLayout.visibility = View.GONE
             onResume()
         }
@@ -116,7 +112,9 @@ class CalendarActivity : AppCompatActivity() {
             }
 
             calendar.set(dateOfExam.year, dateOfExam.monthValue-1, dateOfExam.dayOfMonth, hour, dateOfExam.minute, dateOfExam.second)
-            events.add(EventDay(calendar.clone() as Calendar, R.drawable.ic_baseline_book_24))
+            val event = EventDay(calendar.clone() as Calendar, R.drawable.ic_baseline_book_24)
+            events.add(event)
+            examsToEvent[event] = it
         }
 
         binding.calendarView.setEvents(events)

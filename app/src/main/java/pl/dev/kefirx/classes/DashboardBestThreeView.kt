@@ -40,7 +40,6 @@ class DashboardBestThreeView(val binding: ActivityMainBinding, private val appli
     }
 
     private fun setTestsNull(){
-        println("null")
         with(binding){
             top3TestFirstDayNumber.text = ""
             top3testSecondDayNumber.text = ""
@@ -154,6 +153,17 @@ class DashboardBestThreeView(val binding: ActivityMainBinding, private val appli
         binding.top3test1.setOnClickListener(null)
         binding.top3test2.setOnClickListener(null)
         binding.top3test3.setOnClickListener(null)
+        with(binding){
+            top3TestFirstDayNumber.text = ""
+            top3testSecondDayNumber.text = ""
+            top3TestThirdDayNumber.text = ""
+            top3TestFirstMonth.text = ""
+            top3TestSecondMonth.text = ""
+            top3TestThirdMonth.text = ""
+            top3TestFirstLessonName.text = ""
+            top3TestSecondLessonName.text = ""
+            top3TestThirdLessonName.text = ""
+        }
     }
 
 
