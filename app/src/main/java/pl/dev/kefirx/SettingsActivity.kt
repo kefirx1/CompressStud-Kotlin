@@ -12,6 +12,7 @@ import pl.dev.kefirx.room.User
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingsBinding
+    var temp = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,6 +85,7 @@ class SettingsActivity : AppCompatActivity() {
             binding.wipeDataButton.setOnClickListener{
                 viewModel.deleteAllTests()
                 viewModel.deleteAllUserInfo()
+                temp = true
                 this.finish()
             }
         }
@@ -104,8 +106,6 @@ class SettingsActivity : AppCompatActivity() {
         binding.themeModal.visibility = View.GONE
     }
 
-
-    //TODO
     private fun isLikeMusicTrue() = viewModel.getUserInfoAsync().likeMusic
     private fun isMusicGenresEmpty() = viewModel.getUserInfoAsync().musicGenres == ""
 
@@ -141,18 +141,20 @@ class SettingsActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
 
-            if(!isLikeMusicTrue()){
-                val user : User = viewModel.getUserInfoAsync()
+        if (!temp) {
+            if (!isLikeMusicTrue()) {
+                val user: User = viewModel.getUserInfoAsync()
                 user.musicGenres = ""
                 viewModel.updateUser(user)
-            }else{
-                if(isMusicGenresEmpty()){
-                    val user : User = viewModel.getUserInfoAsync()
+            } else {
+                if (isMusicGenresEmpty()) {
+                    val user: User = viewModel.getUserInfoAsync()
                     user.musicGenres = "Trap"
                     viewModel.updateUser(user)
                 }
             }
 
+        }
     }
 
 
