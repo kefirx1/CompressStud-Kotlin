@@ -21,6 +21,7 @@ import pl.dev.kefirx.reminder.NotificationReceiver.Companion.messageExtra
 import pl.dev.kefirx.reminder.NotificationReceiver.Companion.notificationID
 import pl.dev.kefirx.reminder.NotificationReceiver.Companion.titleExtra
 import pl.dev.kefirx.room.Tests
+import java.time.ZoneId
 import java.util.*
 
 class ListenersSet {
@@ -29,7 +30,6 @@ class ListenersSet {
 
         val modalsView = ModalsView()
         val spinnersSet = SpinnersSet()
-        val notification = Notification()
 
         setCurrentDateTime(binding)
 
@@ -88,7 +88,7 @@ class ListenersSet {
 
                 val lesson = binding.lessonsSpinner.selectedItem.toString()
                 val topic = binding.topicSpinner.selectedItem.toString()
-                val dateOfExam = notification.getTimeInMillis(binding)
+                val dateOfExam = getTimeInMillis(binding)
                 var reminder = 0
                 val timeOfRemindH = binding.timeOfNotificationTimePicker.hour.toString()
                 val timeOfRemindM = binding.timeOfNotificationTimePicker.minute.toString()
@@ -172,6 +172,19 @@ class ListenersSet {
         binding.testDatePicker.updateDate(currentYear,currentMonth, currentDay)
         binding.timeOfNotificationTimePicker.hour = currentHour
         binding.timeOfNotificationTimePicker.minute = currentMinute
+    }
+
+    private fun getTimeInMillis(binding: ActivityMainBinding): Long{
+        val hour = binding.timeOfNotificationTimePicker.hour
+        val minute = binding.timeOfNotificationTimePicker.minute
+        val year = binding.testDatePicker.year
+        val month = binding.testDatePicker.month
+        val dayOfMonth = binding.testDatePicker.dayOfMonth
+
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month, dayOfMonth, hour, minute, 0)
+
+        return calendar.timeInMillis
     }
 
 }
