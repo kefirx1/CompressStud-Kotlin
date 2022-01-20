@@ -25,25 +25,31 @@
             </intent-filter>
         </receiver>
         <activity
+            android:screenOrientation="nosensor"
             android:name=".StudyingActivity"
             android:exported="true" />
         <activity
+            android:screenOrientation="nosensor"
             android:name=".CalendarActivity"
             android:exported="false"
             android:label="@string/title_activity_calendar"
             android:theme="@style/Theme.CompressStud.NoActionBar" />
         <activity
+            android:screenOrientation="nosensor"
             android:name=".StatisticsActivity"
             android:exported="false" />
         <activity
+            android:screenOrientation="nosensor"
             android:name=".SettingsActivity"
             android:exported="true"
             android:label="CompressStud" />
         <activity
+            android:screenOrientation="nosensor"
             android:name=".RegisterActivity"
             android:exported="true"
             android:label="CompressStud" />
         <activity
+            android:screenOrientation="nosensor"
             android:name=".MainActivity"
             android:exported="true"
             android:label="CompressStud">
