@@ -1,13 +1,14 @@
 package pl.dev.kefirx
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.applandeo.materialcalendarview.EventDay
+import pl.dev.kefirx.classes.ViewPagerAdapter
 import pl.dev.kefirx.databinding.ActivityCalendarBinding
+import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.room.Tests
 import pl.dev.kefirx.viewModel.CSViewModel
 import java.time.LocalDateTime
@@ -20,10 +21,15 @@ import kotlin.collections.HashMap
 class CalendarActivity : AppCompatActivity() {
 
 
-    private val events: MutableList<EventDay> = ArrayList()
+    companion object{
+        val examsToViewList: ArrayList<Tests> = ArrayList()
+        val examsToEvent: HashMap<EventDay, Tests> = HashMap()
+        val events: MutableList<EventDay> = ArrayList()
+
+    }
+
+
     private lateinit var binding: ActivityCalendarBinding
-    private val examsToViewList: ArrayList<Tests> = ArrayList()
-    private val examsToEvent: HashMap<EventDay, Tests> = HashMap()
     private lateinit var viewModel: CSViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,64 +42,52 @@ class CalendarActivity : AppCompatActivity() {
         }
     }
 
+
     override fun onResume() {
         super.onResume()
 
-        viewModel = ViewModelProvider
-            .AndroidViewModelFactory
-            .getInstance(application)
-            .create(CSViewModel::class.java)
+        resetViewModel()
 
         setEventsToDays()
 
         binding.calendarView.setOnDayClickListener { eventDay ->
-            val exam: Tests
+
+            val examsList: ArrayList<Tests> = ArrayList()
 
             if( events.contains(eventDay)){
+
+
                 binding.examCalendarLayout.visibility = View.VISIBLE
 
-                exam = examsToEvent[eventDay]!!
+                examsToEvent.forEach{
+                    if(it.value.dateOfExam/1000/60/60/24==(eventDay.calendar.timeInMillis/1000/60/60/24)+1){
+                        examsList.add(it.value)
+                    }
+                }
 
-                setExamDetails(exam)
-                setStartStudyingButtonListener(exam)
-                setDeleteTestButtonListener(exam)
+                binding.examCalendarLayout.adapter = ViewPagerAdapter(examsList, binding, applicationContext, viewModel, this)
+                binding.circleIndicatorCalendar.setViewPager(binding.examCalendarLayout)
 
             }else{
+                examsList.clear()
                 binding.examCalendarLayout.visibility = View.GONE
-            }
+             }
 
         }
     }
 
-    private fun setStartStudyingButtonListener(test: Tests){
-        binding.startStudyingCalendarButton.setOnClickListener{
-            val studyingIntent = Intent(applicationContext, StudyingActivity::class.java).apply {
-                putExtra("testId", test.test_id )
-            }
-            startActivity(studyingIntent)
-        }
-    }
-
-    private fun setDeleteTestButtonListener(test: Tests){
-        binding.deleteTestCalendarButton.setOnClickListener{
-            viewModel.deleteTest(test)
-            Log.e("TAG", "Test deleted")
-            examsToViewList.clear()
-            events.clear()
-            examsToEvent.clear()
-            binding.examCalendarLayout.visibility = View.GONE
-            onResume()
-        }
-    }
-
-    private fun setExamDetails(test: Tests){
-        binding.calendarTopicName.text = test.topic
-        binding.calendarLessonName.text = test.lesson
+    private fun resetViewModel(){
+        viewModel = ViewModelProvider
+            .AndroidViewModelFactory
+            .getInstance(application)
+            .create(CSViewModel::class.java)
     }
 
     private fun setEventsToDays(){
+
         val calendar = Calendar.getInstance()
         val testsList = viewModel.getAllTestsInfoAsync()
+
 
         testsList.forEach{
             examsToViewList.add(it)
@@ -118,6 +112,18 @@ class CalendarActivity : AppCompatActivity() {
         }
 
         binding.calendarView.setEvents(events)
+    }
+
+
+    private fun clearAllCollections(){
+        examsToViewList.clear()
+        events.clear()
+        examsToEvent.clear()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        clearAllCollections()
     }
 
 

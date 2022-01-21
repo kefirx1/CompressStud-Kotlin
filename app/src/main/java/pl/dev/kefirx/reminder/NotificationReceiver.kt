@@ -8,12 +8,9 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
-import androidx.lifecycle.ViewModelProvider
 import pl.dev.kefirx.MainActivity
 import pl.dev.kefirx.MainActivity.Companion.viewModel
 import pl.dev.kefirx.R
-import pl.dev.kefirx.classes.ListenersSet
-import pl.dev.kefirx.viewModel.CSViewModel
 import java.util.*
 
 
@@ -34,7 +31,7 @@ class NotificationReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == "android.intent.action.BOOT_COMPLETED") {
 
-            println(intent.component.toString())
+            println(intent.action)
 
 //            Toast.makeText(context, "Boot", Toast.LENGTH_SHORT).show()
 //
@@ -86,14 +83,12 @@ class NotificationReceiver: BroadcastReceiver() {
 
         }else if(intent.component.toString() == "ComponentInfo{pl.dev.kefirx/pl.dev.kefirx.reminder.NotificationReceiver}"){
 
-            println(intent.component.toString())
-
             val tests = viewModel.getAllTestsInfoAsync()
-            val currentDate = Calendar.getInstance().timeInMillis/10000
+            val currentDate = Calendar.getInstance().timeInMillis/10000/60
 
             tests.forEach{
 
-                if(currentDate == it.dateOfExam/10000){
+                if(currentDate == it.dateOfExam/1000/60){
 
                     channelID = "channel" + (it.test_id).toString()
                     notificationID = it.test_id
@@ -101,18 +96,10 @@ class NotificationReceiver: BroadcastReceiver() {
                 }
             }
 
-            val resultIntent = Intent(context, MainActivity::class.java)
-
-            val resultPendingIntent: PendingIntent? = TaskStackBuilder.create(context).run {
-                addNextIntentWithParentStack(resultIntent)
-                getPendingIntent(notificationID, PendingIntent.FLAG_IMMUTABLE)
-            }
-
             val notification = NotificationCompat.Builder(context, channelID)
                 .setSmallIcon(R.drawable.ic_baseline_menu_book_24)
                 .setContentTitle(intent.getStringExtra(titleExtra))
                 .setContentText(intent.getStringExtra(messageExtra))
-                .setContentIntent(resultPendingIntent)
                 .build()
 
             val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -123,7 +110,7 @@ class NotificationReceiver: BroadcastReceiver() {
 
 
 //            val resultIntent = Intent(context, MainActivity::class.java)
-
+//
 //            val resultPendingIntent: PendingIntent? = TaskStackBuilder.create(context).run {
 //                addNextIntentWithParentStack(resultIntent)
 //                getPendingIntent(DEFAULT_NOTIFICATION_ID, PendingIntent.FLAG_IMMUTABLE)

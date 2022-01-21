@@ -17,12 +17,15 @@ import pl.dev.kefirx.SettingsActivity
 import pl.dev.kefirx.StatisticsActivity
 import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.reminder.NotificationReceiver
+import pl.dev.kefirx.reminder.NotificationReceiver.Companion.channelID
 import pl.dev.kefirx.reminder.NotificationReceiver.Companion.messageExtra
 import pl.dev.kefirx.reminder.NotificationReceiver.Companion.notificationID
 import pl.dev.kefirx.reminder.NotificationReceiver.Companion.titleExtra
 import pl.dev.kefirx.room.Tests
-import java.time.ZoneId
 import java.util.*
+
+import android.app.ActivityManager
+
 
 class ListenersSet {
 
@@ -108,6 +111,8 @@ class ListenersSet {
 
 
                 if(reminder!=0){
+                    notificationID = newTest.test_id
+                    channelID = "channel" + (newTest.test_id).toString()
 
                     instance.createNotificationChannel()
                     scheduleNotification(applicationContext,instance, lesson, topic, reminder, dateOfExam)
@@ -121,13 +126,16 @@ class ListenersSet {
         }
     }
 
+
     private fun scheduleNotification(applicationContext: Context, instance: MainActivity, lesson: String, topic: String, reminder: Int, dateOfExam: Long) {
-        val intent = Intent(applicationContext, NotificationReceiver::class.java)
+        val intent = Intent(instance, NotificationReceiver::class.java)
         val title = "Czas na naukę!"
         val message = "$lesson - $topic"
 
         intent.putExtra(titleExtra, title)
         intent.putExtra(messageExtra, message)
+
+
 
         val pendingIntent = PendingIntent.getBroadcast(
             applicationContext,
@@ -135,6 +143,8 @@ class ListenersSet {
             intent,
             PendingIntent.FLAG_IMMUTABLE
         )
+
+
 
         val alarmManager = instance.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
