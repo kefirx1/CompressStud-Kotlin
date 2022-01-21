@@ -24,6 +24,11 @@
         <item name="spinnerBackground">@color/white</item>
         <item name="inputBackground">@color/gray</item>
         <item name="settingsOption">@color/white</item>
+
+        <!-- Calendar color. -->
+        <item name="ci_drawable">@color/darkGray</item>
+
+
     </style>
 
     <style name="Theme.CompressStud.NoActionBar">

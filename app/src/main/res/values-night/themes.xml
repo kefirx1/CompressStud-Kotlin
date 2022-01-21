@@ -13,6 +13,14 @@
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
 
+        <!-- Calendar color. -->
+        <item name="pagesColor">@color/darkGray</item>
+        <item name="abbreviationsBarColor">@color/darkGray</item>
+        <item name="daysLabelsColor">@color/white</item>
+        <item name="abbreviationsLabelsColor">@color/white</item>
+        <item name="ci_drawable">@color/white</item>
+
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/black</item>
         <!-- Customize your theme here. -->
