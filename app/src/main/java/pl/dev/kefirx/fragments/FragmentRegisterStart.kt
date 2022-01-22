@@ -22,7 +22,6 @@ class FragmentRegisterStart : Fragment() {
     override fun onStart() {
         super.onStart()
 
-
         Log.e("TAG", "start")
 
 
