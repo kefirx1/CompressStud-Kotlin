@@ -57,6 +57,7 @@ open class MainActivity : AppCompatActivity() {
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
+
     }
 
 
@@ -75,7 +76,7 @@ open class MainActivity : AppCompatActivity() {
         }else{
             modalsView = ModalsView()
             dashboardBestThreeView = DashboardBestThreeView(binding, applicationContext, this)
-            listenersSet = ListenersSet()
+            listenersSet = ListenersSet(application)
             spinnersSet = SpinnersSet()
 
 

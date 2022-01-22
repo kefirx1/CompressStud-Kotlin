@@ -6,6 +6,7 @@ import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import pl.dev.kefirx.MainActivity.Companion.viewModel
+import pl.dev.kefirx.classes.Notification
 import pl.dev.kefirx.databinding.ActivitySettingsBinding
 import pl.dev.kefirx.room.User
 
@@ -85,6 +86,7 @@ class SettingsActivity : AppCompatActivity() {
             binding.wipeDataButton.setOnClickListener{
                 viewModel.deleteAllTests()
                 viewModel.deleteAllUserInfo()
+                Notification().cancelAllNotification(applicationContext)
                 temp = true
                 this.finish()
             }

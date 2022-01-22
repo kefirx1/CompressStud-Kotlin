@@ -36,6 +36,9 @@ class CSViewModel(application: Application) : AndroidViewModel(application) {
     private var allTestsInfo: Deferred<List<Tests>> =
         csRepository.getAllTestsInfoAsync()
 
+    private var newestExam: Deferred<Tests> =
+        csRepository.getNewestExamAsync()
+
     fun insertTest(tests: Tests){
         csRepository.insertTest(tests)
     }
@@ -54,8 +57,10 @@ class CSViewModel(application: Application) : AndroidViewModel(application) {
         csRepository.deleteAllTests()
     }
     fun getThreeExams(): List<Tests> = csRepository.getThreeExams()
-    fun getNewestExam(): Tests = csRepository.getNewestExam()
 
+    fun getNewestExamAsync(): Tests = runBlocking {
+        newestExam.await()
+    }
 
 
 

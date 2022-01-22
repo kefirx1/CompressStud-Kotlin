@@ -11,7 +11,6 @@ import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.room.Tests
 import java.time.Instant
 import java.time.ZoneId
-import java.util.*
 
 class DashboardBestThreeView(val binding: ActivityMainBinding, private val applicationContext: Context, private val instance: MainActivity){
 
@@ -143,6 +142,7 @@ class DashboardBestThreeView(val binding: ActivityMainBinding, private val appli
         binding.deleteTestButton.setOnClickListener{
             setClickable(true)
             viewModel.deleteTest(test)
+            Notification().cancelNotificationByID(test.test_id, applicationContext)
             Log.e("TAG", "Test deleted")
             binding.top3test1.setOnClickListener(null)
             binding.top3test2.setOnClickListener(null)

@@ -25,9 +25,12 @@ import pl.dev.kefirx.room.Tests
 import java.util.*
 
 import android.app.ActivityManager
+import android.app.Application
+import androidx.lifecycle.ViewModelProvider
+import pl.dev.kefirx.viewModel.CSViewModel
 
 
-class ListenersSet {
+class ListenersSet (private val application: Application){
 
     fun setMainActivityListeners(binding: ActivityMainBinding, applicationContext: Context, instance: MainActivity){
 
@@ -138,10 +141,19 @@ class ListenersSet {
                     viewModel.insertTest(newTest)
                     Log.e("TAG", "Insert test")
 
+                    viewModel = ViewModelProvider
+                        .AndroidViewModelFactory
+                        .getInstance(application)
+                        .create(CSViewModel::class.java)
+
+                    val exam = viewModel.getNewestExamAsync()
+
+                    println(exam)
 
                     if (reminder != 0) {
-                        notificationID = newTest.test_id
-                        channelID = "channel" + (newTest.test_id).toString()
+                        println(exam.test_id)
+                        notificationID = exam.test_id
+                        channelID = "channel" + (exam.test_id).toString()
 
                         instance.createNotificationChannel()
                         scheduleNotification(
@@ -156,6 +168,10 @@ class ListenersSet {
 
                     Toast.makeText(applicationContext, "Dodano sprawdzian", Toast.LENGTH_SHORT)
                         .show()
+
+
+                    println("Create - $notificationID")
+                    println("Create - $channelID")
 
                     modalsView.newTestModalReset(binding, instance)
                 }

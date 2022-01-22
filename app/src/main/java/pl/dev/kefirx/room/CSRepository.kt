@@ -56,5 +56,8 @@ class CSRepository (application: Application) {
     }
     fun getThreeExams(): List<Tests> = testsDao.getThreeExams()
 
-    fun getNewestExam(): Tests = testsDao.getNewestExam()
+    fun getNewestExamAsync():  Deferred<Tests> =
+        CoroutineScope(Dispatchers.IO).async {
+            testsDao.getNewestExam()
+        }
 }

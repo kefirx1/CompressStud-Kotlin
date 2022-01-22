@@ -84,11 +84,17 @@ class NotificationReceiver: BroadcastReceiver() {
         }else if(intent.component.toString() == "ComponentInfo{pl.dev.kefirx/pl.dev.kefirx.reminder.NotificationReceiver}"){
 
             val tests = viewModel.getAllTestsInfoAsync()
-            val currentDate = Calendar.getInstance().timeInMillis/10000/60
+            val currentDate = Calendar.getInstance().timeInMillis/1000/60
+
+            channelID = "0"
+
+            println(tests)
 
             tests.forEach{
 
                 if(currentDate == it.dateOfExam/1000/60){
+
+                    println("Powaidomienie - $it")
 
                     channelID = "channel" + (it.test_id).toString()
                     notificationID = it.test_id
@@ -96,14 +102,18 @@ class NotificationReceiver: BroadcastReceiver() {
                 }
             }
 
-            val notification = NotificationCompat.Builder(context, channelID)
-                .setSmallIcon(R.drawable.ic_baseline_menu_book_24)
-                .setContentTitle(intent.getStringExtra(titleExtra))
-                .setContentText(intent.getStringExtra(messageExtra))
-                .build()
+            println(notificationID)
+            println(channelID)
+            if(channelID !="0"){
+                val notification = NotificationCompat.Builder(context, channelID)
+                    .setSmallIcon(R.drawable.ic_baseline_menu_book_24)
+                    .setContentTitle(intent.getStringExtra(titleExtra))
+                    .setContentText(intent.getStringExtra(messageExtra))
+                    .build()
 
-            val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            manager.notify(notificationID, notification)
+                val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                manager.notify(notificationID, notification)
+            }
         }else{
 
             Toast.makeText(MainActivity().applicationContext, intent.component.toString(), Toast.LENGTH_SHORT).show()

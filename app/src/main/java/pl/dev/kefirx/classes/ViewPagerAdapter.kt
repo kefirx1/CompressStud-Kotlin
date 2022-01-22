@@ -53,6 +53,7 @@ class ViewPagerAdapter(private val examsList: ArrayList<Tests>, private val bind
     private fun setDeleteTestButtonListener(holder: Pager2ViewHandler, position: Int){
         holder.deleteButton.setOnClickListener{
             viewModel.deleteTest(examsList[position])
+            Notification().cancelNotificationByID(examsList[position].test_id, applicationContext)
             Log.e("TAG", "Test deleted")
             instance.finish()
         }
