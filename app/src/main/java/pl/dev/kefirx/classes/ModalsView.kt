@@ -13,6 +13,13 @@ class ModalsView{
 
     fun newTestModalReset(binding: ActivityMainBinding, instance: MainActivity){
         binding.addNewTestModal.visibility = View.INVISIBLE
+        binding.openNewTestModalButton.isClickable = true
+        binding.top3test1.isClickable = true
+        binding.top3test2.isClickable = true
+        binding.top3test3.isClickable = true
+        binding.calendarButton.isClickable = true
+        binding.statisticsButton.isClickable = true
+        binding.settingsButton.isClickable = true
         instance.callOnResume()
     }
 

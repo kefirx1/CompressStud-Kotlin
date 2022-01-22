@@ -36,94 +36,133 @@ class ListenersSet {
 
         setCurrentDateTime(binding)
 
-        binding.settingsButton.setOnClickListener{
-            Log.e("TAG", "Go to settings")
-            val settingsIntent = Intent(applicationContext, SettingsActivity::class.java)
-            instance.startActivity(settingsIntent)
-        }
-        binding.statisticsButton.setOnClickListener{
-            Log.e("TAG", "Go to statistics")
-            val statisticsIntent = Intent(applicationContext, StatisticsActivity::class.java)
-            instance.startActivity(statisticsIntent)
-        }
-        binding.calendarButton.setOnClickListener{
-            Log.e("TAG", "Go to calendar")
-            val calendarIntent = Intent(applicationContext, CalendarActivity::class.java)
-            instance.startActivity(calendarIntent)
-        }
-        binding.openNewTestModalButton.setOnClickListener{
-            modalsView.hideAllModals(binding)
-
-            binding.addNewTestModal.visibility = View.VISIBLE
-            val levelOfEdu = viewModel.getUserInfoAsync().levelOfEdu
-
-            if(levelOfEdu == "Podstawowa"){
-                val lessonsList = instance.resources.getStringArray(pl.dev.kefirx.R.array.listOfPrimaryLessons)
-                val adapter = ArrayAdapter(instance, layout.simple_spinner_item, lessonsList)
-                binding.lessonsSpinner.adapter = adapter
-            }else if(levelOfEdu == "Średnia"){
-                val lessonsList = instance.resources.getStringArray(pl.dev.kefirx.R.array.listOfHighLessons)
-                val adapter = ArrayAdapter(instance, layout.simple_spinner_item, lessonsList)
-                binding.lessonsSpinner.adapter = adapter
+        if(binding.settingsButton.isClickable) {
+            binding.settingsButton.setOnClickListener {
+                Log.e("TAG", "Go to settings")
+                val settingsIntent = Intent(applicationContext, SettingsActivity::class.java)
+                instance.startActivity(settingsIntent)
             }
-
-            binding.lessonsSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    spinnersSet.setMATopicSpinner(binding, instance, levelOfEdu)
-                }
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                }
+        }
+        if(binding.statisticsButton.isClickable) {
+            binding.statisticsButton.setOnClickListener {
+                Log.e("TAG", "Go to statistics")
+                val statisticsIntent = Intent(applicationContext, StatisticsActivity::class.java)
+                instance.startActivity(statisticsIntent)
             }
-
-            binding.cancelNewTestButton.setOnClickListener{
-                modalsView.newTestModalReset(binding, instance)
+        }
+        if(binding.calendarButton.isClickable){
+            binding.calendarButton.setOnClickListener{
+                Log.e("TAG", "Go to calendar")
+                    val calendarIntent = Intent(applicationContext, CalendarActivity::class.java)
+                    instance.startActivity(calendarIntent)
             }
+        }
 
-            binding.timeOfNotificationTimePicker.setIs24HourView(true)
+        if(binding.openNewTestModalButton.isClickable) {
+            binding.openNewTestModalButton.setOnClickListener {
+                modalsView.hideAllModals(binding)
 
+                binding.openNewTestModalButton.isClickable = false
+                binding.top3test1.isClickable = false
+                binding.top3test2.isClickable = false
+                binding.top3test3.isClickable = false
+                binding.calendarButton.isClickable = false
+                binding.statisticsButton.isClickable = false
+                binding.settingsButton.isClickable = false
 
-            binding.addNewTestButton.setOnClickListener{
+                binding.addNewTestModal.visibility = View.VISIBLE
+                val levelOfEdu = viewModel.getUserInfoAsync().levelOfEdu
 
-                val lesson = binding.lessonsSpinner.selectedItem.toString()
-                val topic = binding.topicSpinner.selectedItem.toString()
-                val dateOfExam = getTimeInMillis(binding)
-                var reminder = 0
-                val timeOfRemindH = binding.timeOfNotificationTimePicker.hour.toString()
-                val timeOfRemindM = binding.timeOfNotificationTimePicker.minute.toString()
-                val timeOfLearning = 0.0
-                val watchedVideos = 0
-
-                when(binding.notificationSpinner.selectedItem.toString()){
-                    "Codziennie" -> reminder = 1
-                    "Co dwa dni" -> reminder = 2
-                    "Dzień przed sprawdzianem" -> reminder = 3
+                if (levelOfEdu == "Podstawowa") {
+                    val lessonsList =
+                        instance.resources.getStringArray(pl.dev.kefirx.R.array.listOfPrimaryLessons)
+                    val adapter = ArrayAdapter(instance, layout.simple_spinner_item, lessonsList)
+                    binding.lessonsSpinner.adapter = adapter
+                } else if (levelOfEdu == "Średnia") {
+                    val lessonsList =
+                        instance.resources.getStringArray(pl.dev.kefirx.R.array.listOfHighLessons)
+                    val adapter = ArrayAdapter(instance, layout.simple_spinner_item, lessonsList)
+                    binding.lessonsSpinner.adapter = adapter
                 }
 
-                val newTest = Tests(lesson, topic, dateOfExam, timeOfLearning, watchedVideos, reminder, timeOfRemindH, timeOfRemindM)
+                binding.lessonsSpinner.onItemSelectedListener =
+                    object : AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(
+                            parent: AdapterView<*>?,
+                            view: View?,
+                            position: Int,
+                            id: Long
+                        ) {
+                            spinnersSet.setMATopicSpinner(binding, instance, levelOfEdu)
+                        }
 
-                viewModel.insertTest(newTest)
-                Log.e("TAG", "Insert test")
+                        override fun onNothingSelected(parent: AdapterView<*>?) {
+                        }
+                    }
 
-
-                if(reminder!=0){
-                    notificationID = newTest.test_id
-                    channelID = "channel" + (newTest.test_id).toString()
-
-                    instance.createNotificationChannel()
-                    scheduleNotification(applicationContext,instance, lesson, topic, reminder, dateOfExam)
+                binding.cancelNewTestButton.setOnClickListener {
+                    modalsView.newTestModalReset(binding, instance)
                 }
 
-                Toast.makeText(applicationContext, "Dodano sprawdzian", Toast.LENGTH_SHORT).show()
+                binding.timeOfNotificationTimePicker.setIs24HourView(true)
 
-                modalsView.newTestModalReset(binding, instance)
+
+                binding.addNewTestButton.setOnClickListener {
+
+                    val lesson = binding.lessonsSpinner.selectedItem.toString()
+                    val topic = binding.topicSpinner.selectedItem.toString()
+                    val dateOfExam = getTimeInMillis(binding)
+                    var reminder = 0
+                    val timeOfRemindH = binding.timeOfNotificationTimePicker.hour.toString()
+                    val timeOfRemindM = binding.timeOfNotificationTimePicker.minute.toString()
+                    val timeOfLearning = 0.0
+                    val watchedVideos = 0
+
+                    when (binding.notificationSpinner.selectedItem.toString()) {
+                        "Codziennie" -> reminder = 1
+                        "Co dwa dni" -> reminder = 2
+                        "Dzień przed sprawdzianem" -> reminder = 3
+                    }
+
+                    val newTest = Tests(
+                        lesson,
+                        topic,
+                        dateOfExam,
+                        timeOfLearning,
+                        watchedVideos,
+                        reminder,
+                        timeOfRemindH,
+                        timeOfRemindM
+                    )
+
+                    viewModel.insertTest(newTest)
+                    Log.e("TAG", "Insert test")
+
+
+                    if (reminder != 0) {
+                        notificationID = newTest.test_id
+                        channelID = "channel" + (newTest.test_id).toString()
+
+                        instance.createNotificationChannel()
+                        scheduleNotification(
+                            applicationContext,
+                            instance,
+                            lesson,
+                            topic,
+                            reminder,
+                            dateOfExam
+                        )
+                    }
+
+                    Toast.makeText(applicationContext, "Dodano sprawdzian", Toast.LENGTH_SHORT)
+                        .show()
+
+                    modalsView.newTestModalReset(binding, instance)
+                }
+
             }
-
         }
+
     }
 
 
