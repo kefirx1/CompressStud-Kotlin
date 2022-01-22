@@ -103,7 +103,6 @@ class SettingsActivity : AppCompatActivity() {
         binding.nameModal.visibility = View.GONE
         binding.levelModal.visibility = View.GONE
         binding.musicModal.visibility = View.GONE
-        binding.themeModal.visibility = View.GONE
     }
 
     private fun isLikeMusicTrue() = viewModel.getUserInfoAsync().likeMusic

@@ -166,6 +166,7 @@ class DashboardBestThreeView(val binding: ActivityMainBinding, private val appli
         binding.top3test1.setOnClickListener(null)
         binding.top3test2.setOnClickListener(null)
         binding.top3test3.setOnClickListener(null)
+        setClickable(true)
         with(binding){
             top3TestFirstDayNumber.text = ""
             top3testSecondDayNumber.text = ""
@@ -179,7 +180,7 @@ class DashboardBestThreeView(val binding: ActivityMainBinding, private val appli
         }
     }
 
-    fun setClickable(value: Boolean){
+    private fun setClickable(value: Boolean){
         binding.openNewTestModalButton.isClickable = value
         binding.calendarButton.isClickable = value
         binding.statisticsButton.isClickable = value
