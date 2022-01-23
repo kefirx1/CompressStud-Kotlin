@@ -11,10 +11,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
-import pl.dev.kefirx.classes.DashboardBestThreeView
-import pl.dev.kefirx.classes.ListenersSet
-import pl.dev.kefirx.classes.ModalsView
-import pl.dev.kefirx.classes.SpinnersSet
+import pl.dev.kefirx.classes.*
 import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.json.GetJSONString
 import pl.dev.kefirx.json.ListOfTopicsJSON
@@ -35,6 +32,7 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var modalsView: ModalsView
     private lateinit var listenersSet: ListenersSet
     private lateinit var spinnersSet: SpinnersSet
+    private lateinit var examsExpiration: ExamsExpiration
     private var getJSONString = GetJSONString()
     private val gson = Gson()
 
@@ -76,6 +74,7 @@ open class MainActivity : AppCompatActivity() {
             dashboardBestThreeView = DashboardBestThreeView(binding, applicationContext, this)
             listenersSet = ListenersSet(application)
             spinnersSet = SpinnersSet()
+            examsExpiration = ExamsExpiration()
 
 
             dashboardBestThreeView.resetListeners()
@@ -103,6 +102,7 @@ open class MainActivity : AppCompatActivity() {
     private fun setDashboardCurrentInfo(){
         val name = viewModel.getUserInfoAsync().name + "!"
         binding.userNameTextView.text = name
+        examsExpiration.checkExamsExpirationDate(applicationContext, this)
         dashboardBestThreeView.setBestOfThreeView(viewModel.getThreeExams())
     }
 

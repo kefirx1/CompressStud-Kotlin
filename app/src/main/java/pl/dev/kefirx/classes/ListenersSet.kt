@@ -129,77 +129,83 @@ class ListenersSet (private val application: Application) {
 
 
                 binding.addNewTestButton.setOnClickListener {
-
-                    val lesson = binding.lessonsSpinner.selectedItem.toString()
-                    val topic = binding.topicSpinner.selectedItem.toString()
                     val dateOfExam = getTimeInMillis(binding)
-                    var reminder = 0
-                    val timeOfRemindH: String
-                    val timeOfRemindM: String
-                    if(binding.timeOfNotificationTimePicker.isEnabled){
-                        timeOfRemindH = binding.timeOfNotificationTimePicker.hour.toString()
-                        timeOfRemindM = binding.timeOfNotificationTimePicker.minute.toString()
-                    }else{
-                        timeOfRemindH = "-"
-                        timeOfRemindM = "-"
-                    }
-                    val timeOfLearning = 0.0
-                    val watchedVideos = 0
 
-                    when (binding.notificationSpinner.selectedItem.toString()) {
-                        "Codziennie" -> reminder = 1
-                        "Co dwa dni" -> reminder = 2
-                        "Dzień przed sprawdzianem" -> reminder = 3
-                    }
+                    if(dateOfExam > Calendar.getInstance().timeInMillis){
+                        val lesson = binding.lessonsSpinner.selectedItem.toString()
+                        val topic = binding.topicSpinner.selectedItem.toString()
+                        var reminder = 0
+                        val timeOfRemindH: String
+                        val timeOfRemindM: String
+                        if(binding.timeOfNotificationTimePicker.isEnabled){
+                            timeOfRemindH = binding.timeOfNotificationTimePicker.hour.toString()
+                            timeOfRemindM = binding.timeOfNotificationTimePicker.minute.toString()
+                        }else{
+                            timeOfRemindH = "-"
+                            timeOfRemindM = "-"
+                        }
+                        val timeOfLearning = 0.0
+                        val watchedVideos = 0
 
-                    val newTest = Tests(
-                        lesson,
-                        topic,
-                        dateOfExam,
-                        timeOfLearning,
-                        watchedVideos,
-                        reminder,
-                        timeOfRemindH,
-                        timeOfRemindM
-                    )
+                        when (binding.notificationSpinner.selectedItem.toString()) {
+                            "Codziennie" -> reminder = 1
+                            "Co dwa dni" -> reminder = 2
+                            "Dzień przed sprawdzianem" -> reminder = 3
+                        }
 
-                    viewModel.insertTest(newTest)
-                    Log.e("TAG", "Insert test")
-
-                    viewModel = ViewModelProvider
-                        .AndroidViewModelFactory
-                        .getInstance(application)
-                        .create(CSViewModel::class.java)
-
-                    val notificationID: Int
-                    val channelID: String
-
-                    val exam = viewModel.getNewestExamAsync()
-
-
-                    if (reminder != 0) {
-                        notificationID = exam.test_id
-                        channelID = "channel" + (exam.test_id).toString()
-
-                        instance.createNotificationChannel(channelID)
-                        scheduleNotification(
-                            applicationContext,
-                            instance,
+                        val newTest = Tests(
                             lesson,
                             topic,
-                            reminder,
                             dateOfExam,
-                            notificationID,
-                            channelID,
+                            timeOfLearning,
+                            watchedVideos,
+                            reminder,
                             timeOfRemindH,
                             timeOfRemindM
                         )
+
+                        viewModel.insertTest(newTest)
+                        Log.e("TAG", "Insert test")
+
+                        viewModel = ViewModelProvider
+                            .AndroidViewModelFactory
+                            .getInstance(application)
+                            .create(CSViewModel::class.java)
+
+                        val notificationID: Int
+                        val channelID: String
+
+                        val exam = viewModel.getNewestExamAsync()
+
+
+                        if (reminder != 0) {
+                            notificationID = exam.test_id
+                            channelID = "channel" + (exam.test_id).toString()
+
+                            instance.createNotificationChannel(channelID)
+                            scheduleNotification(
+                                applicationContext,
+                                instance,
+                                lesson,
+                                topic,
+                                reminder,
+                                dateOfExam,
+                                notificationID,
+                                channelID,
+                                timeOfRemindH,
+                                timeOfRemindM
+                            )
+                        }
+
+                        Toast.makeText(applicationContext, "Dodano sprawdzian", Toast.LENGTH_SHORT)
+                            .show()
+
+                        modalsView.newTestModalReset(binding, instance)
+                    }else{
+                        Toast.makeText(applicationContext, "Podaj popawną datę", Toast.LENGTH_SHORT)
+                            .show()
                     }
 
-                    Toast.makeText(applicationContext, "Dodano sprawdzian", Toast.LENGTH_SHORT)
-                        .show()
-
-                    modalsView.newTestModalReset(binding, instance)
                 }
 
             }
@@ -269,7 +275,6 @@ class ListenersSet (private val application: Application) {
 
     }
 
-
     private fun setCurrentDateTime(binding: ActivityMainBinding) {
         val currentDate = Calendar.getInstance()
         val currentYear = currentDate.get(Calendar.YEAR)
@@ -284,14 +289,12 @@ class ListenersSet (private val application: Application) {
     }
 
     private fun getTimeInMillis(binding: ActivityMainBinding): Long {
-        val hour = binding.timeOfNotificationTimePicker.hour
-        val minute = binding.timeOfNotificationTimePicker.minute
         val year = binding.testDatePicker.year
         val month = binding.testDatePicker.month
         val dayOfMonth = binding.testDatePicker.dayOfMonth
 
         val calendar = Calendar.getInstance()
-        calendar.set(year, month, dayOfMonth, hour, minute, 0)
+        calendar.set(year, month, dayOfMonth, 23, 0, 0)
 
         return calendar.timeInMillis
     }
