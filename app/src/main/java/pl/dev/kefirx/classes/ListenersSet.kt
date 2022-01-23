@@ -2,6 +2,7 @@ package pl.dev.kefirx.classes
 
 import android.R.layout
 import android.app.AlarmManager
+import android.app.Application
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -10,6 +11,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import pl.dev.kefirx.CalendarActivity
 import pl.dev.kefirx.MainActivity
 import pl.dev.kefirx.MainActivity.Companion.viewModel
@@ -17,51 +19,51 @@ import pl.dev.kefirx.SettingsActivity
 import pl.dev.kefirx.StatisticsActivity
 import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.reminder.NotificationReceiver
-import pl.dev.kefirx.reminder.NotificationReceiver.Companion.channelID
-import pl.dev.kefirx.reminder.NotificationReceiver.Companion.messageExtra
-import pl.dev.kefirx.reminder.NotificationReceiver.Companion.notificationID
-import pl.dev.kefirx.reminder.NotificationReceiver.Companion.titleExtra
+import pl.dev.kefirx.reminder.NotificationReceiver.Companion.CHANNEL_EXTRA
+import pl.dev.kefirx.reminder.NotificationReceiver.Companion.MESSAGE_EXTRA
+import pl.dev.kefirx.reminder.NotificationReceiver.Companion.NOTIFICATION_EXTRA
+import pl.dev.kefirx.reminder.NotificationReceiver.Companion.TITLE_EXTRA
 import pl.dev.kefirx.room.Tests
+import pl.dev.kefirx.viewModel.CSViewModel
 import java.util.*
 
-import android.app.ActivityManager
-import android.app.Application
-import androidx.lifecycle.ViewModelProvider
-import pl.dev.kefirx.viewModel.CSViewModel
 
+class ListenersSet (private val application: Application) {
 
-class ListenersSet (private val application: Application){
-
-    fun setMainActivityListeners(binding: ActivityMainBinding, applicationContext: Context, instance: MainActivity){
+    fun setMainActivityListeners(
+        binding: ActivityMainBinding,
+        applicationContext: Context,
+        instance: MainActivity
+    ) {
 
         val modalsView = ModalsView()
         val spinnersSet = SpinnersSet()
 
         setCurrentDateTime(binding)
 
-        if(binding.settingsButton.isClickable) {
+        if (binding.settingsButton.isClickable) {
             binding.settingsButton.setOnClickListener {
                 Log.e("TAG", "Go to settings")
                 val settingsIntent = Intent(applicationContext, SettingsActivity::class.java)
                 instance.startActivity(settingsIntent)
             }
         }
-        if(binding.statisticsButton.isClickable) {
+        if (binding.statisticsButton.isClickable) {
             binding.statisticsButton.setOnClickListener {
                 Log.e("TAG", "Go to statistics")
                 val statisticsIntent = Intent(applicationContext, StatisticsActivity::class.java)
                 instance.startActivity(statisticsIntent)
             }
         }
-        if(binding.calendarButton.isClickable){
-            binding.calendarButton.setOnClickListener{
+        if (binding.calendarButton.isClickable) {
+            binding.calendarButton.setOnClickListener {
                 Log.e("TAG", "Go to calendar")
-                    val calendarIntent = Intent(applicationContext, CalendarActivity::class.java)
-                    instance.startActivity(calendarIntent)
+                val calendarIntent = Intent(applicationContext, CalendarActivity::class.java)
+                instance.startActivity(calendarIntent)
             }
         }
 
-        if(binding.openNewTestModalButton.isClickable) {
+        if (binding.openNewTestModalButton.isClickable) {
             binding.openNewTestModalButton.setOnClickListener {
                 modalsView.hideAllModals(binding)
 
@@ -146,51 +148,61 @@ class ListenersSet (private val application: Application){
                         .getInstance(application)
                         .create(CSViewModel::class.java)
 
+                    val notificationID: Int
+                    val channelID: String
+
                     val exam = viewModel.getNewestExamAsync()
 
-                    println(exam)
 
                     if (reminder != 0) {
-                        println(exam.test_id)
                         notificationID = exam.test_id
                         channelID = "channel" + (exam.test_id).toString()
 
-                        instance.createNotificationChannel()
+                        instance.createNotificationChannel(channelID)
                         scheduleNotification(
                             applicationContext,
                             instance,
                             lesson,
                             topic,
                             reminder,
-                            dateOfExam
+                            dateOfExam,
+                            notificationID,
+                            channelID,
+                            timeOfRemindH,
+                            timeOfRemindM
                         )
                     }
 
                     Toast.makeText(applicationContext, "Dodano sprawdzian", Toast.LENGTH_SHORT)
                         .show()
 
-
-                    println("Create - $notificationID")
-                    println("Create - $channelID")
-
                     modalsView.newTestModalReset(binding, instance)
                 }
 
             }
         }
-
     }
 
-
-    private fun scheduleNotification(applicationContext: Context, instance: MainActivity, lesson: String, topic: String, reminder: Int, dateOfExam: Long) {
+    private fun scheduleNotification(
+        applicationContext: Context,
+        instance: MainActivity,
+        lesson: String,
+        topic: String,
+        reminder: Int,
+        dateOfExam: Long,
+        notificationID: Int,
+        channelID: String,
+        timeOfRemindH: String,
+        timeOfRemindM: String
+    ) {
         val intent = Intent(instance, NotificationReceiver::class.java)
         val title = "Czas na naukę!"
         val message = "$lesson - $topic"
 
-        intent.putExtra(titleExtra, title)
-        intent.putExtra(messageExtra, message)
-
-
+        intent.putExtra(TITLE_EXTRA, title)
+        intent.putExtra(MESSAGE_EXTRA, message)
+        intent.putExtra(CHANNEL_EXTRA, channelID)
+        intent.putExtra(NOTIFICATION_EXTRA, notificationID)
 
         val pendingIntent = PendingIntent.getBroadcast(
             applicationContext,
@@ -199,26 +211,35 @@ class ListenersSet (private val application: Application){
             PendingIntent.FLAG_IMMUTABLE
         )
 
-
-
         val alarmManager = instance.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-        when(reminder){
-            1 -> alarmManager.setExactAndAllowWhileIdle(
+        val currentDate = Calendar.getInstance()
+        val year = currentDate.get(Calendar.YEAR)
+        val month = currentDate.get(Calendar.MONTH)
+        val day = currentDate.get(Calendar.DAY_OF_MONTH)
+        val hour = timeOfRemindH.toInt()
+        val minute = timeOfRemindM.toInt()
+        val nextDay = Calendar.getInstance()
+        nextDay.set(year, month, day, hour, minute, 0)
+        val nextDayMillis = nextDay.timeInMillis + 86400000
+
+
+        when (reminder) {
+            1 -> alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,
-                dateOfExam,
-//                AlarmManager.INTERVAL_DAY,
+                nextDayMillis,
+                AlarmManager.INTERVAL_DAY,
                 pendingIntent
             )
             2 -> alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,
-                dateOfExam,
-                AlarmManager.INTERVAL_DAY*2,
-               pendingIntent
+                nextDayMillis,
+                AlarmManager.INTERVAL_DAY * 2,
+                pendingIntent
             )
             3 -> alarmManager.setExactAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
-                dateOfExam-86400000,
+                dateOfExam - 86400000,
                 pendingIntent
             )
         }
@@ -226,7 +247,7 @@ class ListenersSet (private val application: Application){
     }
 
 
-    private fun setCurrentDateTime(binding: ActivityMainBinding){
+    private fun setCurrentDateTime(binding: ActivityMainBinding) {
         val currentDate = Calendar.getInstance()
         val currentYear = currentDate.get(Calendar.YEAR)
         val currentMonth = currentDate.get(Calendar.MONTH)
@@ -234,12 +255,12 @@ class ListenersSet (private val application: Application){
         val currentHour = currentDate.get(Calendar.HOUR_OF_DAY)
         val currentMinute = currentDate.get(Calendar.MINUTE)
 
-        binding.testDatePicker.updateDate(currentYear,currentMonth, currentDay)
+        binding.testDatePicker.updateDate(currentYear, currentMonth, currentDay)
         binding.timeOfNotificationTimePicker.hour = currentHour
         binding.timeOfNotificationTimePicker.minute = currentMinute
     }
 
-    private fun getTimeInMillis(binding: ActivityMainBinding): Long{
+    private fun getTimeInMillis(binding: ActivityMainBinding): Long {
         val hour = binding.timeOfNotificationTimePicker.hour
         val minute = binding.timeOfNotificationTimePicker.minute
         val year = binding.testDatePicker.year

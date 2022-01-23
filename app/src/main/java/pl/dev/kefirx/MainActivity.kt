@@ -19,7 +19,6 @@ import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.json.GetJSONString
 import pl.dev.kefirx.json.ListOfTopicsJSON
 import pl.dev.kefirx.reminder.NotificationReceiver
-import pl.dev.kefirx.reminder.NotificationReceiver.Companion.channelID
 import pl.dev.kefirx.viewModel.CSViewModel
 
 
@@ -47,8 +46,7 @@ open class MainActivity : AppCompatActivity() {
     }
 
 
-
-    fun createNotificationChannel() {
+    fun createNotificationChannel(channelID: String) {
         val name = "Notif channel"
         val desc = "Desc channel"
         val importance = NotificationManager.IMPORTANCE_DEFAULT
