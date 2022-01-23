@@ -15,16 +15,19 @@ import pl.dev.kefirx.classes.*
 import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.json.GetJSONString
 import pl.dev.kefirx.json.ListOfTopicsJSON
+import pl.dev.kefirx.json.ytResponse.recommendedChannels.RecommendedChannelsIDJSON
 import pl.dev.kefirx.reminder.NotificationReceiver
 import pl.dev.kefirx.viewModel.CSViewModel
 
 
 open class MainActivity : AppCompatActivity() {
 
-    companion object{
+    companion object {
         lateinit var viewModel: CSViewModel
         const val LIST_OF_TOPICS_PATH = "listOfTopics.json"
+        const val LIST_OF_RECOMMENDED_CHANNELS_PATH = "listOfRecommendedChannels.json"
         lateinit var listOfTopicsObject: ListOfTopicsJSON
+        lateinit var listOfRecommendedChannelsObject: RecommendedChannelsIDJSON
     }
 
     protected lateinit var binding: ActivityMainBinding
@@ -40,7 +43,18 @@ open class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        listOfTopicsObject  = gson.fromJson(getJSONString.getJsonStringFromAssets(applicationContext, LIST_OF_TOPICS_PATH), ListOfTopicsJSON::class.java)
+        listOfTopicsObject = gson.fromJson(
+            getJSONString.getJsonStringFromAssets(
+                applicationContext,
+                LIST_OF_TOPICS_PATH
+            ), ListOfTopicsJSON::class.java
+        )
+        listOfRecommendedChannelsObject = gson.fromJson(
+            getJSONString.getJsonStringFromAssets(
+                applicationContext,
+                LIST_OF_RECOMMENDED_CHANNELS_PATH
+            ), RecommendedChannelsIDJSON::class.java
+        )
     }
 
 
@@ -48,10 +62,11 @@ open class MainActivity : AppCompatActivity() {
         val name = "Notif channel"
         val desc = "Desc channel"
         val importance = NotificationManager.IMPORTANCE_DEFAULT
-        val channel= NotificationChannel(channelID, name, importance)
+        val channel = NotificationChannel(channelID, name, importance)
         channel.description = desc
 
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
 
     }
@@ -65,11 +80,11 @@ open class MainActivity : AppCompatActivity() {
             .getInstance(application)
             .create(CSViewModel::class.java)
 
-        if(viewModel.getUserCountAsync() <= 0) {
+        if (viewModel.getUserCountAsync() <= 0) {
             Log.e("TAG", "Create user")
             val registerIntent = Intent(this, RegisterActivity::class.java)
             startActivity(registerIntent)
-        }else{
+        } else {
             modalsView = ModalsView()
             dashboardBestThreeView = DashboardBestThreeView(binding, applicationContext, this)
             listenersSet = ListenersSet(application)
@@ -94,12 +109,12 @@ open class MainActivity : AppCompatActivity() {
 
     }
 
-    fun callOnResume(){
+    fun callOnResume() {
         onResume()
     }
 
 
-    private fun setDashboardCurrentInfo(){
+    private fun setDashboardCurrentInfo() {
         val name = viewModel.getUserInfoAsync().name + "!"
         binding.userNameTextView.text = name
         examsExpiration.checkExamsExpirationDate(applicationContext, this)
