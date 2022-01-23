@@ -105,6 +105,22 @@ class ListenersSet (private val application: Application) {
                         }
                     }
 
+                binding.notificationSpinner.onItemSelectedListener =
+                    object : AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(
+                            parent: AdapterView<*>?,
+                            view: View?,
+                            position: Int,
+                            id: Long
+                        ) {
+                            binding.timeOfNotificationTimePicker.isEnabled =
+                                binding.notificationSpinner.selectedItem.toString() != "Brak"
+                        }
+
+                        override fun onNothingSelected(parent: AdapterView<*>?) {
+                        }
+                    }
+
                 binding.cancelNewTestButton.setOnClickListener {
                     modalsView.newTestModalReset(binding, instance)
                 }
@@ -118,8 +134,15 @@ class ListenersSet (private val application: Application) {
                     val topic = binding.topicSpinner.selectedItem.toString()
                     val dateOfExam = getTimeInMillis(binding)
                     var reminder = 0
-                    val timeOfRemindH = binding.timeOfNotificationTimePicker.hour.toString()
-                    val timeOfRemindM = binding.timeOfNotificationTimePicker.minute.toString()
+                    val timeOfRemindH: String
+                    val timeOfRemindM: String
+                    if(binding.timeOfNotificationTimePicker.isEnabled){
+                        timeOfRemindH = binding.timeOfNotificationTimePicker.hour.toString()
+                        timeOfRemindM = binding.timeOfNotificationTimePicker.minute.toString()
+                    }else{
+                        timeOfRemindH = "-"
+                        timeOfRemindM = "-"
+                    }
                     val timeOfLearning = 0.0
                     val watchedVideos = 0
 
