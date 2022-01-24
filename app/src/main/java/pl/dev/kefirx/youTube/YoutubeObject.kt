@@ -1,33 +1,59 @@
 package pl.dev.kefirx.youTube
 
+import pl.dev.kefirx.MainActivity
 import pl.dev.kefirx.json.ytResponse.YoutubeResponseJSON
 
-class YoutubeObject{
+object YoutubeObject {
 
-    companion object{
-        private const val BASIC_YT_URL = "https://www.youtube.com/watch?v="
 
-        private fun getVideoURL(videoId: String)  = BASIC_YT_URL + videoId
+    private fun getSortedVideosIdList(
+        channelsIdList: ArrayList<String>,
+        videosIdList: ArrayList<String>,
+        lesson: String
+    ): ArrayList<String> {
 
-        //TODO
-        private fun checkChannelValue(channelsIdList: ArrayList<String>, videosIdList: ArrayList<String>): ArrayList<String>{
-            val videoIdSortedList: ArrayList<String> = ArrayList()
+        val videoIdSortedList: ArrayList<String> = ArrayList()
 
-            return videosIdList
-        }
-
-        fun getBestOfFive(responseObject: YoutubeResponseJSON): ArrayList<String>{
-
-            val channelsIdList: ArrayList<String> = ArrayList()
-            val videosIdList: ArrayList<String> = ArrayList()
-
-            responseObject.items.forEach{
-                channelsIdList.add(it.snippet.channelId)
-                videosIdList.add(it.id.videoId)
+        channelsIdList.forEach{ channel ->
+            MainActivity.listOfRecommendedChannelsObject.forEach{
+                if(it[0] == lesson){
+                    val channelsList = it.subList(1, it.size-1)
+                    if(checkOnList(channelsList, channel)){
+                        videoIdSortedList.add(videosIdList[channelsIdList.indexOf(channel)])
+                        videosIdList.removeAt(channelsIdList.indexOf(channel))
+                    }
+                }
             }
-
-            return checkChannelValue(channelsIdList,videosIdList)
         }
+
+        videosIdList.forEach{
+            videoIdSortedList.add(it)
+        }
+
+        return videoIdSortedList
+    }
+
+    private fun checkOnList(channelsList: MutableList<String>, channel: String): Boolean{
+        channelsList.forEach{
+            if(it == channel){
+                return true
+            }
+        }
+        return false
+    }
+
+
+    fun getBestOfFive(responseObject: YoutubeResponseJSON, lesson: String): ArrayList<String> {
+
+        val channelsIdList: ArrayList<String> = ArrayList()
+        val videosIdList: ArrayList<String> = ArrayList()
+
+        responseObject.items.forEach {
+            channelsIdList.add(it.snippet.channelId)
+            videosIdList.add(it.id.videoId)
+        }
+
+        return getSortedVideosIdList(channelsIdList, videosIdList, lesson)
     }
 
 

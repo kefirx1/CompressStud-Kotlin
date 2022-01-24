@@ -6,7 +6,7 @@ import pl.dev.kefirx.MainActivity
 import pl.dev.kefirx.json.GetJSONString
 import pl.dev.kefirx.json.ytResponse.YoutubeResponseJSON
 
-object YoutubeSampleRespose {
+object YoutubeSampleResponse {
 
     private val gson = Gson()
 

@@ -10,6 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import pl.dev.kefirx.MainActivity.Companion.viewModel
 import pl.dev.kefirx.classes.Convert
 import pl.dev.kefirx.databinding.ActivityStudyingBinding
@@ -17,7 +21,8 @@ import pl.dev.kefirx.json.ytResponse.YoutubeResponseJSON
 import pl.dev.kefirx.room.Tests
 import pl.dev.kefirx.services.TimerService
 import pl.dev.kefirx.youTube.YoutubeObject
-import pl.dev.kefirx.youTube.YoutubeSampleRespose
+import pl.dev.kefirx.youTube.YoutubeRetrofitClient
+import pl.dev.kefirx.youTube.YoutubeSampleResponse
 
 
 class StudyingActivity : AppCompatActivity() {
@@ -44,19 +49,24 @@ class StudyingActivity : AppCompatActivity() {
         setListeners()
         setTestInfo()
 
-//        CoroutineScope(Dispatchers.IO).launch{
-//            println(YoutubeRetrofitClient.instance
-//                .getResponseAsync("")
-//                .await()
-//                .body()!!.items[0].id.videoId)
-//        }
 
-        val responseObject = YoutubeSampleRespose.getSampleResponse(this)
+        CoroutineScope(Dispatchers.Main).launch {
+            loadVideos(
+                YoutubeRetrofitClient.instance
+                    .getResponseAsync(getSearchKey(testToStudying))
+                    .await()
+                    .body()!!,
+                testToStudying.lesson
+            )
+        }
 
-        loadVideos(responseObject)
+
+//        val responseObject = YoutubeSampleResponse.getSampleResponse(this)
+//        loadVideos(responseObject)
 
     }
 
+    private fun getSearchKey(testToStudying: Tests) = testToStudying.lesson + testToStudying.topic
 
     override fun onResume() {
         super.onResume()
@@ -67,9 +77,9 @@ class StudyingActivity : AppCompatActivity() {
         watchedVideos++
     }
 
-    private fun loadVideos(responseObject: YoutubeResponseJSON){
+    private fun loadVideos(responseObject: YoutubeResponseJSON, lesson: String){
 
-        val bestOfFiveVideosURL: ArrayList<String> = YoutubeObject.getBestOfFive(responseObject)
+        val bestOfFiveVideosURL: ArrayList<String> = YoutubeObject.getBestOfFive(responseObject, lesson)
 
         lifecycle.addObserver(binding.youtubePlayer1)
         lifecycle.addObserver(binding.youtubePlayer2)
