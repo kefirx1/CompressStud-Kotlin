@@ -3,12 +3,10 @@ package pl.dev.kefirx
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.applandeo.materialcalendarview.EventDay
 import pl.dev.kefirx.classes.ViewPagerAdapter
 import pl.dev.kefirx.databinding.ActivityCalendarBinding
-import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.room.Tests
 import pl.dev.kefirx.viewModel.CSViewModel
 import java.time.LocalDateTime
@@ -21,7 +19,7 @@ import kotlin.collections.HashMap
 class CalendarActivity : AppCompatActivity() {
 
 
-    companion object{
+    companion object {
         val examsToViewList: ArrayList<Tests> = ArrayList()
         val examsToEvent: HashMap<EventDay, Tests> = HashMap()
         val events: MutableList<EventDay> = ArrayList()
@@ -37,7 +35,7 @@ class CalendarActivity : AppCompatActivity() {
         binding = ActivityCalendarBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.backToDashboardButton.setOnClickListener{
+        binding.backToDashboardButton.setOnClickListener {
             this.finish()
         }
     }
@@ -54,58 +52,69 @@ class CalendarActivity : AppCompatActivity() {
 
             val examsList: ArrayList<Tests> = ArrayList()
 
-            if( events.contains(eventDay)){
+            if (events.contains(eventDay)) {
 
 
                 binding.examCalendarLayout.visibility = View.VISIBLE
+                binding.circleIndicatorCalendar.visibility = View.VISIBLE
 
-                examsToEvent.forEach{
-                    if(it.value.dateOfExam/1000/60/60/24==(eventDay.calendar.timeInMillis/1000/60/60/24)+1){
+                examsToEvent.forEach {
+                    if (it.value.dateOfExam / 1000 / 60 / 60 / 24 == (eventDay.calendar.timeInMillis / 1000 / 60 / 60 / 24) + 1) {
                         examsList.add(it.value)
                     }
                 }
 
-                binding.examCalendarLayout.adapter = ViewPagerAdapter(examsList, binding, applicationContext, viewModel, this)
+                binding.examCalendarLayout.adapter =
+                    ViewPagerAdapter(examsList, applicationContext, viewModel, this)
                 binding.circleIndicatorCalendar.setViewPager(binding.examCalendarLayout)
 
-            }else{
+            } else {
                 examsList.clear()
+                binding.circleIndicatorCalendar.visibility = View.GONE
                 binding.examCalendarLayout.visibility = View.GONE
-             }
+            }
 
         }
     }
 
-    private fun resetViewModel(){
+    private fun resetViewModel() {
         viewModel = ViewModelProvider
             .AndroidViewModelFactory
             .getInstance(application)
             .create(CSViewModel::class.java)
     }
 
-    private fun setEventsToDays(){
+    private fun setEventsToDays() {
 
         val calendar = Calendar.getInstance()
         val testsList = viewModel.getAllTestsInfoAsync()
 
 
-        testsList.forEach{
+        testsList.forEach {
             examsToViewList.add(it)
             val dateOfExamMillis = it.dateOfExam
-            val dateOfExamSec = dateOfExamMillis/1000
-            val dateOfExam = LocalDateTime.ofEpochSecond(dateOfExamSec, 0,
+            val dateOfExamSec = dateOfExamMillis / 1000
+            val dateOfExam = LocalDateTime.ofEpochSecond(
+                dateOfExamSec, 0,
                 ZoneOffset.UTC
             )
 
-            var hour = dateOfExam.hour+1
+            var hour = dateOfExam.hour + 1
 
-            if(dateOfExam.monthValue==3 && dateOfExam.dayOfMonth>=27){
+            if (dateOfExam.monthValue == 3 && dateOfExam.dayOfMonth >= 27) {
                 hour++
-            }else if(dateOfExam.monthValue in 4..8){
+            } else if (dateOfExam.monthValue in 4..8) {
                 hour++
             }
 
-            calendar.set(dateOfExam.year, dateOfExam.monthValue-1, dateOfExam.dayOfMonth, hour, dateOfExam.minute, dateOfExam.second)
+            calendar.set(
+                dateOfExam.year,
+                dateOfExam.monthValue - 1,
+                dateOfExam.dayOfMonth,
+                hour,
+                dateOfExam.minute,
+                dateOfExam.second
+            )
             val event = EventDay(calendar.clone() as Calendar, R.drawable.ic_baseline_book_24)
             events.add(event)
             examsToEvent[event] = it
@@ -115,7 +124,7 @@ class CalendarActivity : AppCompatActivity() {
     }
 
 
-    private fun clearAllCollections(){
+    private fun clearAllCollections() {
         examsToViewList.clear()
         events.clear()
         examsToEvent.clear()
@@ -125,6 +134,5 @@ class CalendarActivity : AppCompatActivity() {
         super.onDestroy()
         clearAllCollections()
     }
-
 
 }
