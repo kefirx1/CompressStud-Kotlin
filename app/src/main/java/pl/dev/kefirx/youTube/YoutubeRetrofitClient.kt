@@ -9,16 +9,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object YoutubeRetrofitClient {
 
-    private const val BASE_URL ="https://youtube.googleapis.com"
+    private const val BASE_URL = "https://youtube.googleapis.com"
     private const val API_KEY = "AIzaSyDxTfhNslMMA7jYCNbXjcJvIVo0dACUNIE"
 
     private val client: OkHttpClient = OkHttpClient.Builder()
-        .addInterceptor{ chain -> return@addInterceptor addApiKeyToRequests(chain)}
+        .addInterceptor { chain -> return@addInterceptor addApiKeyToRequests(chain) }
         .build()
 
 
-    val instance: YoutubeAPIService by lazy{
-       val retrofit = Retrofit.Builder()
+    val instance: YoutubeAPIService by lazy {
+        val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())

@@ -13,7 +13,6 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import pl.dev.kefirx.MainActivity.Companion.viewModel
 import pl.dev.kefirx.classes.Convert
 import pl.dev.kefirx.databinding.ActivityStudyingBinding
@@ -22,7 +21,6 @@ import pl.dev.kefirx.room.Tests
 import pl.dev.kefirx.services.TimerService
 import pl.dev.kefirx.youTube.YoutubeObject
 import pl.dev.kefirx.youTube.YoutubeRetrofitClient
-import pl.dev.kefirx.youTube.YoutubeSampleResponse
 
 
 class StudyingActivity : AppCompatActivity() {
