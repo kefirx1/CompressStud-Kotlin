@@ -13,27 +13,36 @@ object YoutubeObject {
     ): ArrayList<String> {
 
         val videoIdSortedList: ArrayList<String> = ArrayList()
+        val recommendedChannelsList = MainActivity.listOfRecommendedChannelsObject
+        var recommendedLessonList: ArrayList<String> = ArrayList()
+        val videosIdListCopy: MutableList<String> = mutableListOf(videosIdList.clone()) as MutableList<String>
+        var i = -1
+
+        recommendedChannelsList.forEach{
+            if (it[0] == lesson) {
+                recommendedLessonList = it
+            }
+        }
+        recommendedLessonList.removeAt(0)
+
 
         channelsIdList.forEach { channel ->
-            MainActivity.listOfRecommendedChannelsObject.forEach {
-                if (it[0] == lesson) {
-                    val channelsList = it.subList(1, it.size - 1)
-                    if (checkOnList(channelsList, channel)) {
-                        videoIdSortedList.add(videosIdList[channelsIdList.indexOf(channel)])
-                        videosIdList.removeAt(channelsIdList.indexOf(channel))
-                    }
-                }
+            i++
+            if (checkOnList(recommendedLessonList, channel)) {
+                videoIdSortedList.add(videosIdList[i])
+                videosIdListCopy.remove(videosIdList[i])
             }
         }
 
-        videosIdList.forEach {
+
+        videosIdListCopy.forEach {
             videoIdSortedList.add(it)
         }
 
         return videoIdSortedList
     }
 
-    private fun checkOnList(channelsList: MutableList<String>, channel: String): Boolean {
+    private fun checkOnList(channelsList: ArrayList<String>, channel: String): Boolean {
         channelsList.forEach {
             if (it == channel) {
                 return true

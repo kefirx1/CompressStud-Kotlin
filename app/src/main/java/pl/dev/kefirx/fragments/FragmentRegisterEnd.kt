@@ -1,13 +1,11 @@
 package pl.dev.kefirx.fragments
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
-import pl.dev.kefirx.MainActivity.Companion.viewModel
+import pl.dev.kefirx.RegisterActivity.Companion.viewModel
 import pl.dev.kefirx.databinding.FragmentRegisterEndBinding
 import pl.dev.kefirx.room.User
 

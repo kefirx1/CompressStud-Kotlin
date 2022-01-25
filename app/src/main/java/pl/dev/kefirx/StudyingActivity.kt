@@ -6,19 +6,21 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.widget.MultiAutoCompleteTextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import pl.dev.kefirx.MainActivity.Companion.viewModel
 import pl.dev.kefirx.classes.Convert
 import pl.dev.kefirx.databinding.ActivityStudyingBinding
 import pl.dev.kefirx.json.ytResponse.YoutubeResponseJSON
 import pl.dev.kefirx.room.Tests
 import pl.dev.kefirx.services.TimerService
+import pl.dev.kefirx.viewModel.CSViewModel
 import pl.dev.kefirx.youTube.YoutubeObject
 import pl.dev.kefirx.youTube.YoutubeRetrofitClient
 
@@ -28,11 +30,18 @@ class StudyingActivity : AppCompatActivity() {
     private lateinit var testToStudying: Tests
     private lateinit var binding: ActivityStudyingBinding
     private lateinit var serviceIntent: Intent
+    private lateinit var viewModel: CSViewModel
     private var time = 0.0
     private var watchedVideos = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        viewModel = ViewModelProvider
+            .AndroidViewModelFactory
+            .getInstance(application)
+            .create(CSViewModel::class.java)
+
         binding = ActivityStudyingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -71,13 +80,14 @@ class StudyingActivity : AppCompatActivity() {
         startTimer()
     }
 
-    private fun addWatchedVideos(){
+    private fun addWatchedVideos() {
         watchedVideos++
     }
 
-    private fun loadVideos(responseObject: YoutubeResponseJSON, lesson: String){
+    private fun loadVideos(responseObject: YoutubeResponseJSON, lesson: String) {
 
-        val bestOfFiveVideosURL: ArrayList<String> = YoutubeObject.getBestOfFive(responseObject, lesson)
+        val bestOfFiveVideosURL: ArrayList<String> =
+            YoutubeObject.getBestOfFive(responseObject, lesson)
 
         lifecycle.addObserver(binding.youtubePlayer1)
         lifecycle.addObserver(binding.youtubePlayer2)
@@ -95,7 +105,7 @@ class StudyingActivity : AppCompatActivity() {
                 state: PlayerConstants.PlayerState
             ) {
                 super.onStateChange(youTubePlayer, state)
-                if(state.name == "ENDED"){
+                if (state.name == "ENDED") {
                     addWatchedVideos()
                 }
             }
@@ -111,7 +121,7 @@ class StudyingActivity : AppCompatActivity() {
                 state: PlayerConstants.PlayerState
             ) {
                 super.onStateChange(youTubePlayer, state)
-                if(state.name == "ENDED"){
+                if (state.name == "ENDED") {
                     addWatchedVideos()
                 }
             }
@@ -127,7 +137,7 @@ class StudyingActivity : AppCompatActivity() {
                 state: PlayerConstants.PlayerState
             ) {
                 super.onStateChange(youTubePlayer, state)
-                if(state.name == "ENDED"){
+                if (state.name == "ENDED") {
                     addWatchedVideos()
                 }
             }
@@ -143,7 +153,7 @@ class StudyingActivity : AppCompatActivity() {
                 state: PlayerConstants.PlayerState
             ) {
                 super.onStateChange(youTubePlayer, state)
-                if(state.name == "ENDED"){
+                if (state.name == "ENDED") {
                     addWatchedVideos()
                 }
             }
@@ -159,7 +169,7 @@ class StudyingActivity : AppCompatActivity() {
                 state: PlayerConstants.PlayerState
             ) {
                 super.onStateChange(youTubePlayer, state)
-                if(state.name == "ENDED"){
+                if (state.name == "ENDED") {
                     addWatchedVideos()
                 }
             }
@@ -169,36 +179,37 @@ class StudyingActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun setListeners(){
-        binding.studyingPauseButton.setOnClickListener{
-            if(binding.studyingPauseButton.text == "PAUZA"){
+    private fun setListeners() {
+        binding.studyingPauseButton.setOnClickListener {
+            if (binding.studyingPauseButton.text == "PAUZA") {
                 binding.studyingPauseButton.text = "START"
                 stopTimer()
-            }else if (binding.studyingPauseButton.text == "START"){
+            } else if (binding.studyingPauseButton.text == "START") {
                 binding.studyingPauseButton.text = "PAUZA"
                 startTimer()
             }
         }
-        binding.studyingStopButton.setOnClickListener{
+        binding.studyingStopButton.setOnClickListener {
             finish()
         }
     }
 
-    private fun setTestInfo(){
+    private fun setTestInfo() {
         binding.testLessonNameText.text = testToStudying.lesson
         binding.testTopicNameText.text = testToStudying.topic
     }
 
-    private fun startTimer(){
+    private fun startTimer() {
         serviceIntent.putExtra(TimerService.TIME_EXTRA, time)
         startService(serviceIntent)
     }
-    private fun stopTimer(){
+
+    private fun stopTimer() {
         stopService(serviceIntent)
         testToStudying.timeOfLearning = time
     }
 
-    private val updateTime: BroadcastReceiver = object : BroadcastReceiver(){
+    private val updateTime: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             time = intent!!.getDoubleExtra(TimerService.TIME_EXTRA, 0.0)
             binding.studyingTimeText.text = Convert.getTimeStringFromDouble(time)

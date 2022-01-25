@@ -14,7 +14,11 @@ class FragmentRegisterStart : Fragment() {
 
     private lateinit var binding: FragmentRegisterStartBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentRegisterStartBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -25,9 +29,10 @@ class FragmentRegisterStart : Fragment() {
         Log.e("TAG", "start")
 
 
-        binding.startRegisterButton.setOnClickListener{
+        binding.startRegisterButton.setOnClickListener {
             findNavController().navigate(
-                FragmentRegisterStartDirections.actionFragmentRegisterStartToFragmentRegisterStep1())
+                FragmentRegisterStartDirections.actionFragmentRegisterStartToFragmentRegisterStep1()
+            )
         }
 
 

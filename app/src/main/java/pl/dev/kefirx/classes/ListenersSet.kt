@@ -44,7 +44,9 @@ class ListenersSet (private val application: Application) {
         if (binding.settingsButton.isClickable) {
             binding.settingsButton.setOnClickListener {
                 Log.e("TAG", "Go to settings")
-                val settingsIntent = Intent(applicationContext, SettingsActivity::class.java)
+                val settingsIntent = Intent(
+                    applicationContext, SettingsActivity::class.java
+                )
                 instance.startActivity(settingsIntent)
             }
         }
