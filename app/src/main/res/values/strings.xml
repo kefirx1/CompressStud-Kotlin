@@ -89,4 +89,7 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="calendarText">Kalendarz</string>
+    <string name="footerText"><![CDATA[Made by SakubDev & Kefirx]]></string>
+    <string name="backText">COFNIJ</string>
 </resources>
