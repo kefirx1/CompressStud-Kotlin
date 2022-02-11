@@ -92,4 +92,20 @@
     <string name="calendarText">Kalendarz</string>
     <string name="footerText"><![CDATA[Made by SakubDev & Kefirx]]></string>
     <string name="backText">COFNIJ</string>
+    <string name="addNewText">DODAJ NOWY</string>
+    <string name="actionsText">Akcje</string>
+    <string name="mathText">MATEMATYKA</string>
+    <string name="startLearningText">ROZPOCZNIJ NAUKĘ</string>
+    <string name="deleteExamText">USUŃ SPRAWDZIAN</string>
+    <string name="openCalendarText">Otwórz kalendarz</string>
+    <string name="loremText">Lorem</string>
+    <string name="statsText">Statystyki</string>
+    <string name="settingsText">Ustawienia</string>
+    <string name="lessonText">Przedmiot:</string>
+    <string name="topicText">Dział:</string>
+    <string name="reminderText">Przypomnienie:</string>
+    <string name="hourOfRemindText">Godzina przypominania:</string>
+    <string name="addText">DODAJ</string>
+    <string name="cancelText">ANULUJ</string>
+    <string name="welcomeText">Witaj</string>
 </resources>
