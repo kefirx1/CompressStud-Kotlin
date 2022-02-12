@@ -108,4 +108,16 @@
     <string name="addText">DODAJ</string>
     <string name="cancelText">ANULUJ</string>
     <string name="welcomeText">Witaj</string>
+    <string name="wipeConfirmText">TAK, WYCZYŚĆ</string>
+    <string name="wipeQuestionText">Jesteś pewien?</string>
+    <string name="wipeWarningText">Wyczyszczenie danych spowoduje także usunięcie statystyk i sprawdzianów.</string>
+    <string name="confirmText">ZATWIERDŹ</string>
+    <string name="newFavMusicText">Podaj nowy ulubiony typ muzyki</string>
+    <string name="newFavMusicQuestionText">Słuchasz muzyki podczas nauki?</string>
+    <string name="newNameText">Podaj nowe imie</string>
+    <string name="wipeDataText">Wyczyść dane</string>
+    <string name="musicalPreferencesText">Preferencje muzyczne</string>
+    <string name="eduLevelText">Poziom nauczania</string>
+    <string name="nameText">Imię</string>
+    <string name="newEduLevelText">Podaj nowy poziom nauczania</string>
 </resources>
