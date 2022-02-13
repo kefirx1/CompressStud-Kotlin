@@ -120,4 +120,6 @@
     <string name="eduLevelText">Poziom nauczania</string>
     <string name="nameText">Imię</string>
     <string name="newEduLevelText">Podaj nowy poziom nauczania</string>
+    <string name="learningTimeText">Czas poświęcony nauce:</string>
+    <string name="watchedVideosText">Liczba obejrzanych filmów:</string>
 </resources>

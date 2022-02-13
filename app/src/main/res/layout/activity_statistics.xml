@@ -13,7 +13,7 @@
         android:background="@color/primary"
         android:fontFamily="@font/regular"
         android:padding="5dp"
-        android:text="Made by  SakubDev &amp; Kefirx"
+        android:text="@string/footerText"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/regular"
-                android:text="Czas poświęcony nauce:"
+                android:text="@string/learningTimeText"
                 android:textSize="20sp" />
 
             <TextView
@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/regular"
-                android:text="Liczba obejrzanych filmów: "
+                android:text="@string/watchedVideosText"
                 android:textSize="20sp" />
 
             <TextView
@@ -103,7 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/regular"
-            android:text="Statystyki"
+            android:text="@string/statsText"
             android:textSize="40sp" />
 
         <LinearLayout
@@ -117,7 +117,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/bold"
-                android:text="COFNIJ" />
+                android:text="@string/backText" />
         </LinearLayout>
 
 
