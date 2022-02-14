@@ -13,7 +13,7 @@
         android:background="@color/primary"
         android:fontFamily="@font/regular"
         android:padding="5dp"
-        android:text="Made by  SakubDev &amp; Kefirx"
+        android:text="@string/footerText"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -167,7 +167,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/bold"
-            android:text="CZAS NAUKI:"
+            android:text="@string/learningActivityTimeText"
             android:textSize="20sp" />
 
         <TextView
@@ -197,7 +197,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/regular"
-            android:text="Nauka"
+            android:text="@string/learningText"
             android:textSize="40sp" />
 
         <LinearLayout
@@ -212,14 +212,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:fontFamily="@font/bold"
-                android:text="PAUZA" />
+                android:text="@string/pauseText" />
 
             <Button
                 android:id="@+id/studyingStopButton"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/bold"
-                android:text="STOP" />
+                android:text="@string/stopText" />
         </LinearLayout>
 
 

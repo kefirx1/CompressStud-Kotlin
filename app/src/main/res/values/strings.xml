@@ -122,4 +122,8 @@
     <string name="newEduLevelText">Podaj nowy poziom nauczania</string>
     <string name="learningTimeText">Czas poświęcony nauce:</string>
     <string name="watchedVideosText">Liczba obejrzanych filmów:</string>
+    <string name="learningActivityTimeText">CZAS NAUKI:</string>
+    <string name="learningText">Nauka</string>
+    <string name="pauseText">PAUZA</string>
+    <string name="stopText">STOP</string>
 </resources>
