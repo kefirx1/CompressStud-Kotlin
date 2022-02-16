@@ -17,7 +17,7 @@
         android:fontFamily="@font/bold"
         android:letterSpacing="0"
         android:tag="dashboard"
-        android:text="KONIEC"
+        android:text="@string/endText"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -32,8 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/regular"
-        android:lineHeight="1.2dp"
-        android:text="To już koniec!"
+        android:text="@string/endText1"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -47,8 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/regular"
-        android:lineHeight="1.2dp"
-        android:text="Możesz przejśc do"
+        android:text="@string/endText3"
         android:textColor="@color/primary"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -62,8 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/regular"
-        android:lineHeight="1.2dp"
-        android:text="aplikacji 😁"
+        android:text="@string/endText2"
         android:textColor="@color/primary"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -80,7 +77,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:adjustViewBounds="true"
-        app:srcCompat="@drawable/ic_background" />
+        app:srcCompat="@drawable/ic_background"
+        android:contentDescription="@string/blueWave" />
 
     <TextView
         android:id="@+id/textView3"

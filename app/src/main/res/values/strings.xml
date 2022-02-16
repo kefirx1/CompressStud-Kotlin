@@ -126,4 +126,22 @@
     <string name="learningText">Nauka</string>
     <string name="pauseText">PAUZA</string>
     <string name="stopText">STOP</string>
+    <string name="endText">KONIEC</string>
+    <string name="endText1">To już koniec!</string>
+    <string name="endText2">aplikacji 😁</string>
+    <string name="blueWave">wave</string>
+    <string name="endText3">Możesz przejśc do</string>
+    <string name="registerText1">Z nami\nnauka jest</string>
+    <string name="registerText2">prostsza!</string>
+    <string name="startText">ZACZYNAMY</string>
+    <string name="nextText">DALEJ</string>
+    <string name="firstStepText">Krok 1:</string>
+    <string name="putNameText">Podaj imię</string>
+    <string name="secondStepText">Krok 2:</string>
+    <string name="putEduLevelText">Podaj poziom\nnauczania</string>
+    <string name="thirdStepText">Krok 3:</string>
+    <string name="musicRegText">Odpowiedz\nna pytanie</string>
+    <string name="musicRegText2">Słuchasz muzyki podczas nauki?</string>
+    <string name="fourthStepText">Krok 4:</string>
+    <string name="typeMusicRegText">Wybierz swój\nulubiony\ngatunek muzyczny</string>
 </resources>
