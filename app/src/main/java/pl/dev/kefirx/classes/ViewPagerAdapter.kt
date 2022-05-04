@@ -49,6 +49,7 @@ class ViewPagerAdapter(private val examsList: ArrayList<Tests>, private val appl
                     Intent(applicationContext, StudyingActivity::class.java).apply {
                         putExtra("testId", examsList[position].test_id)
                     }
+                studyingIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 applicationContext.startActivity(studyingIntent)
             }else{
                 Toast.makeText(applicationContext, "Brak internetu", Toast.LENGTH_SHORT).show()

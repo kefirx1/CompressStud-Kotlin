@@ -15,14 +15,18 @@ object YoutubeObject {
         val videoIdSortedList: ArrayList<String> = ArrayList()
         val recommendedChannelsList = MainActivity.listOfRecommendedChannelsObject
         var recommendedLessonList: ArrayList<String> = ArrayList()
-        val videosIdListCopy: MutableList<String> = mutableListOf(videosIdList.clone()) as MutableList<String>
+        val videosIdListCopy: ArrayList<String> = videosIdList.clone() as ArrayList<String>
         var i = -1
 
         recommendedChannelsList.forEach{
             if (it[0] == lesson) {
-                recommendedLessonList = it
+                recommendedLessonList = it.clone() as ArrayList<String>
             }
         }
+
+        println(recommendedChannelsList)
+        println(recommendedLessonList)
+
         recommendedLessonList.removeAt(0)
 
 
@@ -33,6 +37,13 @@ object YoutubeObject {
                 videosIdListCopy.remove(videosIdList[i])
             }
         }
+
+        println(videoIdSortedList)
+
+        videosIdListCopy.forEach {
+            println(it)
+        }
+        println(videosIdListCopy)
 
 
         videosIdListCopy.forEach {
