@@ -9,12 +9,12 @@ import androidx.lifecycle.ViewModelProvider
 import pl.dev.kefirx.classes.Notification
 import pl.dev.kefirx.databinding.ActivitySettingsBinding
 import pl.dev.kefirx.room.User
-import pl.dev.kefirx.viewModel.CSViewModel
+import pl.dev.kefirx.viewModels.SettingsViewModel
 
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingsBinding
-    private lateinit var viewModel: CSViewModel
+    private lateinit var viewModel: SettingsViewModel
     private var temp = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +23,7 @@ class SettingsActivity : AppCompatActivity() {
         viewModel = ViewModelProvider
             .AndroidViewModelFactory
             .getInstance(application)
-            .create(CSViewModel::class.java)
+            .create(SettingsViewModel::class.java)
 
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)

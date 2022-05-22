@@ -8,7 +8,7 @@ import com.applandeo.materialcalendarview.EventDay
 import pl.dev.kefirx.classes.ViewPagerAdapter
 import pl.dev.kefirx.databinding.ActivityCalendarBinding
 import pl.dev.kefirx.room.Tests
-import pl.dev.kefirx.viewModel.CSViewModel
+import pl.dev.kefirx.viewModels.CalendarViewModel
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.*
@@ -23,12 +23,11 @@ class CalendarActivity : AppCompatActivity() {
         val examsToViewList: ArrayList<Tests> = ArrayList()
         val examsToEvent: HashMap<EventDay, Tests> = HashMap()
         val events: MutableList<EventDay> = ArrayList()
-
     }
 
 
     private lateinit var binding: ActivityCalendarBinding
-    private lateinit var viewModel: CSViewModel
+    private lateinit var viewModel: CalendarViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,7 +80,7 @@ class CalendarActivity : AppCompatActivity() {
         viewModel = ViewModelProvider
             .AndroidViewModelFactory
             .getInstance(application)
-            .create(CSViewModel::class.java)
+            .create(CalendarViewModel::class.java)
     }
 
     private fun setEventsToDays() {

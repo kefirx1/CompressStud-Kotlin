@@ -14,9 +14,9 @@ import pl.dev.kefirx.CalendarActivity
 import pl.dev.kefirx.R
 import pl.dev.kefirx.StudyingActivity
 import pl.dev.kefirx.room.Tests
-import pl.dev.kefirx.viewModel.CSViewModel
+import pl.dev.kefirx.viewModels.CalendarViewModel
 
-class ViewPagerAdapter(private val examsList: ArrayList<Tests>, private val applicationContext: Context, val viewModel: CSViewModel, private val instance: CalendarActivity): RecyclerView.Adapter<ViewPagerAdapter.Pager2ViewHandler>() {
+class ViewPagerAdapter(private val examsList: ArrayList<Tests>, private val applicationContext: Context, val viewModel: CalendarViewModel, private val instance: CalendarActivity): RecyclerView.Adapter<ViewPagerAdapter.Pager2ViewHandler>() {
 
     inner class Pager2ViewHandler(itemView: View): RecyclerView.ViewHolder(itemView) {
         val lessonTextView: TextView = itemView.findViewById(R.id.calendarLessonName)

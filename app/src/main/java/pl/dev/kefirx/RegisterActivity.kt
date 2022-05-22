@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import pl.dev.kefirx.databinding.ActivityMainBinding
-import pl.dev.kefirx.viewModel.CSViewModel
+import pl.dev.kefirx.viewModels.RegisterViewModel
 
 class RegisterActivity : AppCompatActivity() {
 
     companion object{
-        lateinit var viewModel: CSViewModel
+        lateinit var viewModel: RegisterViewModel
     }
 
     private lateinit var binding: ActivityMainBinding
@@ -22,7 +22,7 @@ class RegisterActivity : AppCompatActivity() {
         viewModel = ViewModelProvider
             .AndroidViewModelFactory
             .getInstance(application)
-            .create(CSViewModel::class.java)
+            .create(RegisterViewModel::class.java)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_register)

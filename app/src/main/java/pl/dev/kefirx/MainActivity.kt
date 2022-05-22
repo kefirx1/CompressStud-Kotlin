@@ -17,13 +17,13 @@ import pl.dev.kefirx.json.GetJSONString
 import pl.dev.kefirx.json.ListOfTopicsJSON
 import pl.dev.kefirx.json.ytResponse.recommendedChannels.RecommendedChannelsIDJSON
 import pl.dev.kefirx.reminder.NotificationReceiver
-import pl.dev.kefirx.viewModel.CSViewModel
+import pl.dev.kefirx.viewModels.DashboardViewModel
 
 
 open class MainActivity : AppCompatActivity() {
 
     companion object {
-        lateinit var viewModel: CSViewModel
+        lateinit var viewModel: DashboardViewModel
         const val LIST_OF_TOPICS_PATH = "listOfTopics.json"
         const val LIST_OF_RECOMMENDED_CHANNELS_PATH = "listOfRecommendedChannels.json"
         lateinit var listOfTopicsObject: ListOfTopicsJSON
@@ -78,7 +78,7 @@ open class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider
             .AndroidViewModelFactory
             .getInstance(application)
-            .create(CSViewModel::class.java)
+            .create(DashboardViewModel::class.java)
 
         if (viewModel.getUserCountAsync() <= 0) {
             Log.e("TAG", "Create user")

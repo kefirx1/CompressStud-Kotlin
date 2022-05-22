@@ -24,7 +24,7 @@ import pl.dev.kefirx.reminder.NotificationReceiver.Companion.MESSAGE_EXTRA
 import pl.dev.kefirx.reminder.NotificationReceiver.Companion.NOTIFICATION_EXTRA
 import pl.dev.kefirx.reminder.NotificationReceiver.Companion.TITLE_EXTRA
 import pl.dev.kefirx.room.Tests
-import pl.dev.kefirx.viewModel.CSViewModel
+import pl.dev.kefirx.viewModels.DashboardViewModel
 import java.util.*
 
 
@@ -172,7 +172,7 @@ class ListenersSet (private val application: Application) {
                         viewModel = ViewModelProvider
                             .AndroidViewModelFactory
                             .getInstance(application)
-                            .create(CSViewModel::class.java)
+                            .create(DashboardViewModel::class.java)
 
                         val notificationID: Int
                         val channelID: String

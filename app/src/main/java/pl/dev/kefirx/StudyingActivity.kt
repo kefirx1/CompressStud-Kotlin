@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.widget.MultiAutoCompleteTextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
@@ -20,7 +19,7 @@ import pl.dev.kefirx.databinding.ActivityStudyingBinding
 import pl.dev.kefirx.json.ytResponse.YoutubeResponseJSON
 import pl.dev.kefirx.room.Tests
 import pl.dev.kefirx.services.TimerService
-import pl.dev.kefirx.viewModel.CSViewModel
+import pl.dev.kefirx.viewModels.StudyingViewModel
 import pl.dev.kefirx.youTube.YoutubeObject
 import pl.dev.kefirx.youTube.YoutubeRetrofitClient
 
@@ -30,7 +29,7 @@ class StudyingActivity : AppCompatActivity() {
     private lateinit var testToStudying: Tests
     private lateinit var binding: ActivityStudyingBinding
     private lateinit var serviceIntent: Intent
-    private lateinit var viewModel: CSViewModel
+    private lateinit var viewModel: StudyingViewModel
     private var time = 0.0
     private var watchedVideos = 0
 
@@ -40,7 +39,7 @@ class StudyingActivity : AppCompatActivity() {
         viewModel = ViewModelProvider
             .AndroidViewModelFactory
             .getInstance(application)
-            .create(CSViewModel::class.java)
+            .create(StudyingViewModel::class.java)
 
         binding = ActivityStudyingBinding.inflate(layoutInflater)
         setContentView(binding.root)

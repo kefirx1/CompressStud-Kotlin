@@ -5,12 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import pl.dev.kefirx.classes.Convert
 import pl.dev.kefirx.databinding.ActivityStatisticsBinding
-import pl.dev.kefirx.viewModel.CSViewModel
+import pl.dev.kefirx.viewModels.StatisticsViewModel
 
 class StatisticsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityStatisticsBinding
-    private lateinit var viewModel: CSViewModel
+    private lateinit var viewModel: StatisticsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,7 +18,7 @@ class StatisticsActivity : AppCompatActivity() {
         viewModel = ViewModelProvider
             .AndroidViewModelFactory
             .getInstance(application)
-            .create(CSViewModel::class.java)
+            .create(StatisticsViewModel::class.java)
 
         binding = ActivityStatisticsBinding.inflate(layoutInflater)
         setContentView(binding.root)
