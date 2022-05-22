@@ -17,7 +17,10 @@ interface TestsDao {
     fun delete(tests: Tests)
 
     @Query("SELECT * FROM testsTable")
-    fun getAllTestsInfo(): List<Tests>
+    fun getAllTestsInfo2(): List<Tests>
+
+    @Query("SELECT * FROM testsTable")
+    fun getAllTestsInfo(): Observable<List<Tests>>
 
     @Query("SELECT * FROM testsTable WHERE test_id=:id")
     fun getTestByIdInfo(id: Int): Observable<Tests>

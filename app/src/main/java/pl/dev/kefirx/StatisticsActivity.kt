@@ -32,18 +32,21 @@ class StatisticsActivity : AppCompatActivity() {
 
     private fun setStats(){
 
-        val allTests = viewModel.getAllTestsInfoAsync()
+        viewModel.setAllTestsInfoObserver()
+
         var studyingTimeCounter = 0.0
         var watchedVideos = 0
 
-        allTests.forEach{
-            studyingTimeCounter += it.timeOfLearning
-            watchedVideos += it.watchedVideos
+        viewModel.testInfoResult.observe(this){ testsList ->
+
+            testsList?.forEach {
+                studyingTimeCounter += it.timeOfLearning
+                watchedVideos += it.watchedVideos
+            }
+            binding.allStudyingTimeText.text =
+                Convert.getTimeStringFromDouble(studyingTimeCounter)
+            binding.allWatchedVideosText.text = watchedVideos.toString()
         }
-
-
-        binding.allStudyingTimeText.text = Convert.getTimeStringFromDouble(studyingTimeCounter)
-        binding.allWatchedVideosText.text = watchedVideos.toString()
 
     }
 }

@@ -56,7 +56,7 @@ class CSRepository (application: Application) {
     }
     fun getAllTestsInfoAsync():  Deferred<List<Tests>> =
         CoroutineScope(Dispatchers.IO).async {
-            testsDao.getAllTestsInfo()
+            testsDao.getAllTestsInfo2()
         }
 
     fun deleteAllTests() = CoroutineScope(Dispatchers.IO).launch {
@@ -69,6 +69,9 @@ class CSRepository (application: Application) {
             testsDao.getNewestExam()
         }
 
+    fun getAllTestsInfoObservable(): Observable<List<Tests>>{
+        return testsDao.getAllTestsInfo()
+    }
 
     fun getTestByIdInfoObservable(id: Int): Observable<Tests>{
         return testsDao.getTestByIdInfo(id = id)

@@ -1,6 +1,5 @@
 package pl.dev.kefirx
 
-import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -12,11 +11,11 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstan
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import pl.dev.kefirx.classes.Convert
-import pl.dev.kefirx.databinding.ActivityStudyingBinding
 import pl.dev.kefirx.data.Tests
+import pl.dev.kefirx.databinding.ActivityStudyingBinding
+import pl.dev.kefirx.network.YoutubeObject
 import pl.dev.kefirx.services.TimerService
 import pl.dev.kefirx.viewModels.StudyingViewModel
-import pl.dev.kefirx.network.YoutubeObject
 
 
 class StudyingActivity : AppCompatActivity() {
@@ -26,6 +25,8 @@ class StudyingActivity : AppCompatActivity() {
     private lateinit var serviceIntent: Intent
     private lateinit var viewModel: StudyingViewModel
 
+    private var pauseButtonStartText = "START"
+    private var pauseButtonPauseText = "PAUZA"
     private var time = 0.0
     private var watchedVideos = 0
 
@@ -82,7 +83,7 @@ class StudyingActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         stopTimer()
-        binding.studyingPauseButton.text = "START"
+        binding.studyingPauseButton.text = pauseButtonStartText
     }
 
     private fun getSearchKey(testToStudying: Tests) = testToStudying.lesson + testToStudying.topic
@@ -193,14 +194,13 @@ class StudyingActivity : AppCompatActivity() {
         })
     }
 
-    @SuppressLint("SetTextI18n")
     private fun setListeners() {
         binding.studyingPauseButton.setOnClickListener {
-            if (binding.studyingPauseButton.text == "PAUZA") {
-                binding.studyingPauseButton.text = "START"
+            if (binding.studyingPauseButton.text == pauseButtonPauseText) {
+                binding.studyingPauseButton.text = pauseButtonStartText
                 stopTimer()
-            } else if (binding.studyingPauseButton.text == "START") {
-                binding.studyingPauseButton.text = "PAUZA"
+            } else if (binding.studyingPauseButton.text == pauseButtonStartText) {
+                binding.studyingPauseButton.text = pauseButtonPauseText
                 startTimer()
             }
         }

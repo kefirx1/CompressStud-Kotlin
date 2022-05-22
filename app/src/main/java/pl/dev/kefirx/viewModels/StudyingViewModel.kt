@@ -16,9 +16,9 @@ class StudyingViewModel(application: Application) : AndroidViewModel(application
     private var csRepository: CSRepository = CSRepository(application)
 
     private var dataFromAPI = MutableLiveData<YoutubeResponseJSON?>()
-    private var testInfo = MutableLiveData<Tests?>()
     val dataFromAPIResult: LiveData<YoutubeResponseJSON?>
         get() = dataFromAPI
+    private var testInfo = MutableLiveData<Tests?>()
     val testInfoResult: LiveData<Tests?>
         get() = testInfo
 
