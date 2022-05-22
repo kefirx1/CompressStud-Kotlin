@@ -9,7 +9,6 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
 
     private var csRepository: CSRepository = CSRepository(application)
 
-
     fun insertUser(user: User){
         csRepository.insertUser(user)
     }

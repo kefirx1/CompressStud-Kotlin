@@ -6,14 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.applandeo.materialcalendarview.EventDay
 import pl.dev.kefirx.adapters.ViewPagerAdapter
-import pl.dev.kefirx.databinding.ActivityCalendarBinding
 import pl.dev.kefirx.data.Tests
+import pl.dev.kefirx.databinding.ActivityCalendarBinding
 import pl.dev.kefirx.viewModels.CalendarViewModel
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 class CalendarActivity : AppCompatActivity() {
@@ -46,6 +44,8 @@ class CalendarActivity : AppCompatActivity() {
         resetViewModel()
 
         setEventsToDays()
+
+        viewModel.setAllTestsInfoObserver()
 
         binding.calendarView.setOnDayClickListener { eventDay ->
 
@@ -86,40 +86,46 @@ class CalendarActivity : AppCompatActivity() {
     private fun setEventsToDays() {
 
         val calendar = Calendar.getInstance()
-        val testsList = viewModel.getAllTestsInfoAsync()
 
+        viewModel.testInfoResult.observe(this){ testsList ->
+            if(testsList!=null){
+                testsList.forEach {
+                    examsToViewList.add(it)
+                    val dateOfExamMillis = it.dateOfExam
+                    val dateOfExamSec = dateOfExamMillis / 1000
+                    val dateOfExam = LocalDateTime.ofEpochSecond(
+                        dateOfExamSec, 0,
+                        ZoneOffset.UTC
+                    )
 
-        testsList.forEach {
-            examsToViewList.add(it)
-            val dateOfExamMillis = it.dateOfExam
-            val dateOfExamSec = dateOfExamMillis / 1000
-            val dateOfExam = LocalDateTime.ofEpochSecond(
-                dateOfExamSec, 0,
-                ZoneOffset.UTC
-            )
+                    var hour = dateOfExam.hour + 1
 
-            var hour = dateOfExam.hour + 1
+                    if (dateOfExam.monthValue == 3 && dateOfExam.dayOfMonth >= 27) {
+                        hour++
+                    } else if (dateOfExam.monthValue in 4..8) {
+                        hour++
+                    }
 
-            if (dateOfExam.monthValue == 3 && dateOfExam.dayOfMonth >= 27) {
-                hour++
-            } else if (dateOfExam.monthValue in 4..8) {
-                hour++
+                    calendar.set(
+                        dateOfExam.year,
+                        dateOfExam.monthValue - 1,
+                        dateOfExam.dayOfMonth,
+                        hour,
+                        dateOfExam.minute,
+                        dateOfExam.second
+                    )
+                    val event = EventDay(calendar.clone() as Calendar, R.drawable.ic_baseline_book_24)
+                    events.add(event)
+                    examsToEvent[event] = it
+                }
+
+                binding.calendarView.setEvents(events)
+
+            }else{
+                //TODO
             }
-
-            calendar.set(
-                dateOfExam.year,
-                dateOfExam.monthValue - 1,
-                dateOfExam.dayOfMonth,
-                hour,
-                dateOfExam.minute,
-                dateOfExam.second
-            )
-            val event = EventDay(calendar.clone() as Calendar, R.drawable.ic_baseline_book_24)
-            events.add(event)
-            examsToEvent[event] = it
         }
 
-        binding.calendarView.setEvents(events)
     }
 
 

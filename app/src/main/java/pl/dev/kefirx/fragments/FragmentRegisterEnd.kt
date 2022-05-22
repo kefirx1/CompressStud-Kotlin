@@ -21,7 +21,6 @@ class FragmentRegisterEnd : Fragment() {
     override fun onStart() {
         super.onStart()
 
-
         val personalInformation: ArrayList<String> = arguments?.getStringArrayList("info") as ArrayList<String>
 
         val name = personalInformation[0]
