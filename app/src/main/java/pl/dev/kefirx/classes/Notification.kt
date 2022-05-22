@@ -6,7 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import pl.dev.kefirx.MainActivity.Companion.viewModel
-import pl.dev.kefirx.reminder.NotificationReceiver
+import pl.dev.kefirx.receivers.NotificationReceiver
 
 class Notification {
 

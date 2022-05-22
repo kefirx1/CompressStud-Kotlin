@@ -16,7 +16,7 @@ import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.json.GetJSONString
 import pl.dev.kefirx.json.ListOfTopicsJSON
 import pl.dev.kefirx.json.ytResponse.recommendedChannels.RecommendedChannelsIDJSON
-import pl.dev.kefirx.reminder.NotificationReceiver
+import pl.dev.kefirx.receivers.NotificationReceiver
 import pl.dev.kefirx.viewModels.DashboardViewModel
 
 

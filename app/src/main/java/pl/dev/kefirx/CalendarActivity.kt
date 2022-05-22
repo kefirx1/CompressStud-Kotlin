@@ -5,9 +5,9 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.applandeo.materialcalendarview.EventDay
-import pl.dev.kefirx.classes.ViewPagerAdapter
+import pl.dev.kefirx.adapters.ViewPagerAdapter
 import pl.dev.kefirx.databinding.ActivityCalendarBinding
-import pl.dev.kefirx.room.Tests
+import pl.dev.kefirx.data.Tests
 import pl.dev.kefirx.viewModels.CalendarViewModel
 import java.time.LocalDateTime
 import java.time.ZoneOffset

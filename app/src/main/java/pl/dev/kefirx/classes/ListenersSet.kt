@@ -18,12 +18,12 @@ import pl.dev.kefirx.MainActivity.Companion.viewModel
 import pl.dev.kefirx.SettingsActivity
 import pl.dev.kefirx.StatisticsActivity
 import pl.dev.kefirx.databinding.ActivityMainBinding
-import pl.dev.kefirx.reminder.NotificationReceiver
-import pl.dev.kefirx.reminder.NotificationReceiver.Companion.CHANNEL_EXTRA
-import pl.dev.kefirx.reminder.NotificationReceiver.Companion.MESSAGE_EXTRA
-import pl.dev.kefirx.reminder.NotificationReceiver.Companion.NOTIFICATION_EXTRA
-import pl.dev.kefirx.reminder.NotificationReceiver.Companion.TITLE_EXTRA
-import pl.dev.kefirx.room.Tests
+import pl.dev.kefirx.receivers.NotificationReceiver
+import pl.dev.kefirx.receivers.NotificationReceiver.Companion.CHANNEL_EXTRA
+import pl.dev.kefirx.receivers.NotificationReceiver.Companion.MESSAGE_EXTRA
+import pl.dev.kefirx.receivers.NotificationReceiver.Companion.NOTIFICATION_EXTRA
+import pl.dev.kefirx.receivers.NotificationReceiver.Companion.TITLE_EXTRA
+import pl.dev.kefirx.data.Tests
 import pl.dev.kefirx.viewModels.DashboardViewModel
 import java.util.*
 

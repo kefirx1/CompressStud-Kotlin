@@ -9,7 +9,7 @@ import pl.dev.kefirx.MainActivity
 import pl.dev.kefirx.MainActivity.Companion.viewModel
 import pl.dev.kefirx.StudyingActivity
 import pl.dev.kefirx.databinding.ActivityMainBinding
-import pl.dev.kefirx.room.Tests
+import pl.dev.kefirx.data.Tests
 import java.time.Instant
 import java.time.ZoneId
 

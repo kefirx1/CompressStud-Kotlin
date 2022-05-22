@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CompressStud"
         android:allowBackup="true">
-        <receiver android:name=".reminder.NotificationReceiver"
+        <receiver android:name=".receivers.NotificationReceiver"
             android:exported="true"
             android:enabled="true">
             <intent-filter>

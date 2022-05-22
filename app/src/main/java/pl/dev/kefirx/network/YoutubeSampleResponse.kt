@@ -1,8 +1,7 @@
-package pl.dev.kefirx.youTube
+package pl.dev.kefirx.network
 
 import android.content.Context
 import com.google.gson.Gson
-import pl.dev.kefirx.MainActivity
 import pl.dev.kefirx.json.GetJSONString
 import pl.dev.kefirx.json.ytResponse.YoutubeResponseJSON
 

@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.runBlocking
-import pl.dev.kefirx.room.CSRepository
-import pl.dev.kefirx.room.User
+import pl.dev.kefirx.database.CSRepository
+import pl.dev.kefirx.data.User
 
 class SettingsViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -14,7 +14,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     private var userInfo: Deferred<User> =
         csRepository.getUserInfoAsync()
 
-    fun updateUser(user:User){
+    fun updateUser(user: User){
         csRepository.updateUser(user)
     }
 

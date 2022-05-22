@@ -1,6 +1,8 @@
-package pl.dev.kefirx.room
+package pl.dev.kefirx.database.dao
 
 import androidx.room.*
+import io.reactivex.rxjava3.core.Observable
+import pl.dev.kefirx.data.Tests
 
 @Dao
 interface TestsDao {
@@ -18,7 +20,7 @@ interface TestsDao {
     fun getAllTestsInfo(): List<Tests>
 
     @Query("SELECT * FROM testsTable WHERE test_id=:id")
-    fun getTestByIdInfo(id: Int): Tests
+    fun getTestByIdInfo(id: Int): Observable<Tests>
 
     @Query("DELETE FROM testsTable")
     fun deleteAllTests()

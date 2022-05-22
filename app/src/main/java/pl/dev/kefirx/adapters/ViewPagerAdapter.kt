@@ -1,4 +1,4 @@
-package pl.dev.kefirx.classes
+package pl.dev.kefirx.adapters
 
 import android.content.Context
 import android.content.Intent
@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import pl.dev.kefirx.CalendarActivity
 import pl.dev.kefirx.R
 import pl.dev.kefirx.StudyingActivity
-import pl.dev.kefirx.room.Tests
+import pl.dev.kefirx.classes.DeviceInfo
+import pl.dev.kefirx.classes.Notification
+import pl.dev.kefirx.data.Tests
 import pl.dev.kefirx.viewModels.CalendarViewModel
 
 class ViewPagerAdapter(private val examsList: ArrayList<Tests>, private val applicationContext: Context, val viewModel: CalendarViewModel, private val instance: CalendarActivity): RecyclerView.Adapter<ViewPagerAdapter.Pager2ViewHandler>() {

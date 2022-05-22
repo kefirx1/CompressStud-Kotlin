@@ -1,4 +1,4 @@
-package pl.dev.kefirx.youTube
+package pl.dev.kefirx.network
 
 import pl.dev.kefirx.MainActivity
 import pl.dev.kefirx.json.ytResponse.YoutubeResponseJSON
@@ -24,9 +24,6 @@ object YoutubeObject {
             }
         }
 
-        println(recommendedChannelsList)
-        println(recommendedLessonList)
-
         recommendedLessonList.removeAt(0)
 
 
@@ -37,14 +34,6 @@ object YoutubeObject {
                 videosIdListCopy.remove(videosIdList[i])
             }
         }
-
-        println(videoIdSortedList)
-
-        videosIdListCopy.forEach {
-            println(it)
-        }
-        println(videosIdListCopy)
-
 
         videosIdListCopy.forEach {
             videoIdSortedList.add(it)

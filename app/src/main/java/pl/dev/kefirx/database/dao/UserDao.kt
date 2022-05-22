@@ -1,7 +1,7 @@
-package pl.dev.kefirx.room
+package pl.dev.kefirx.database.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
+import pl.dev.kefirx.data.User
 
 @Dao
 interface UserDao {

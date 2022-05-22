@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import pl.dev.kefirx.classes.Notification
 import pl.dev.kefirx.databinding.ActivitySettingsBinding
-import pl.dev.kefirx.room.User
+import pl.dev.kefirx.data.User
 import pl.dev.kefirx.viewModels.SettingsViewModel
 
 class SettingsActivity : AppCompatActivity() {

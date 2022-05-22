@@ -11,17 +11,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import pl.dev.kefirx.classes.Convert
 import pl.dev.kefirx.databinding.ActivityStudyingBinding
-import pl.dev.kefirx.json.ytResponse.YoutubeResponseJSON
-import pl.dev.kefirx.room.Tests
+import pl.dev.kefirx.data.Tests
 import pl.dev.kefirx.services.TimerService
 import pl.dev.kefirx.viewModels.StudyingViewModel
-import pl.dev.kefirx.youTube.YoutubeObject
-import pl.dev.kefirx.youTube.YoutubeRetrofitClient
+import pl.dev.kefirx.network.YoutubeObject
 
 
 class StudyingActivity : AppCompatActivity() {
@@ -30,6 +25,7 @@ class StudyingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityStudyingBinding
     private lateinit var serviceIntent: Intent
     private lateinit var viewModel: StudyingViewModel
+
     private var time = 0.0
     private var watchedVideos = 0
 
@@ -45,49 +41,70 @@ class StudyingActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val idTestToStudying = intent.getIntExtra("testId", -1)
-        testToStudying = viewModel.getTestByIdInfoAsync(idTestToStudying)
 
-        time = testToStudying.timeOfLearning
-        watchedVideos = testToStudying.watchedVideos
+        viewModel.setTestByIdInfoObserver(id = idTestToStudying)
 
+        viewModel.testInfoResult.observe(this) {
+            if (it != null) {
+                testToStudying = it
+                time = testToStudying.timeOfLearning
+                watchedVideos = testToStudying.watchedVideos
+
+                setListeners()
+                setTestInfo()
+
+                viewModel.setYouTubeVideosResponseObserver(
+                    searchKey = getSearchKey(testToStudying)
+                )
+
+                loadVideosFromAPI(
+                    testToStudying.lesson
+                )
+
+                startTimer()
+
+            } else {
+                //TODO
+            }
+        }
         serviceIntent = Intent(applicationContext, TimerService::class.java)
         registerReceiver(updateTime, IntentFilter(TimerService.TIMER_UPDATED))
-        setListeners()
-        setTestInfo()
 
+    }
 
-        CoroutineScope(Dispatchers.Main).launch {
-            loadVideos(
-                YoutubeRetrofitClient.instance
-                    .getResponseAsync(getSearchKey(testToStudying))
-                    .await()
-                    .body()!!,
-                testToStudying.lesson
-            )
-        }
+    override fun onPause() {
+        super.onPause()
+        testToStudying.timeOfLearning = time
+        testToStudying.watchedVideos = watchedVideos
+        viewModel.updateTest(testToStudying)
+    }
 
-
-//        val responseObject = YoutubeSampleResponse.getSampleResponse(this)
-//        loadVideos(responseObject)
-
+    override fun onStop() {
+        super.onStop()
+        stopTimer()
+        binding.studyingPauseButton.text = "START"
     }
 
     private fun getSearchKey(testToStudying: Tests) = testToStudying.lesson + testToStudying.topic
 
-    override fun onResume() {
-        super.onResume()
-        startTimer()
+    private fun loadVideosFromAPI(lesson: String) {
+
+        viewModel.dataFromAPIResult.observe(this) {
+
+            if (it != null) {
+                val bestOfFiveVideosURL: ArrayList<String> =
+                    YoutubeObject.getBestOfFive(it, lesson)
+
+                setUpYoutubePlayers(bestOfFiveVideosURL = bestOfFiveVideosURL)
+            } else {
+                //TODO
+            }
+
+        }
+
     }
 
-    private fun addWatchedVideos() {
-        watchedVideos++
-    }
-
-    private fun loadVideos(responseObject: YoutubeResponseJSON, lesson: String) {
-
-        val bestOfFiveVideosURL: ArrayList<String> =
-            YoutubeObject.getBestOfFive(responseObject, lesson)
-
+    private fun setUpYoutubePlayers(bestOfFiveVideosURL: ArrayList<String>) {
         lifecycle.addObserver(binding.youtubePlayer1)
         lifecycle.addObserver(binding.youtubePlayer2)
         lifecycle.addObserver(binding.youtubePlayer3)
@@ -105,7 +122,7 @@ class StudyingActivity : AppCompatActivity() {
             ) {
                 super.onStateChange(youTubePlayer, state)
                 if (state.name == "ENDED") {
-                    addWatchedVideos()
+                    watchedVideos++
                 }
             }
 
@@ -121,7 +138,7 @@ class StudyingActivity : AppCompatActivity() {
             ) {
                 super.onStateChange(youTubePlayer, state)
                 if (state.name == "ENDED") {
-                    addWatchedVideos()
+                    watchedVideos++
                 }
             }
 
@@ -137,7 +154,7 @@ class StudyingActivity : AppCompatActivity() {
             ) {
                 super.onStateChange(youTubePlayer, state)
                 if (state.name == "ENDED") {
-                    addWatchedVideos()
+                    watchedVideos++
                 }
             }
 
@@ -153,7 +170,7 @@ class StudyingActivity : AppCompatActivity() {
             ) {
                 super.onStateChange(youTubePlayer, state)
                 if (state.name == "ENDED") {
-                    addWatchedVideos()
+                    watchedVideos++
                 }
             }
 
@@ -169,12 +186,11 @@ class StudyingActivity : AppCompatActivity() {
             ) {
                 super.onStateChange(youTubePlayer, state)
                 if (state.name == "ENDED") {
-                    addWatchedVideos()
+                    watchedVideos++
                 }
             }
 
         })
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -215,12 +231,4 @@ class StudyingActivity : AppCompatActivity() {
         }
     }
 
-
-    override fun onPause() {
-        super.onPause()
-        stopService(serviceIntent)
-        testToStudying.timeOfLearning = time
-        testToStudying.watchedVideos = watchedVideos
-        viewModel.updateTest(testToStudying)
-    }
 }

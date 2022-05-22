@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import pl.dev.kefirx.RegisterActivity.Companion.viewModel
 import pl.dev.kefirx.databinding.FragmentRegisterEndBinding
-import pl.dev.kefirx.room.User
+import pl.dev.kefirx.data.User
 
 class FragmentRegisterEnd : Fragment() {
 

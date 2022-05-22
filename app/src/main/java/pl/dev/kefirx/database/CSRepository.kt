@@ -1,13 +1,22 @@
-package pl.dev.kefirx.room
+package pl.dev.kefirx.database
 
 import android.app.Application
+import io.reactivex.rxjava3.core.Observable
 import kotlinx.coroutines.*
+import pl.dev.kefirx.data.Tests
+import pl.dev.kefirx.data.User
+import pl.dev.kefirx.database.dao.TestsDao
+import pl.dev.kefirx.database.dao.UserDao
+import pl.dev.kefirx.json.ytResponse.YoutubeResponseJSON
+import pl.dev.kefirx.network.YoutubeRetrofitClient
 
 
 class CSRepository (application: Application) {
 
     private var userDao: UserDao
     private var testsDao: TestsDao
+    private val youtubeRetrofitClient = YoutubeRetrofitClient()
+    private val service = youtubeRetrofitClient.getYouTubeService()
 
     init{
         val database = CSDatabase
@@ -49,7 +58,6 @@ class CSRepository (application: Application) {
         CoroutineScope(Dispatchers.IO).async {
             testsDao.getAllTestsInfo()
         }
-    fun getTestByIdInfoAsync(id: Int):  Tests = testsDao.getTestByIdInfo(id)
 
     fun deleteAllTests() = CoroutineScope(Dispatchers.IO).launch {
         testsDao.deleteAllTests()
@@ -60,4 +68,14 @@ class CSRepository (application: Application) {
         CoroutineScope(Dispatchers.IO).async {
             testsDao.getNewestExam()
         }
+
+
+    fun getTestByIdInfoObservable(id: Int): Observable<Tests>{
+        return testsDao.getTestByIdInfo(id = id)
+    }
+
+    fun getYouTubeVideosResponseObservable(searchKey: String): Observable<YoutubeResponseJSON> {
+        return service.getResponseAsync(searchKey = searchKey)
+    }
+
 }

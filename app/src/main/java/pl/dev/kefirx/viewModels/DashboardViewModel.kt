@@ -4,9 +4,9 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.runBlocking
-import pl.dev.kefirx.room.CSRepository
-import pl.dev.kefirx.room.Tests
-import pl.dev.kefirx.room.User
+import pl.dev.kefirx.database.CSRepository
+import pl.dev.kefirx.data.Tests
+import pl.dev.kefirx.data.User
 
 class DashboardViewModel(application: Application) : AndroidViewModel(application) {
 
