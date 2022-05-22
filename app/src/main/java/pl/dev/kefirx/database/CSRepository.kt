@@ -38,7 +38,7 @@ class CSRepository (application: Application) {
 
     fun getUserInfoAsync(): Deferred<User> =
         CoroutineScope(Dispatchers.IO).async {
-            userDao.getUserInfo()
+            userDao.getUserInfo2Async()
         }
     fun deleteAllUserInfo() = CoroutineScope(Dispatchers.IO).launch {
         userDao.deleteAllUserInfo()
@@ -68,6 +68,10 @@ class CSRepository (application: Application) {
         CoroutineScope(Dispatchers.IO).async {
             testsDao.getNewestExam()
         }
+
+    fun getUserInfoObservable(): Observable<User>{
+        return userDao.getUserInfo()
+    }
 
     fun getAllTestsInfoObservable(): Observable<List<Tests>>{
         return testsDao.getAllTestsInfo()

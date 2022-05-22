@@ -1,6 +1,8 @@
 package pl.dev.kefirx.database.dao
 
 import androidx.room.*
+import io.reactivex.rxjava3.core.Observable
+import kotlinx.coroutines.Deferred
 import pl.dev.kefirx.data.User
 
 @Dao
@@ -19,7 +21,10 @@ interface UserDao {
     fun getUserCount(): Int
 
     @Query("SELECT * FROM userTable")
-    fun getUserInfo(): User
+    fun getUserInfo(): Observable<User>
+
+    @Query("SELECT * FROM userTable")
+    fun getUserInfo2Async(): User
 
     @Query("DELETE FROM userTable")
     fun deleteAllUserInfo()
