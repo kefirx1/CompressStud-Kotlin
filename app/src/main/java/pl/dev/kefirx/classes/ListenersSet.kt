@@ -17,13 +17,13 @@ import pl.dev.kefirx.MainActivity
 import pl.dev.kefirx.MainActivity.Companion.viewModel
 import pl.dev.kefirx.SettingsActivity
 import pl.dev.kefirx.StatisticsActivity
+import pl.dev.kefirx.data.Tests
 import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.receivers.NotificationReceiver
 import pl.dev.kefirx.receivers.NotificationReceiver.Companion.CHANNEL_EXTRA
 import pl.dev.kefirx.receivers.NotificationReceiver.Companion.MESSAGE_EXTRA
 import pl.dev.kefirx.receivers.NotificationReceiver.Companion.NOTIFICATION_EXTRA
 import pl.dev.kefirx.receivers.NotificationReceiver.Companion.TITLE_EXTRA
-import pl.dev.kefirx.data.Tests
 import pl.dev.kefirx.viewModels.DashboardViewModel
 import java.util.*
 
@@ -78,7 +78,13 @@ class ListenersSet (private val application: Application) {
                 binding.settingsButton.isClickable = false
 
                 binding.addNewTestModal.visibility = View.VISIBLE
-                val levelOfEdu = viewModel.getUserInfoAsync().levelOfEdu
+                var levelOfEdu = ""
+
+                viewModel.userInfoResult.observe(instance){
+                    if(it!=null){
+                        levelOfEdu = it.levelOfEdu
+                    }
+                }
 
                 if (levelOfEdu == "Podstawowa") {
                     val lessonsList =
@@ -174,30 +180,39 @@ class ListenersSet (private val application: Application) {
                             .getInstance(application)
                             .create(DashboardViewModel::class.java)
 
-                        val notificationID: Int
-                        val channelID: String
+                        var notificationID: Int
+                        var channelID: String
 
-                        val exam = viewModel.getNewestExamAsync()
+                        viewModel.setNewestTestInfoObserver()
 
+                        viewModel.newestTestInfoResult.observe(instance){
+                            if(it!=null){
+                                val exam = it
 
-                        if (reminder != 0) {
-                            notificationID = exam.test_id
-                            channelID = "channel" + (exam.test_id).toString()
+                                if (reminder != 0) {
+                                    notificationID = exam.test_id
+                                    channelID = "channel" + (exam.test_id).toString()
 
-                            instance.createNotificationChannel(channelID)
-                            scheduleNotification(
-                                applicationContext,
-                                instance,
-                                lesson,
-                                topic,
-                                reminder,
-                                dateOfExam,
-                                notificationID,
-                                channelID,
-                                timeOfRemindH,
-                                timeOfRemindM
-                            )
+                                    instance.createNotificationChannel(channelID)
+                                    scheduleNotification(
+                                        applicationContext,
+                                        instance,
+                                        lesson,
+                                        topic,
+                                        reminder,
+                                        dateOfExam,
+                                        notificationID,
+                                        channelID,
+                                        timeOfRemindH,
+                                        timeOfRemindM
+                                    )
+                                }
+                            }else{
+                                //TODO
+                            }
+
                         }
+
 
                         Toast.makeText(applicationContext, "Dodano sprawdzian", Toast.LENGTH_SHORT)
                             .show()

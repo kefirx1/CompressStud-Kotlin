@@ -36,14 +36,9 @@ class CSRepository (application: Application) {
     }
     fun getUserCountAsync(): Int = userDao.getUserCount()
 
-    fun getUserInfoAsync(): Deferred<User> =
-        CoroutineScope(Dispatchers.IO).async {
-            userDao.getUserInfo2Async()
-        }
     fun deleteAllUserInfo() = CoroutineScope(Dispatchers.IO).launch {
         userDao.deleteAllUserInfo()
     }
-
 
     fun insertTest(tests: Tests) = CoroutineScope(Dispatchers.IO).launch {
         testsDao.insert(tests)
@@ -54,20 +49,18 @@ class CSRepository (application: Application) {
     fun deleteTest(tests: Tests) = CoroutineScope(Dispatchers.IO).launch {
         testsDao.delete(tests)
     }
-    fun getAllTestsInfoAsync():  Deferred<List<Tests>> =
-        CoroutineScope(Dispatchers.IO).async {
-            testsDao.getAllTestsInfo2()
-        }
 
     fun deleteAllTests() = CoroutineScope(Dispatchers.IO).launch {
         testsDao.deleteAllTests()
     }
-    fun getThreeExams(): List<Tests> = testsDao.getThreeExams()
 
-    fun getNewestExamAsync():  Deferred<Tests> =
-        CoroutineScope(Dispatchers.IO).async {
-            testsDao.getNewestExam()
-        }
+    fun getNewestTestInfoObservable(): Observable<Tests>{
+        return testsDao.getNewestExam()
+    }
+
+    fun getNewestThreeTestsInfoObservable(): Observable<List<Tests>>{
+        return testsDao.getNewestThreeExams()
+    }
 
     fun getUserInfoObservable(): Observable<User>{
         return userDao.getUserInfo()

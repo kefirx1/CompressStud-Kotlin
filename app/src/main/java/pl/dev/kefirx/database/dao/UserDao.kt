@@ -23,9 +23,6 @@ interface UserDao {
     @Query("SELECT * FROM userTable")
     fun getUserInfo(): Observable<User>
 
-    @Query("SELECT * FROM userTable")
-    fun getUserInfo2Async(): User
-
     @Query("DELETE FROM userTable")
     fun deleteAllUserInfo()
 

@@ -17,9 +17,6 @@ interface TestsDao {
     fun delete(tests: Tests)
 
     @Query("SELECT * FROM testsTable")
-    fun getAllTestsInfo2(): List<Tests>
-
-    @Query("SELECT * FROM testsTable")
     fun getAllTestsInfo(): Observable<List<Tests>>
 
     @Query("SELECT * FROM testsTable WHERE test_id=:id")
@@ -29,10 +26,10 @@ interface TestsDao {
     fun deleteAllTests()
 
     @Query("SELECT * FROM testsTable ORDER BY dateOfExam LIMIT 3")
-    fun getThreeExams(): List<Tests>
+    fun getNewestThreeExams(): Observable<List<Tests>>
 
     @Query("SELECT * FROM testsTable ORDER BY test_id DESC LIMIT 1")
-    fun getNewestExam(): Tests
+    fun getNewestExam(): Observable<Tests>
 
 
 

@@ -107,7 +107,7 @@ class SettingsActivity : AppCompatActivity() {
             binding.wipeDataButton.setOnClickListener {
                 viewModel.deleteAllTests()
                 viewModel.deleteAllUserInfo()
-                Notification().cancelAllNotification(applicationContext)
+                Notification().cancelAllNotification(applicationContext = applicationContext, instance = this)
                 temp = true
                 this.finish()
             }

@@ -11,19 +11,25 @@ class ExamsExpiration {
 
     fun checkExamsExpirationDate(applicationContext: Context, instance: MainActivity){
 
-        val examsList = viewModel.getAllTestsInfoAsync()
+        viewModel.setAllTestsInfoObserver()
+        viewModel.testInfoResult.observe(instance){ testsList ->
+            if(testsList!=null){
+                testsList.forEach{
+                    val dateOfExam = it.dateOfExam
 
-        examsList.forEach{
-            val dateOfExam = it.dateOfExam
+                    if(dateOfExam<getNextDayDateMillis()){
+                        notification.cancelNotificationByID(it.test_id, applicationContext)
+                        viewModel.deleteTest(it)
 
-            if(dateOfExam<getNextDayDateMillis()){
-                notification.cancelNotificationByID(it.test_id, applicationContext)
-                viewModel.deleteTest(it)
+                        instance.callOnResume()
+                    }
 
-                instance.callOnResume()
+                }
+            }else{
+                //TODO
             }
-
         }
+
     }
 
 

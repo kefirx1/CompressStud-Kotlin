@@ -43,6 +43,13 @@ open class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel = ViewModelProvider
+            .AndroidViewModelFactory
+            .getInstance(application)
+            .create(DashboardViewModel::class.java)
+
+
         listOfTopicsObject = gson.fromJson(
             getJSONString.getJsonStringFromAssets(
                 applicationContext,
@@ -80,6 +87,7 @@ open class MainActivity : AppCompatActivity() {
             .getInstance(application)
             .create(DashboardViewModel::class.java)
 
+
         if (viewModel.getUserCountAsync() <= 0) {
             Log.e("TAG", "Create user")
             val registerIntent = Intent(this, RegisterActivity::class.java)
@@ -115,10 +123,30 @@ open class MainActivity : AppCompatActivity() {
 
 
     private fun setDashboardCurrentInfo() {
-        val name = viewModel.getUserInfoAsync().name + "!"
-        binding.userNameTextView.text = name
-        examsExpiration.checkExamsExpirationDate(applicationContext, this)
-        dashboardBestThreeView.setBestOfThreeView(viewModel.getThreeExams())
+        viewModel.setUserInfoObserver()
+        viewModel.setNewestThreeTestsInfoObserver()
+
+        viewModel.userInfoResult.observe(this){ userInfo ->
+            if(userInfo!=null){
+                val name = userInfo.name + "!"
+
+                binding.userNameTextView.text = name
+                examsExpiration.checkExamsExpirationDate(applicationContext, this)
+
+                viewModel.newestThreeTestsInfoResult.observe(this){
+                    if(it!=null){
+                        dashboardBestThreeView.setBestOfThreeView(listOfThreeTests = it)
+                    }else{
+                        //TODO
+                    }
+                }
+
+            }else{
+                //TODO
+            }
+        }
+
+
     }
 
 }
