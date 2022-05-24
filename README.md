@@ -21,7 +21,7 @@ for school tests (At the moment only YouTube videos).
 
 ## UI
 
-### Dashboard!
+### Dashboard
 ![dashboardView](https://user-images.githubusercontent.com/54641754/170010043-98a45829-60f3-4811-90b5-2a6fd43d203d.jpg)
 ### Calendar
 ![CSCalendar](https://user-images.githubusercontent.com/54641754/170009075-54b09d36-c1bf-4b08-865f-07fc71e21d2f.jpg)
