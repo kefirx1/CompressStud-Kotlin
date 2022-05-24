@@ -10,6 +10,7 @@ for school tests (At the moment only YouTube videos).
 ## Tech stack
 
 - Kotlin
+- Android SDK
 - YouTube Data API
 - MVVM (View Mode, Room database)
 - Retrofit2
