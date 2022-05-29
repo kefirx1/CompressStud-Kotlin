@@ -1,6 +1,5 @@
 package pl.dev.kefirx.network
 
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -8,8 +7,9 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
+
 private const val BASE_URL = "https://youtube.googleapis.com"
-private const val API_KEY = "AIzaSyDxTfhNslMMA7jYCNbXjcJvIVo0dACUNIE"
+private val API_KEY = System.getenv("API_KEY")
 
 class YoutubeRetrofitClient {
 
