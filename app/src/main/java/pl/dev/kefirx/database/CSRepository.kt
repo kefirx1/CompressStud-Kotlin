@@ -8,16 +8,18 @@ import pl.dev.kefirx.data.User
 import pl.dev.kefirx.database.dao.TestsDao
 import pl.dev.kefirx.database.dao.UserDao
 import pl.dev.kefirx.json.ytResponse.YoutubeResponseJSON
+import pl.dev.kefirx.network.YoutubeAPIService
 import pl.dev.kefirx.network.YoutubeRetrofitClient
 
 
 class CSRepository (
     private val userDao: UserDao,
-    private val testsDao: TestsDao
+    private val testsDao: TestsDao,
+    private val youtubeAPIService: YoutubeAPIService
     ) {
 
     private val youtubeRetrofitClient = YoutubeRetrofitClient()
-    private val service = youtubeRetrofitClient.getYouTubeService()
+//    private val service = youtubeRetrofitClient.getYouTubeService()
 
     fun insertUser(user: User) = CoroutineScope(Dispatchers.IO).launch {
         userDao.insert(user)
@@ -69,7 +71,7 @@ class CSRepository (
     }
 
     fun getYouTubeVideosResponseObservable(searchKey: String): Observable<YoutubeResponseJSON> {
-        return service.getResponseAsync(searchKey = searchKey)
+        return youtubeAPIService.getResponseAsync(searchKey = searchKey)
     }
 
 }

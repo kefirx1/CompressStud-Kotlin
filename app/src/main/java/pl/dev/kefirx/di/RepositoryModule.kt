@@ -7,6 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import pl.dev.kefirx.database.CSRepository
 import pl.dev.kefirx.database.dao.TestsDao
 import pl.dev.kefirx.database.dao.UserDao
+import pl.dev.kefirx.network.YoutubeAPIService
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -17,8 +18,9 @@ object RepositoryModule {
     @Provides
     fun provideCSDatabase(
         testsDao: TestsDao,
-        userDao: UserDao
+        userDao: UserDao,
+        youtubeAPIService: YoutubeAPIService
     ): CSRepository {
-        return CSRepository(userDao, testsDao)
+        return CSRepository(userDao, testsDao, youtubeAPIService)
     }
 }
