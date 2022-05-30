@@ -6,7 +6,6 @@ import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import pl.dev.kefirx.classes.Notification
 import pl.dev.kefirx.data.User

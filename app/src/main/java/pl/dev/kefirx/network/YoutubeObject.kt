@@ -1,7 +1,8 @@
 package pl.dev.kefirx.network
 
-import pl.dev.kefirx.MainActivity
+import pl.dev.kefirx.StudyingActivity
 import pl.dev.kefirx.json.ytResponse.YoutubeResponseJSON
+import pl.dev.kefirx.viewModels.StudyingViewModel
 
 object YoutubeObject {
 
@@ -9,22 +10,31 @@ object YoutubeObject {
     private fun getSortedVideosIdList(
         channelsIdList: ArrayList<String>,
         videosIdList: ArrayList<String>,
-        lesson: String
+        lesson: String,
+        viewModel: StudyingViewModel,
+        instance: StudyingActivity
     ): ArrayList<String> {
 
+        viewModel.setListOfRecommendedChannels()
+
         val videoIdSortedList: ArrayList<String> = ArrayList()
-        val recommendedChannelsList = MainActivity.listOfRecommendedChannelsObject
         var recommendedLessonList: ArrayList<String> = ArrayList()
         val videosIdListCopy: ArrayList<String> = videosIdList.clone() as ArrayList<String>
         var i = -1
 
-        recommendedChannelsList.forEach{
-            if (it[0] == lesson) {
-                recommendedLessonList = it.clone() as ArrayList<String>
+        viewModel.listOfChannelsResult.observe(instance){ result ->
+            if(result != null){
+                result.forEach{
+                    if (it[0] == lesson) {
+                        recommendedLessonList = it.clone() as ArrayList<String>
+                    }
+                }
+                recommendedLessonList.removeAt(0)
+            }else{
+                //TODO
             }
         }
 
-        recommendedLessonList.removeAt(0)
 
 
         channelsIdList.forEach { channel ->
@@ -52,7 +62,7 @@ object YoutubeObject {
     }
 
 
-    fun getBestOfFive(responseObject: YoutubeResponseJSON, lesson: String): ArrayList<String> {
+    fun getBestOfFive(responseObject: YoutubeResponseJSON, lesson: String, viewModel: StudyingViewModel, instance: StudyingActivity): ArrayList<String> {
 
         val channelsIdList: ArrayList<String> = ArrayList()
         val videosIdList: ArrayList<String> = ArrayList()
@@ -62,7 +72,13 @@ object YoutubeObject {
             videosIdList.add(it.id.videoId)
         }
 
-        return getSortedVideosIdList(channelsIdList, videosIdList, lesson)
+        return getSortedVideosIdList(
+            channelsIdList = channelsIdList,
+            videosIdList = videosIdList,
+            lesson = lesson,
+            viewModel = viewModel,
+            instance =  instance
+        )
     }
 
 

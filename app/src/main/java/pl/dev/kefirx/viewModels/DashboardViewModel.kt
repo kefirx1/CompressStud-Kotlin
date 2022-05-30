@@ -3,13 +3,17 @@ package pl.dev.kefirx.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.scopes.ViewModelScoped
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.launch
 import pl.dev.kefirx.data.Tests
 import pl.dev.kefirx.data.User
 import pl.dev.kefirx.database.CSRepository
+import pl.dev.kefirx.json.ListOfTopicsJSON
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,9 +32,20 @@ constructor(
     private var newestThreeTestsInfo = MutableLiveData<List<Tests>?>()
     val newestThreeTestsInfoResult: LiveData<List<Tests>?>
         get() = newestThreeTestsInfo
+
     private var newestTestInfo = MutableLiveData<Tests?>()
     val newestTestInfoResult: LiveData<Tests?>
         get() = newestTestInfo
+
+    private var listOfTopics = MutableLiveData<ListOfTopicsJSON?>()
+    val listOfTopicsResult: LiveData<ListOfTopicsJSON?>
+        get() = listOfTopics
+
+    fun setListOfTopics(){
+        viewModelScope.launch{
+            listOfTopics.postValue(csRepository.getListOfTopics())
+        }
+    }
 
     fun setUserInfoObserver(){
         csRepository.getUserInfoObservable()

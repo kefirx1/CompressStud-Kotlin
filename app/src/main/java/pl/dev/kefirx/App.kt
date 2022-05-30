@@ -2,8 +2,6 @@ package pl.dev.kefirx
 
 import android.app.Application
 import android.content.Context
-import android.content.pm.ApplicationInfo
-import android.content.pm.PackageManager
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp

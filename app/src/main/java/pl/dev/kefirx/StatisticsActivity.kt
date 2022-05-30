@@ -3,7 +3,6 @@ package pl.dev.kefirx
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import pl.dev.kefirx.classes.Convert
 import pl.dev.kefirx.databinding.ActivityStatisticsBinding

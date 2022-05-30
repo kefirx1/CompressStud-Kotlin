@@ -1,11 +1,9 @@
 package pl.dev.kefirx.viewModels
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import pl.dev.kefirx.database.CSRepository
 import pl.dev.kefirx.data.User
+import pl.dev.kefirx.database.CSRepository
 import javax.inject.Inject
 
 @HiltViewModel

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.applandeo.materialcalendarview.EventDay
 import dagger.hilt.android.AndroidEntryPoint
 import pl.dev.kefirx.adapters.ViewPagerAdapter

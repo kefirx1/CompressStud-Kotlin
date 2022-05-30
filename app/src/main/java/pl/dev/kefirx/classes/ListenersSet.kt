@@ -2,7 +2,6 @@ package pl.dev.kefirx.classes
 
 import android.R.layout
 import android.app.AlarmManager
-import android.app.Application
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -11,7 +10,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import pl.dev.kefirx.CalendarActivity
 import pl.dev.kefirx.MainActivity
 import pl.dev.kefirx.SettingsActivity
@@ -28,7 +26,6 @@ import java.util.*
 
 
 class ListenersSet (
-    private val application: Application,
     private val viewModel: DashboardViewModel
 ) {
 
@@ -108,7 +105,7 @@ class ListenersSet (
                             position: Int,
                             id: Long
                         ) {
-                            spinnersSet.setMATopicSpinner(binding, instance, levelOfEdu)
+                            spinnersSet.setMATopicSpinner(binding, instance, levelOfEdu, viewModel)
                         }
 
                         override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -132,7 +129,7 @@ class ListenersSet (
                     }
 
                 binding.cancelNewTestButton.setOnClickListener {
-                    modalsView.newTestModalReset(binding, instance)
+                    modalsView.newTestModalReset(binding)
                 }
 
                 binding.timeOfNotificationTimePicker.setIs24HourView(true)
@@ -177,11 +174,6 @@ class ListenersSet (
                         viewModel.insertTest(newTest)
                         Log.e("TAG", "Insert test")
 
-//                        viewModel = ViewModelProvider
-//                            .AndroidViewModelFactory
-//                            .getInstance(application)
-//                            .create(DashboardViewModel::class.java)
-
                         var notificationID: Int
                         var channelID: String
 
@@ -219,7 +211,7 @@ class ListenersSet (
                         Toast.makeText(applicationContext, "Dodano sprawdzian", Toast.LENGTH_SHORT)
                             .show()
 
-                        modalsView.newTestModalReset(binding, instance)
+                        modalsView.newTestModalReset(binding)
                     }else{
                         Toast.makeText(applicationContext, "Podaj popawną datę", Toast.LENGTH_SHORT)
                             .show()

@@ -5,20 +5,15 @@ import android.app.NotificationManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import pl.dev.kefirx.App.Companion.applicationContext
 import pl.dev.kefirx.classes.*
 import pl.dev.kefirx.databinding.ActivityMainBinding
-import pl.dev.kefirx.json.GetJSONString
-import pl.dev.kefirx.json.ListOfTopicsJSON
-import pl.dev.kefirx.json.ytResponse.recommendedChannels.RecommendedChannelsIDJSON
 import pl.dev.kefirx.receivers.NotificationReceiver
 import pl.dev.kefirx.viewModels.DashboardViewModel
 
@@ -26,15 +21,9 @@ import pl.dev.kefirx.viewModels.DashboardViewModel
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        const val LIST_OF_TOPICS_PATH = "listOfTopics.json"
-        const val LIST_OF_RECOMMENDED_CHANNELS_PATH = "listOfRecommendedChannels.json"
-        lateinit var listOfTopicsObject: ListOfTopicsJSON
-        lateinit var listOfRecommendedChannelsObject: RecommendedChannelsIDJSON
         val ai = applicationContext().packageManager
             .getApplicationInfo(applicationContext().packageName, PackageManager.GET_META_DATA)
     }
-
-    private val viewModel: DashboardViewModel by viewModels()
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var dashboardBestThreeView: DashboardBestThreeView
@@ -42,26 +31,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var listenersSet: ListenersSet
     private lateinit var spinnersSet: SpinnersSet
     private lateinit var examsExpiration: ExamsExpiration
-    private var getJSONString = GetJSONString()
-    private val gson = Gson()
+
+    private val viewModel: DashboardViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        listOfTopicsObject = gson.fromJson(
-            getJSONString.getJsonStringFromAssets(
-                applicationContext,
-                LIST_OF_TOPICS_PATH
-            ), ListOfTopicsJSON::class.java
-        )
-        listOfRecommendedChannelsObject = gson.fromJson(
-            getJSONString.getJsonStringFromAssets(
-                applicationContext,
-                LIST_OF_RECOMMENDED_CHANNELS_PATH
-            ), RecommendedChannelsIDJSON::class.java
-        )
     }
 
 
@@ -95,7 +71,6 @@ class MainActivity : AppCompatActivity() {
                 viewModel = viewModel
             )
             listenersSet = ListenersSet(
-                application = application,
                 viewModel = viewModel
             )
             spinnersSet = SpinnersSet()

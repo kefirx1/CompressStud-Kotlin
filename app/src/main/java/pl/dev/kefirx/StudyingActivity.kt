@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
@@ -44,9 +43,6 @@ class StudyingActivity : AppCompatActivity() {
         viewModel.setTestByIdInfoObserver(id = idTestToStudying)
 
         viewModel.testInfoResult.observe(this) {
-
-            println(it)
-
             if (it != null) {
                 testToStudying = it
                 time = testToStudying.timeOfLearning
@@ -95,7 +91,12 @@ class StudyingActivity : AppCompatActivity() {
 
             if (it != null) {
                 val bestOfFiveVideosURL: ArrayList<String> =
-                    YoutubeObject.getBestOfFive(it, lesson)
+                    YoutubeObject.getBestOfFive(
+                        responseObject = it,
+                        lesson = lesson,
+                        viewModel = viewModel,
+                        instance = this
+                    )
 
                 setUpYoutubePlayers(bestOfFiveVideosURL = bestOfFiveVideosURL)
             } else {
