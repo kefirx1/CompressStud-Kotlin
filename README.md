@@ -14,6 +14,7 @@ for school tests (At the moment only YouTube videos).
 - YouTube Data API
 - MVVM (View Mode, Room database)
 - Retrofit2
+- Dagger/Hilt
 - RxJava3
 - Coroutines
 - LiveData
