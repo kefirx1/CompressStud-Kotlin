@@ -4,27 +4,25 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.VISIBLE
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 import pl.dev.kefirx.classes.Notification
 import pl.dev.kefirx.data.User
 import pl.dev.kefirx.databinding.ActivitySettingsBinding
 import pl.dev.kefirx.viewModels.SettingsViewModel
 
+@AndroidEntryPoint
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingsBinding
-    private lateinit var viewModel: SettingsViewModel
     private lateinit var userInfo: User
+    private val viewModel: SettingsViewModel by viewModels()
     private var temp = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        viewModel = ViewModelProvider
-            .AndroidViewModelFactory
-            .getInstance(application)
-            .create(SettingsViewModel::class.java)
 
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -107,7 +105,10 @@ class SettingsActivity : AppCompatActivity() {
             binding.wipeDataButton.setOnClickListener {
                 viewModel.deleteAllTests()
                 viewModel.deleteAllUserInfo()
-                Notification().cancelAllNotification(applicationContext = applicationContext, instance = this)
+                Notification().cancelAllNotification(
+                    applicationContext = applicationContext,
+                    instance = this,
+                    viewModel = viewModel)
                 temp = true
                 this.finish()
             }

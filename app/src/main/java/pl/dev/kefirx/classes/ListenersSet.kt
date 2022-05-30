@@ -14,7 +14,6 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import pl.dev.kefirx.CalendarActivity
 import pl.dev.kefirx.MainActivity
-import pl.dev.kefirx.MainActivity.Companion.viewModel
 import pl.dev.kefirx.SettingsActivity
 import pl.dev.kefirx.StatisticsActivity
 import pl.dev.kefirx.data.Tests
@@ -28,7 +27,10 @@ import pl.dev.kefirx.viewModels.DashboardViewModel
 import java.util.*
 
 
-class ListenersSet (private val application: Application) {
+class ListenersSet (
+    private val application: Application,
+    private val viewModel: DashboardViewModel
+) {
 
     fun setMainActivityListeners(
         binding: ActivityMainBinding,
@@ -175,10 +177,10 @@ class ListenersSet (private val application: Application) {
                         viewModel.insertTest(newTest)
                         Log.e("TAG", "Insert test")
 
-                        viewModel = ViewModelProvider
-                            .AndroidViewModelFactory
-                            .getInstance(application)
-                            .create(DashboardViewModel::class.java)
+//                        viewModel = ViewModelProvider
+//                            .AndroidViewModelFactory
+//                            .getInstance(application)
+//                            .create(DashboardViewModel::class.java)
 
                         var notificationID: Int
                         var channelID: String

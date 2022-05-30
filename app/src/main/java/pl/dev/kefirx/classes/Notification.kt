@@ -1,14 +1,13 @@
 package pl.dev.kefirx.classes
 
-import android.app.Activity
 import android.app.AlarmManager
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import pl.dev.kefirx.MainActivity.Companion.viewModel
 import pl.dev.kefirx.SettingsActivity
 import pl.dev.kefirx.receivers.NotificationReceiver
+import pl.dev.kefirx.viewModels.SettingsViewModel
 
 class Notification {
 
@@ -27,7 +26,7 @@ class Notification {
         alarmManager.cancel(pendingIntent)
     }
 
-    fun cancelAllNotification(applicationContext: Context, instance: SettingsActivity){
+    fun cancelAllNotification(applicationContext: Context, instance: SettingsActivity, viewModel: SettingsViewModel){
         val manager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.cancelAll()
 

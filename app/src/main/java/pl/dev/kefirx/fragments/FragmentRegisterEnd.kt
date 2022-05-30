@@ -5,13 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import pl.dev.kefirx.RegisterActivity.Companion.viewModel
-import pl.dev.kefirx.databinding.FragmentRegisterEndBinding
+import androidx.fragment.app.activityViewModels
 import pl.dev.kefirx.data.User
+import pl.dev.kefirx.databinding.FragmentRegisterEndBinding
+import pl.dev.kefirx.viewModels.RegisterViewModel
+
 
 class FragmentRegisterEnd : Fragment() {
 
     private lateinit var binding: FragmentRegisterEndBinding
+    private val viewModel: RegisterViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentRegisterEndBinding.inflate(inflater, container, false)

@@ -2,9 +2,11 @@ package pl.dev.kefirx
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.applandeo.materialcalendarview.EventDay
+import dagger.hilt.android.AndroidEntryPoint
 import pl.dev.kefirx.adapters.ViewPagerAdapter
 import pl.dev.kefirx.data.Tests
 import pl.dev.kefirx.databinding.ActivityCalendarBinding
@@ -13,7 +15,7 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.*
 
-
+@AndroidEntryPoint
 class CalendarActivity : AppCompatActivity() {
 
 
@@ -25,7 +27,7 @@ class CalendarActivity : AppCompatActivity() {
 
 
     private lateinit var binding: ActivityCalendarBinding
-    private lateinit var viewModel: CalendarViewModel
+    private val viewModel: CalendarViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +43,7 @@ class CalendarActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        resetViewModel()
+//        resetViewModel()
 
         setEventsToDays()
 
@@ -76,12 +78,12 @@ class CalendarActivity : AppCompatActivity() {
         }
     }
 
-    private fun resetViewModel() {
-        viewModel = ViewModelProvider
-            .AndroidViewModelFactory
-            .getInstance(application)
-            .create(CalendarViewModel::class.java)
-    }
+//    private fun resetViewModel() {
+//        viewModel = ViewModelProvider
+//            .AndroidViewModelFactory
+//            .getInstance(application)
+//            .create(CalendarViewModel::class.java)
+//    }
 
     private fun setEventsToDays() {
 

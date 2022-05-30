@@ -1,24 +1,22 @@
 package pl.dev.kefirx
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 import pl.dev.kefirx.classes.Convert
 import pl.dev.kefirx.databinding.ActivityStatisticsBinding
 import pl.dev.kefirx.viewModels.StatisticsViewModel
 
+@AndroidEntryPoint
 class StatisticsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityStatisticsBinding
-    private lateinit var viewModel: StatisticsViewModel
+    private val viewModel: StatisticsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        viewModel = ViewModelProvider
-            .AndroidViewModelFactory
-            .getInstance(application)
-            .create(StatisticsViewModel::class.java)
 
         binding = ActivityStatisticsBinding.inflate(layoutInflater)
         setContentView(binding.root)

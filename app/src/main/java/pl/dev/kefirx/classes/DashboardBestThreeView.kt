@@ -6,17 +6,22 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import pl.dev.kefirx.MainActivity
-import pl.dev.kefirx.MainActivity.Companion.viewModel
+
 import pl.dev.kefirx.StudyingActivity
-import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.data.Tests
+import pl.dev.kefirx.databinding.ActivityMainBinding
+import pl.dev.kefirx.viewModels.DashboardViewModel
 import java.time.Instant
 import java.time.ZoneId
 
-class DashboardBestThreeView(val binding: ActivityMainBinding, private val applicationContext: Context, private val instance: MainActivity) {
+class DashboardBestThreeView(
+    private val binding: ActivityMainBinding,
+    private val applicationContext: Context,
+    private val instance: MainActivity,
+    private val viewModel: DashboardViewModel
+    ) {
 
     private var modalsView = ModalsView()
-
 
     fun setBestOfThreeView(listOfThreeTests: List<Tests>) {
 
@@ -158,7 +163,7 @@ class DashboardBestThreeView(val binding: ActivityMainBinding, private val appli
             binding.top3test2.setOnClickListener(null)
             binding.top3test3.setOnClickListener(null)
             setTestsNull()
-            instance.callOnResume()
+            binding.learnModal.visibility = View.GONE
         }
     }
 

@@ -1,19 +1,23 @@
 package pl.dev.kefirx.viewModels
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import pl.dev.kefirx.database.CSRepository
 import pl.dev.kefirx.data.Tests
+import pl.dev.kefirx.database.CSRepository
 import pl.dev.kefirx.json.ytResponse.YoutubeResponseJSON
+import javax.inject.Inject
 
-class StudyingViewModel(application: Application) : AndroidViewModel(application) {
-
-    private var csRepository: CSRepository = CSRepository(application)
+@HiltViewModel
+class StudyingViewModel
+@Inject
+constructor(
+    private val csRepository: CSRepository
+): ViewModel(){
 
     private var dataFromAPI = MutableLiveData<YoutubeResponseJSON?>()
     val dataFromAPIResult: LiveData<YoutubeResponseJSON?>
@@ -55,10 +59,12 @@ class StudyingViewModel(application: Application) : AndroidViewModel(application
                 }
 
                 override fun onNext(t: YoutubeResponseJSON) {
+                    println(t)
                     onResponseNext(youtubeResponseJSON = t)
                 }
 
                 override fun onError(e: Throwable) {
+                    println(e)
                     onResponseError()
                 }
 

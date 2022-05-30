@@ -18,25 +18,7 @@ abstract class CSDatabase: RoomDatabase() {
 
     companion object{
 
-        private var instance: CSDatabase? = null
-        private val LOCK = Any()
-
-        operator fun invoke(context: Context)= instance ?: synchronized(LOCK){
-            instance ?: getInstance(context).also { instance = it}
-        }
-
-        fun getInstance(context: Context) : CSDatabase?{
-            if(instance == null){
-                instance = Room.databaseBuilder(
-                    context,
-                    CSDatabase::class.java,
-                    "compressStudDB.db")
-                    .allowMainThreadQueries()
-                    .fallbackToDestructiveMigration()
-                    .build()
-            }
-            return instance
-        }
+        const val DATABASE_NAME = "compressStudDB.db"
 
     }
 

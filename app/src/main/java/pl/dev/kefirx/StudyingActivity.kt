@@ -5,11 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import dagger.hilt.android.AndroidEntryPoint
 import pl.dev.kefirx.classes.Convert
 import pl.dev.kefirx.data.Tests
 import pl.dev.kefirx.databinding.ActivityStudyingBinding
@@ -17,14 +20,14 @@ import pl.dev.kefirx.network.YoutubeObject
 import pl.dev.kefirx.services.TimerService
 import pl.dev.kefirx.viewModels.StudyingViewModel
 
-
+@AndroidEntryPoint
 class StudyingActivity : AppCompatActivity() {
 
     private lateinit var testToStudying: Tests
     private lateinit var binding: ActivityStudyingBinding
     private lateinit var serviceIntent: Intent
-    private lateinit var viewModel: StudyingViewModel
 
+    private val viewModel: StudyingViewModel by viewModels()
     private var pauseButtonStartText = "START"
     private var pauseButtonPauseText = "PAUZA"
     private var time = 0.0
@@ -32,11 +35,6 @@ class StudyingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        viewModel = ViewModelProvider
-            .AndroidViewModelFactory
-            .getInstance(application)
-            .create(StudyingViewModel::class.java)
 
         binding = ActivityStudyingBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -46,6 +44,9 @@ class StudyingActivity : AppCompatActivity() {
         viewModel.setTestByIdInfoObserver(id = idTestToStudying)
 
         viewModel.testInfoResult.observe(this) {
+
+            println(it)
+
             if (it != null) {
                 testToStudying = it
                 time = testToStudying.timeOfLearning
@@ -99,6 +100,11 @@ class StudyingActivity : AppCompatActivity() {
                 setUpYoutubePlayers(bestOfFiveVideosURL = bestOfFiveVideosURL)
             } else {
                 //TODO
+                Toast.makeText(
+                    this,
+                    "Błąd odtwarzacza",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
         }
@@ -111,6 +117,8 @@ class StudyingActivity : AppCompatActivity() {
         lifecycle.addObserver(binding.youtubePlayer3)
         lifecycle.addObserver(binding.youtubePlayer4)
         lifecycle.addObserver(binding.youtubePlayer5)
+
+        println(bestOfFiveVideosURL)
 
         binding.youtubePlayer1.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {

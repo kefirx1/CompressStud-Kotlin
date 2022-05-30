@@ -20,7 +20,7 @@ class ModalsView{
         binding.calendarButton.isClickable = true
         binding.statisticsButton.isClickable = true
         binding.settingsButton.isClickable = true
-        instance.callOnResume()
+        binding.addNewTestModal.visibility = View.GONE
     }
 
 }

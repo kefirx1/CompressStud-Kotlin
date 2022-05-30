@@ -2,14 +2,18 @@ package pl.dev.kefirx.classes
 
 import android.content.Context
 import pl.dev.kefirx.MainActivity
-import pl.dev.kefirx.MainActivity.Companion.viewModel
+import pl.dev.kefirx.viewModels.DashboardViewModel
 import java.util.*
 
 class ExamsExpiration {
 
     private val notification = Notification()
 
-    fun checkExamsExpirationDate(applicationContext: Context, instance: MainActivity){
+    fun checkExamsExpirationDate(
+        applicationContext: Context,
+        instance: MainActivity,
+        viewModel: DashboardViewModel
+    ){
 
         viewModel.setAllTestsInfoObserver()
         viewModel.testInfoResult.observe(instance){ testsList ->
@@ -20,8 +24,6 @@ class ExamsExpiration {
                     if(dateOfExam<getNextDayDateMillis()){
                         notification.cancelNotificationByID(it.test_id, applicationContext)
                         viewModel.deleteTest(it)
-
-                        instance.callOnResume()
                     }
 
                 }

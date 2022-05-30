@@ -5,12 +5,15 @@ import android.app.NotificationManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
+import pl.dev.kefirx.App.Companion.applicationContext
 import pl.dev.kefirx.classes.*
 import pl.dev.kefirx.databinding.ActivityMainBinding
 import pl.dev.kefirx.json.GetJSONString
@@ -19,18 +22,21 @@ import pl.dev.kefirx.json.ytResponse.recommendedChannels.RecommendedChannelsIDJS
 import pl.dev.kefirx.receivers.NotificationReceiver
 import pl.dev.kefirx.viewModels.DashboardViewModel
 
-
-open class MainActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
 
     companion object {
-        lateinit var viewModel: DashboardViewModel
         const val LIST_OF_TOPICS_PATH = "listOfTopics.json"
         const val LIST_OF_RECOMMENDED_CHANNELS_PATH = "listOfRecommendedChannels.json"
         lateinit var listOfTopicsObject: ListOfTopicsJSON
         lateinit var listOfRecommendedChannelsObject: RecommendedChannelsIDJSON
+        val ai = applicationContext().packageManager
+            .getApplicationInfo(applicationContext().packageName, PackageManager.GET_META_DATA)
     }
 
-    protected lateinit var binding: ActivityMainBinding
+    private val viewModel: DashboardViewModel by viewModels()
+
+    private lateinit var binding: ActivityMainBinding
     private lateinit var dashboardBestThreeView: DashboardBestThreeView
     private lateinit var modalsView: ModalsView
     private lateinit var listenersSet: ListenersSet
@@ -43,12 +49,6 @@ open class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        viewModel = ViewModelProvider
-            .AndroidViewModelFactory
-            .getInstance(application)
-            .create(DashboardViewModel::class.java)
-
 
         listOfTopicsObject = gson.fromJson(
             getJSONString.getJsonStringFromAssets(
@@ -82,20 +82,22 @@ open class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        viewModel = ViewModelProvider
-            .AndroidViewModelFactory
-            .getInstance(application)
-            .create(DashboardViewModel::class.java)
-
-
         if (viewModel.getUserCountAsync() <= 0) {
             Log.e("TAG", "Create user")
             val registerIntent = Intent(this, RegisterActivity::class.java)
             startActivity(registerIntent)
         } else {
             modalsView = ModalsView()
-            dashboardBestThreeView = DashboardBestThreeView(binding, applicationContext, this)
-            listenersSet = ListenersSet(application)
+            dashboardBestThreeView = DashboardBestThreeView(
+                binding = binding,
+                applicationContext = applicationContext,
+                instance = this,
+                viewModel = viewModel
+            )
+            listenersSet = ListenersSet(
+                application = application,
+                viewModel = viewModel
+            )
             spinnersSet = SpinnersSet()
             examsExpiration = ExamsExpiration()
 
@@ -103,7 +105,11 @@ open class MainActivity : AppCompatActivity() {
             dashboardBestThreeView.resetListeners()
             modalsView.hideAllModals(binding)
             setDashboardCurrentInfo()
-            listenersSet.setMainActivityListeners(binding, applicationContext, this)
+            listenersSet.setMainActivityListeners(
+                binding = binding,
+                applicationContext = applicationContext,
+                instance = this
+            )
 
             val receiver = ComponentName(applicationContext, NotificationReceiver::class.java)
 
@@ -117,9 +123,6 @@ open class MainActivity : AppCompatActivity() {
 
     }
 
-    fun callOnResume() {
-        onResume()
-    }
 
 
     private fun setDashboardCurrentInfo() {
@@ -131,7 +134,11 @@ open class MainActivity : AppCompatActivity() {
                 val name = userInfo.name + "!"
 
                 binding.userNameTextView.text = name
-                examsExpiration.checkExamsExpirationDate(applicationContext, this)
+                examsExpiration.checkExamsExpirationDate(
+                    applicationContext = applicationContext,
+                    instance = this,
+                    viewModel = viewModel
+                )
 
                 viewModel.newestThreeTestsInfoResult.observe(this){
                     if(it!=null){

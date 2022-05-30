@@ -1,20 +1,22 @@
 package pl.dev.kefirx.viewModels
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.runBlocking
-import pl.dev.kefirx.database.CSRepository
 import pl.dev.kefirx.data.Tests
+import pl.dev.kefirx.database.CSRepository
+import javax.inject.Inject
 
-class CalendarViewModel(application: Application) : AndroidViewModel(application) {
-
-    private var csRepository: CSRepository = CSRepository(application)
+@HiltViewModel
+class CalendarViewModel
+@Inject
+constructor(
+    private val csRepository: CSRepository
+): ViewModel(){
 
     private var testInfo = MutableLiveData<List<Tests>?>()
     val testInfoResult: LiveData<List<Tests>?>

@@ -11,19 +11,13 @@ import pl.dev.kefirx.json.ytResponse.YoutubeResponseJSON
 import pl.dev.kefirx.network.YoutubeRetrofitClient
 
 
-class CSRepository (application: Application) {
+class CSRepository (
+    private val userDao: UserDao,
+    private val testsDao: TestsDao
+    ) {
 
-    private var userDao: UserDao
-    private var testsDao: TestsDao
     private val youtubeRetrofitClient = YoutubeRetrofitClient()
     private val service = youtubeRetrofitClient.getYouTubeService()
-
-    init{
-        val database = CSDatabase
-            .getInstance(application.applicationContext)
-        userDao = database!!.userDao()
-        testsDao = database.testsDao()
-    }
 
     fun insertUser(user: User) = CoroutineScope(Dispatchers.IO).launch {
         userDao.insert(user)
